@@ -30,16 +30,16 @@ public class peticion {
     @JoinColumn(name = "rut_prestatario")
     private prestatario rut_prestatario;
     @OneToOne
-    @JoinColumn(name = "id_biblioteca",updatable = false,insertable = false)
+    @JoinColumn(name = "id_biblioteca", updatable = false, insertable = false)
     private bibliotecaModelo id_biblioteca_prestataria;
     @OneToOne
-    @JoinColumn(name = "id_institucion",updatable = false,insertable = false)
+    @JoinColumn(name = "id_institucion", updatable = false, insertable = false)
     private bibliotecaModelo id_institucion_prestataria;
     @OneToOne
-    @JoinColumn(name = "id_biblioteca",updatable = false,insertable = false)
+    @JoinColumn(name = "id_biblioteca", updatable = false, insertable = false)
     private bibliotecaModelo id_biblioteca_prestadora;
     @OneToOne
-    @JoinColumn(name = "id_institucion",updatable = false,insertable = false)
+    @JoinColumn(name = "id_institucion", updatable = false, insertable = false)
     private bibliotecaModelo id_institucion_prestadora;
     @OneToOne
     @JoinColumn(name = "id_estado")
@@ -47,6 +47,9 @@ public class peticion {
     @OneToOne
     @JoinColumn(name = "id_envio")
     private terminos_envio id_terminos_envio;
+    @OneToOne
+    @JoinColumn(name = "id_item")
+    private tipo_item id_item;
 
     public peticion() {
     }
