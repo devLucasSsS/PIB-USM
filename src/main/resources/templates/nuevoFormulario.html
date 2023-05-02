@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- Custom CSS -->
+  <link th:href="@{/main.css}" rel="stylesheet" />
+  <!-- estilo propio -->
+</head>
+
+<body>
+
+<!-- <div th:insert="_fragments :: nav"></div> -->
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <div class="form-container">
+        <h2>Nueva Petición</h2>
+        <form action="" method="post" th:object="${peticion}">
+          <input hidden="hidden" type="datetime-local" id="hora_local">
+          <div class="form-group">
+            <label for="rut">Rut:</label>
+            <input type="text" class="form-control" id="rut" name="rut" placeholder="Introduce tu rut"  required>
+          </div>
+          <div class="form-group">
+            <label for="nombre">Nombre y apellido:</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Introduce tu nombre"  required>
+          </div>
+          <div class="form-group">
+            <label for="email">Correo:</label>
+            <input type="text" class="form-control" id="email" name="email" placeholder="Introduce tu correo electronico"  required>
+          </div>
+          <div class="form-group">
+            <label for="titulo">Titulo:</label>
+            <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Introduce el titulo del libro"  required>
+          </div>
+          <div class="form-group">
+            <label for="autor">Autor:</label>
+            <input type="text" class="form-control" id="autor" name="autor" placeholder="Introduce el autor del libro"  required>
+          </div>
+          <div class="form-group">
+            <label for="edicion">Edicion:</label>
+            <input type="text" class="form-control" id="edicion" name="edicion" placeholder="Introduce la edicion del libro"  required>
+          </div>
+          <div class="form-group">
+            <label for="link">URL del libro:</label>
+            <input type="text" class="form-control" id="link" name="link" placeholder="Introduce la direccion web del libro"  required>
+          </div>
+          <div class="form-group">
+            <label for="institucion">Institucion</label>
+            <select id="institucion" name="institucion"> </select>
+          </div>
+          <div class="form-group">
+            <input type="radio" id="libro" name="seleccion" value="Libro">
+            <label for="libro">Libro</label>
+            <input type="radio" id="Documento" name="seleccion" value="Documento">
+            <label for="Documento">Documento</label>
+          </div>
+
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+</script>
+<script>
+  date = document.getElementById("hora_local").innerHTML = new Date().toLocaleString();
+  document.write(date);
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+		$('form').submit(function(event) {
+			event.preventDefault();
+			var formData = $(this).serialize();
+			$.ajax({
+				url: $(this).attr('action'),
+				type: $(this).attr('method'),
+				data: formData,
+				success: function(response) {
+					Swal.fire({
+						title: 'Mensaje enviado',
+						text: 'Gracias por ponerte en contacto con nosotros. Nos pondremos en contacto contigo lo antes posible.',
+						icon: 'success',
+						confirmButtonText: 'OK'
+					}).then((result) => {
+						if (result.isConfirmed) {
+							location.reload();
+						}
+					});
+				},
+				error: function(response) {
+					Swal.fire({
+						title: 'Error',
+						text: 'Ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.',
+						icon: 'error',
+						confirmButtonText: 'OK'
+					});
+				}
+			});
+		});
+	</script>
+</body>
+</html>
+
+
+
+<!--<div class="form-group">
+  <label for="email">Correo electrónico:</label>
+  <input type="email" class="form-control" id="email" name="email" placeholder="Introduce tu correo electrónico"  required>
+</div>
+<div class="form-group">
+  <div class="form-group">
+    <label for="telefono">Teléfono:</label>
+    <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Introduce tu número de teléfono">
+  </div>
+  <div class="form-group">
+    <label for="mensaje">Mensaje:</label>
+    <textarea class="form-control" id="mensaje" name="mensaje" rows="4" placeholder="Introduce tu mensaje"></textarea>
+  </div>
+             </div>
+
+   -->
