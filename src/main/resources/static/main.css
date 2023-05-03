@@ -6,6 +6,13 @@
 		color: #212529;
 	}
 
+    .navbar-default .navbar-brand {
+        color: #fff;
+    }
+    .navbar-default .navbar-nav>li>a {
+        color: #fff;
+    }
+
 	.navbar {
 		background-color: #004b85;
 	}
@@ -45,5 +52,13 @@
 		margin-bottom: 20px;
 		text-align: center;
 	}
+    .my-custom-scrollbar {
+    position: relative;
+    height: 200px;
+    overflow: auto;
+    }
+    .table-wrapper-scroll-y {
+    display: block;
+    }
 
 </style>
