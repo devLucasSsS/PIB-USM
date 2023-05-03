@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Contacto</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- Custom CSS -->
+  <link th:href="@{/main.css}" rel="stylesheet" />
+  <!-- estilo propio -->
+</head>
+<body>
+
+<div th:insert="_fragments :: nav"></div>
+
+<div class="container">
+  <h1>Peticiones Pendientes</h1>
+  <div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered table-striped mb-0">
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Autor</th>
+        <th>edicion</th>
+        <th>mlibro</th>
+        <th>x</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="pet : ${peticiones}" th:object="${pet}">
+        <td th:text="*{id_peticion}"></td>
+        <td th:text="*{autor}"></td>
+        <td th:text="*{edicion}"></td>
+        <td th:text="*{libro}"></td>
+        <td>
+          <!-- <a th:href="@{/formularios/editar/{id}(id=*{id})}">Editar</a>
+          <a th:href="@{/formularios/eliminar/{id}(id=*{id})}">Eliminar</a> -->
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="container">
+  <h1>Peticiones Cerradas</h1>
+  <div class="table-wrapper-scroll-y my-custom-scrollbar">
+    <table class="table table-bordered table-striped mb-0">
+      <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>correo</th>
+        <th>telefono</th>
+        <th>mensaje</th>
+        <th>Acciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="form : ${forms}" th:object="${form}">
+        <td th:text="*{nombre}"></td>
+        <td th:text="*{correo}"></td>
+        <td th:text="*{telefono}"></td>
+        <td th:text="*{mensaje}"></td>
+        <td>
+          <a th:href="@{/formularios/editar/{id}(id=*{id})}">Editar</a>
+          <a th:href="@{/formularios/eliminar/{id}(id=*{id})}">Eliminar</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Scripts de Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+        integrity="sha384-g+tH1lUhLj0c6PjLsoQudQLZ/Qptdli1ET62KjxytV2vzjLwW6NHYU6onN05V4B4"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-xZYscZiCpOH1/Hbbot+EJu/w3qHXyWwLhYvoFswjLX9v+RZG1db6Jgmm6u1zHvIy"
+        crossorigin="anonymous"></script>
+</body>
+</footer>
+</html>

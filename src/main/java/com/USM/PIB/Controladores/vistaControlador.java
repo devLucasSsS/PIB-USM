@@ -43,4 +43,10 @@ public class vistaControlador {
         //prestatarioControlador.savePrestatario(prestatario);
         return new ModelAndView("redirect:/peticion/nueva");
     }
+
+    @GetMapping(path = "peticiones")
+    public ModelAndView peticiones(){
+        ArrayList<Peticion> pet = peticionControlador.getPeticiones();
+        return new ModelAndView("formularios").addObject("peticiones",pet);
+    }
 }

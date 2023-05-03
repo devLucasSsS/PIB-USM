@@ -5,6 +5,8 @@ import com.USM.PIB.Repositorios.PeticionRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class PeticionServicio {
     @Autowired
@@ -12,5 +14,9 @@ public class PeticionServicio {
 
     public Peticion savePeticion(Peticion peticion){
         return peticionRepositorio.save(peticion);
+    }
+
+    public ArrayList<Peticion> getPeticion() {
+    return (ArrayList<Peticion>) peticionRepositorio.findAll();
     }
 }

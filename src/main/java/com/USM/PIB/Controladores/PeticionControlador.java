@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("/peticion")
 public class PeticionControlador {
@@ -19,5 +21,9 @@ public class PeticionControlador {
     @PostMapping
     public Peticion savePeticion(@RequestBody Peticion peticion){
         return new ResponseEntity<>(this.peticionServicio.savePeticion(peticion), HttpStatus.CREATED).getBody();
+    }
+
+    public ArrayList<Peticion> getPeticiones() {
+        return this.peticionServicio.getPeticion();
     }
 }
