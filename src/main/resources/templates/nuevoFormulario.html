@@ -17,7 +17,7 @@
 <body>
 
 <div th:insert="_fragments :: nav"></div>
-
+<!--<a th:object="${institucion}" th:field="*{nombre_institucion}"></a> -->
 <div class="container">
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
@@ -55,11 +55,15 @@
           </div>
           <div class="form-group">
             <label for="institucion">Institucion</label>
-            <select id="institucion" name="institucion"> </select>
+            <select id="institucion" name="institucion">
+              <option th:each="inst : ${institucion}" th:value="${inst.id_institucion}" th:text="${inst.nombre_institucion}"></option>
+            </select>
           </div>
           <div class="form-group">
             <label for="biblioteca">Biblioteca</label>
-            <select id="biblioteca" name="biblioteca"> </select>
+            <select id="biblioteca" name="biblioteca">
+              <option th:each="bib : ${bibliotecas}" th:value="${bib.id_biblioteca}" th:text="${bib.nombre_biblioteca}"></option>
+            </select>
           </div>
           <div class="form-group">
             <input type="radio" id="libro" name="seleccion" value="Libro">
@@ -72,6 +76,9 @@
       </div>
     </div>
   </div>
+</div>
+<div>
+
 </div>
 <script>
 </script>
