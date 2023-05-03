@@ -19,12 +19,12 @@ public class mensajes {
     private gestor rut_gestor;
     @ManyToOne(optional = true)
     @JoinColumn(name = "id_peticion")
-    private peticion id_peticion;
+    private Peticion id_peticion;
 
     public mensajes() {
     }
 
-    public mensajes(int id_mensaje, String mensaje, Date fecha_mensaje, gestor rut_gestor, peticion id_peticion) {
+    public mensajes(int id_mensaje, String mensaje, Date fecha_mensaje, gestor rut_gestor, Peticion id_peticion) {
         this.id_mensaje = id_mensaje;
         this.mensaje = mensaje;
         this.fecha_mensaje = fecha_mensaje;
@@ -64,11 +64,11 @@ public class mensajes {
         this.rut_gestor = rut_gestor;
     }
 
-    public peticion getId_peticion() {
+    public Peticion getId_peticion() {
         return id_peticion;
     }
 
-    public void setId_peticion(peticion id_peticion) {
+    public void setId_peticion(Peticion id_peticion) {
         this.id_peticion = id_peticion;
     }
 }

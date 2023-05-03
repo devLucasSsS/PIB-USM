@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "prestatario")
-public class prestatario {
+public class Prestatario {
     @Id
     @Column(length = 13, unique = true)
     private String rut_prestatario;
@@ -16,10 +16,10 @@ public class prestatario {
     @Column(unique = true)
     private String email;
 
-    public prestatario() {
+    public Prestatario() {
     }
 
-    public prestatario(String rut_prestatario, String nombre, String email) {
+    public Prestatario(String rut_prestatario, String nombre, String email) {
         this.rut_prestatario = rut_prestatario;
         this.nombre = nombre;
         this.email = email;

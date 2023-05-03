@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "peticion")
-public class peticion {
+public class Peticion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_peticion;
@@ -28,7 +28,7 @@ public class peticion {
     private Date fecha_devolucion;
     @OneToOne
     @JoinColumn(name = "rut_prestatario")
-    private prestatario rut_prestatario;
+    private Prestatario rut_prestatario;
     @OneToOne
     @JoinColumn(name = "id_biblioteca", updatable = false, insertable = false)
     private bibliotecaModelo id_biblioteca_prestataria;
@@ -51,10 +51,10 @@ public class peticion {
     @JoinColumn(name = "id_item")
     private tipo_item id_item;
 
-    public peticion() {
+    public Peticion() {
     }
 
-    public peticion(int id_peticion, String libro, String edicion, String autor, String link, String ip, Date fecha_peticion, Date fecha_prestamo, Date fecha_devolucion, prestatario rut_prestatario, bibliotecaModelo id_biblioteca_prestataria, bibliotecaModelo id_institucion_prestataria, bibliotecaModelo id_biblioteca_prestadora, bibliotecaModelo id_institucion_prestadora, estado id_estado, terminos_envio id_terminos_envio) {
+    public Peticion(int id_peticion, String libro, String edicion, String autor, String link, String ip, Date fecha_peticion, Date fecha_prestamo, Date fecha_devolucion, Prestatario rut_prestatario, bibliotecaModelo id_biblioteca_prestataria, bibliotecaModelo id_institucion_prestataria, bibliotecaModelo id_biblioteca_prestadora, bibliotecaModelo id_institucion_prestadora, estado id_estado, terminos_envio id_terminos_envio) {
         this.id_peticion = id_peticion;
         this.libro = libro;
         this.edicion = edicion;
@@ -145,11 +145,11 @@ public class peticion {
         this.fecha_devolucion = fecha_devolucion;
     }
 
-    public prestatario getRut_prestatario() {
+    public Prestatario getRut_prestatario() {
         return rut_prestatario;
     }
 
-    public void setRut_prestatario(prestatario rut_prestatario) {
+    public void setRut_prestatario(Prestatario rut_prestatario) {
         this.rut_prestatario = rut_prestatario;
     }
 
