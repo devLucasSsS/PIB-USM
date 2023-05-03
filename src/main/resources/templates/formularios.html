@@ -26,9 +26,10 @@
       <tr>
         <th>Id</th>
         <th>Autor</th>
-        <th>edicion</th>
-        <th>mlibro</th>
-        <th>x</th>
+        <th>Edicion</th>
+        <th>Libro</th>
+        <th>Rut</th>
+        <th>Acciones</th>
       </tr>
       </thead>
       <tbody>
@@ -37,6 +38,7 @@
         <td th:text="*{autor}"></td>
         <td th:text="*{edicion}"></td>
         <td th:text="*{libro}"></td>
+        <td th:text="*{rut_prestatario}"></td>
         <td>
           <!-- <a th:href="@{/formularios/editar/{id}(id=*{id})}">Editar</a>
           <a th:href="@{/formularios/eliminar/{id}(id=*{id})}">Eliminar</a> -->

@@ -26,51 +26,24 @@ public class Peticion {
     private Date fecha_prestamo;
     @Column
     private Date fecha_devolucion;
-    @OneToOne
-    @JoinColumn(name = "rut_prestatario")
-    private Prestatario rut_prestatario;
-    @OneToOne
-    @JoinColumn(name = "id_biblioteca", updatable = false, insertable = false)
-    private bibliotecaModelo id_biblioteca_prestataria;
-    @OneToOne
-    @JoinColumn(name = "id_institucion", updatable = false, insertable = false)
-    private bibliotecaModelo id_institucion_prestataria;
-    @OneToOne
-    @JoinColumn(name = "id_biblioteca", updatable = false, insertable = false)
-    private bibliotecaModelo id_biblioteca_prestadora;
-    @OneToOne
-    @JoinColumn(name = "id_institucion", updatable = false, insertable = false)
-    private bibliotecaModelo id_institucion_prestadora;
-    @OneToOne
-    @JoinColumn(name = "id_estado")
-    private estado id_estado;
-    @OneToOne
-    @JoinColumn(name = "id_envio")
-    private terminos_envio id_terminos_envio;
-    @OneToOne
-    @JoinColumn(name = "id_item")
-    private tipo_item id_item;
+    @Column
+    private String rut_prestatario;
+    @Column
+    private int id_biblioteca_prestataria;
+    @Column
+    private int id_institucion_prestataria;
+    @Column
+    private int id_biblioteca_prestadora;
+    @Column
+    private int id_institucion_prestadora;
+    @Column
+    private int id_estado;
+    @Column
+    private int id_terminos_envio;
+    @Column
+    private int id_item;
 
     public Peticion() {
-    }
-
-    public Peticion(int id_peticion, String libro, String edicion, String autor, String link, String ip, Date fecha_peticion, Date fecha_prestamo, Date fecha_devolucion, Prestatario rut_prestatario, bibliotecaModelo id_biblioteca_prestataria, bibliotecaModelo id_institucion_prestataria, bibliotecaModelo id_biblioteca_prestadora, bibliotecaModelo id_institucion_prestadora, estado id_estado, terminos_envio id_terminos_envio) {
-        this.id_peticion = id_peticion;
-        this.libro = libro;
-        this.edicion = edicion;
-        this.autor = autor;
-        this.link = link;
-        this.ip = ip;
-        this.fecha_peticion = fecha_peticion;
-        this.fecha_prestamo = fecha_prestamo;
-        this.fecha_devolucion = fecha_devolucion;
-        this.rut_prestatario = rut_prestatario;
-        this.id_biblioteca_prestataria = id_biblioteca_prestataria;
-        this.id_institucion_prestataria = id_institucion_prestataria;
-        this.id_biblioteca_prestadora = id_biblioteca_prestadora;
-        this.id_institucion_prestadora = id_institucion_prestadora;
-        this.id_estado = id_estado;
-        this.id_terminos_envio = id_terminos_envio;
     }
 
     public int getId_peticion() {
@@ -145,59 +118,90 @@ public class Peticion {
         this.fecha_devolucion = fecha_devolucion;
     }
 
-    public Prestatario getRut_prestatario() {
+    public String getRut_prestatario() {
         return rut_prestatario;
     }
 
-    public void setRut_prestatario(Prestatario rut_prestatario) {
+    public void setRut_prestatario(String rut_prestatario) {
         this.rut_prestatario = rut_prestatario;
     }
 
-    public bibliotecaModelo getId_biblioteca_prestataria() {
+    public int getId_biblioteca_prestataria() {
         return id_biblioteca_prestataria;
     }
 
-    public void setId_biblioteca_prestataria(bibliotecaModelo id_biblioteca_prestataria) {
+    public void setId_biblioteca_prestataria(int id_biblioteca_prestataria) {
         this.id_biblioteca_prestataria = id_biblioteca_prestataria;
     }
 
-    public bibliotecaModelo getId_institucion_prestataria() {
+    public int getId_institucion_prestataria() {
         return id_institucion_prestataria;
     }
 
-    public void setId_institucion_prestataria(bibliotecaModelo id_institucion_prestataria) {
+    public void setId_institucion_prestataria(int id_institucion_prestataria) {
         this.id_institucion_prestataria = id_institucion_prestataria;
     }
 
-    public bibliotecaModelo getId_biblioteca_prestadora() {
+    public int getId_biblioteca_prestadora() {
         return id_biblioteca_prestadora;
     }
 
-    public void setId_biblioteca_prestadora(bibliotecaModelo id_biblioteca_prestadora) {
+    public void setId_biblioteca_prestadora(int id_biblioteca_prestadora) {
         this.id_biblioteca_prestadora = id_biblioteca_prestadora;
     }
 
-    public bibliotecaModelo getId_institucion_prestadora() {
+    public int getId_institucion_prestadora() {
         return id_institucion_prestadora;
     }
 
-    public void setId_institucion_prestadora(bibliotecaModelo id_institucion_prestadora) {
+    public void setId_institucion_prestadora(int id_institucion_prestadora) {
         this.id_institucion_prestadora = id_institucion_prestadora;
     }
 
-    public estado getId_estado() {
+    public int getId_estado() {
         return id_estado;
     }
 
-    public void setId_estado(estado id_estado) {
+    public void setId_estado(int id_estado) {
         this.id_estado = id_estado;
     }
 
-    public terminos_envio getId_terminos_envio() {
+    public int getId_terminos_envio() {
         return id_terminos_envio;
     }
 
-    public void setId_terminos_envio(terminos_envio id_terminos_envio) {
+    public void setId_terminos_envio(int id_terminos_envio) {
         this.id_terminos_envio = id_terminos_envio;
     }
+
+    public int getId_item() {
+        return id_item;
+    }
+
+    public void setId_item(int id_item) {
+        this.id_item = id_item;
+    }
+
+    public Peticion(int id_peticion, String libro, String edicion, String autor, String link, String ip, Date fecha_peticion, Date fecha_prestamo, Date fecha_devolucion, String rut_prestatario, int id_biblioteca_prestataria, int id_institucion_prestataria, int id_biblioteca_prestadora, int id_institucion_prestadora, int id_estado, int id_terminos_envio, int id_item) {
+        this.id_peticion = id_peticion;
+        this.libro = libro;
+        this.edicion = edicion;
+        this.autor = autor;
+        this.link = link;
+        this.ip = ip;
+        this.fecha_peticion = fecha_peticion;
+        this.fecha_prestamo = fecha_prestamo;
+        this.fecha_devolucion = fecha_devolucion;
+        this.rut_prestatario = rut_prestatario;
+        this.id_biblioteca_prestataria = id_biblioteca_prestataria;
+        this.id_institucion_prestataria = id_institucion_prestataria;
+        this.id_biblioteca_prestadora = id_biblioteca_prestadora;
+        this.id_institucion_prestadora = id_institucion_prestadora;
+        this.id_estado = id_estado;
+        this.id_terminos_envio = id_terminos_envio;
+        this.id_item = id_item;
+    }
 }
+
+
+

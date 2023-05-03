@@ -41,7 +41,7 @@ public class vistaControlador {
     public ModelAndView nuevaPeticion(Peticion peticion){
         peticionControlador.savePeticion(peticion);
         //prestatarioControlador.savePrestatario(prestatario);
-        return new ModelAndView("redirect:/peticion/nueva");
+        return new ModelAndView("redirect:/peticiones");
     }
 
     @GetMapping(path = "peticiones")
