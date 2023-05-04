@@ -63,8 +63,10 @@
           </div>
           <div class="form-group">
             <label for="biblioteca">Biblioteca</label>
-            <select id="biblioteca" name="biblioteca" >
-              <option th:each="bib : ${bibliotecas}" th:value="${bib.id_biblioteca}" th:text="${bib.nombre_biblioteca}"></option>
+            <select id="biblioteca" name="biblioteca" th:field="*{id_biblioteca_prestataria}" >
+              <option th:each="bib : ${bibliotecas}"
+                      th:value="${bib.id_biblioteca}"
+                      th:text="${bib.nombre_biblioteca}"></option>
             </select>
           </div>
           <div class="form-group">

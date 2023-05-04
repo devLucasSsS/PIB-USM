@@ -4,15 +4,14 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "biblioteca")
-public class bibliotecaModelo {
+public class BibliotecaModelo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_biblioteca;
     @Column(length = 45)
     private String nombre_biblioteca;
-    @ManyToOne
-    @JoinColumn(name = "id_institucion")
-    private institucionModelo id_institucion;
+    @Column
+    private int id_institucion;
 
     public int getId_biblioteca() {
         return id_biblioteca;
@@ -30,12 +29,11 @@ public class bibliotecaModelo {
         this.nombre_biblioteca = nombre_biblioteca;
     }
 
-    public institucionModelo getId_institucion() {
+    public int getId_institucion() {
         return id_institucion;
     }
 
-    public void setId_institucion(institucionModelo id_institucion) {
+    public void setId_institucion(int id_institucion) {
         this.id_institucion = id_institucion;
     }
-
 }

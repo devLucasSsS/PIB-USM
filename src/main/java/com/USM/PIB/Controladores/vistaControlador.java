@@ -1,10 +1,10 @@
 package com.USM.PIB.Controladores;
 
-import com.USM.PIB.Modelos.bibliotecaModelo;
+import com.USM.PIB.Modelos.BibliotecaModelo;
 import com.USM.PIB.Modelos.institucionModelo;
 import com.USM.PIB.Modelos.Peticion;
 import com.USM.PIB.Modelos.Prestatario;
-
+import com.USM.PIB.Servicios.BibliotecaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,18 +20,20 @@ public class vistaControlador {
     @Autowired
     private com.USM.PIB.Servicios.institucionServicio institucionServicio;
     @Autowired
+    private BibliotecaServicio bibliotecaServicio;
+    @Autowired
     private PeticionControlador peticionControlador;
     @Autowired
     private PrestatarioControlador prestatarioControlador;
     @GetMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(){
         ArrayList<institucionModelo> institucion = institucionServicio.getInstituciones();
-
+        ArrayList<BibliotecaModelo> bibliotecas = bibliotecaServicio.getBibliotecas();
         return new ModelAndView("nuevoFormulario")
                 .addObject("peticion",new Peticion())
                 .addObject("prestatario", new Prestatario())
-                .addObject("institucion",institucion);
-                //.addObject("bibliotecas",bibliotecas);
+                .addObject("institucion",institucion)
+                .addObject("bibliotecas",bibliotecas);
     }
     @PostMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(Peticion peticion, Prestatario prestatario){

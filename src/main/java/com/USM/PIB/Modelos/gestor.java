@@ -15,7 +15,7 @@ public class gestor {
     private String contraseña;
     @ManyToOne
     @JoinColumn(name = "id_biblioteca")
-    private bibliotecaModelo id_biblioteca;
+    private BibliotecaModelo id_biblioteca;
 
     public String getRut_gestor() {
         return rut_gestor;
@@ -34,11 +34,11 @@ public class gestor {
         this.id_nivel = id_nivel;
     }
 
-    public bibliotecaModelo getId_biblioteca() {
+    public BibliotecaModelo getId_biblioteca() {
         return id_biblioteca;
     }
 
-    public void setId_biblioteca(bibliotecaModelo id_biblioteca) {
+    public void setId_biblioteca(BibliotecaModelo id_biblioteca) {
         this.id_biblioteca = id_biblioteca;
     }
 }
