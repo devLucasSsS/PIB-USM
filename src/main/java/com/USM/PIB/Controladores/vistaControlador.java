@@ -38,9 +38,9 @@ public class vistaControlador {
                 .addObject("bibliotecas",bibliotecas);
     }
     @PostMapping(path = "peticion/nueva")
-    public ModelAndView nuevaPeticion(Peticion peticion){
+    public ModelAndView nuevaPeticion(Peticion peticion, Prestatario prestatario){
         peticionControlador.savePeticion(peticion);
-        //prestatarioControlador.savePrestatario(prestatario);
+        prestatarioControlador.savePrestatario(prestatario);
         return new ModelAndView("redirect:/peticiones");
     }
 
