@@ -1,6 +1,7 @@
 package com.USM.PIB.Modelos;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -21,6 +22,7 @@ public class Peticion {
     @Column(length = 20)
     private String ip;
     @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha_peticion;
     @Column
     private Date fecha_prestamo;

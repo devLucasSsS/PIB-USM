@@ -17,15 +17,14 @@
 <body>
 
 <div th:insert="_fragments :: nav"></div>
-<!--<a th:object="${institucion}" th:field="*{nombre_institucion}"></a> -->
 <div class="container">
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
       <div class="form-container">
         <h2>Nueva Petición</h2>
         <form action="" method="post" th:object="${peticion}">
-          <input hidden="hidden" type="datetime-local" id="hora_local">
-          <input hidden="hidden" th:value="2" th:field="*{id_estado}">
+          <input type="date" hidden="hidden" id="hora_local" th:field="*{fecha_peticion}">
+          <input hidden="hidden" id="estado" th:field="*{id_estado}">
           <input type="text" hidden="hidden" id="ip" th:field="*{ip}">
           <div class="form-group">
             <label for="rut">Rut:</label>
@@ -58,14 +57,14 @@
           </div>
           <div class="form-group">
             <label for="institucion">Institucion</label>
-            <select id="institucion" name="institucion" th:field="*{id_institucion_prestataria}" >
+            <select id="institucion" name="institucion" th:field="*{id_institucion_prestataria}" onchange="getBibliotecas(this.value)" >
               <option th:each="inst : ${institucion}"  th:value="${inst.id_institucion}" th:text="${inst.nombre_institucion}"></option>
             </select>
           </div>
           <div class="form-group">
             <label for="biblioteca">Biblioteca</label>
-            <select id="biblioteca" name="biblioteca">
-              <option th:each="bib : ${bibliotecas}" th:value="${bib.id_biblioteca}" th:text="${bib.nombre_biblioteca}" ></option>
+            <select id="biblioteca" name="biblioteca" >
+              <option th:each="bib : ${bibliotecas}" th:value="${bib.id_biblioteca}" th:text="${bib.nombre_biblioteca}"></option>
             </select>
           </div>
           <div class="form-group">
@@ -85,14 +84,18 @@
 
 </div>
 <script>
+  function getBibliotecas(id_institucion){
+
+</script>
+<script>
+  estado = document.getElementById("estado");
+  estado.value = 0;
 </script>
 <script>
   hora_local = document.getElementById("hora_local");
-  //date = new Date().toLocaleString();
-  //dateformat= date.toISOString().slice(0,16);
-  date = new Date(); //.toLocaleString("es-CL", { timeZone: "America/Santiago" }).slice(0, -3);
-  hora_local.value = date.toISOString().slice(0,16);
-
+  date = new Date();
+  hora_local.value = date.toISOString().slice(0, 10);
+  document.write(hora_local.value);
 </script>
 <script>
   const ip = document.getElementById("ip");
@@ -112,22 +115,3 @@
 
 </body>
 </html>
-
-
-
-<!--<div class="form-group">
-  <label for="email">Correo electrónico:</label>
-  <input type="email" class="form-control" id="email" name="email" placeholder="Introduce tu correo electrónico"  required>
-</div>
-<div class="form-group">
-  <div class="form-group">
-    <label for="telefono">Teléfono:</label>
-    <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Introduce tu número de teléfono">
-  </div>
-  <div class="form-group">
-    <label for="mensaje">Mensaje:</label>
-    <textarea class="form-control" id="mensaje" name="mensaje" rows="4" placeholder="Introduce tu mensaje"></textarea>
-  </div>
-             </div>
-
-   -->
