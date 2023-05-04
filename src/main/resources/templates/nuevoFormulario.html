@@ -57,16 +57,14 @@
           </div>
           <div class="form-group">
             <label for="institucion">Institucion</label>
-            <select id="institucion" name="institucion" th:field="*{id_institucion_prestataria}" onchange="getBibliotecas(this.value)" >
+            <select id="institucion" name="institucion" th:field="*{id_institucion_prestataria}" onchange="ReloadBibliotecas(this.value)" >
               <option th:each="inst : ${institucion}"  th:value="${inst.id_institucion}" th:text="${inst.nombre_institucion}"></option>
             </select>
           </div>
           <div class="form-group">
             <label for="biblioteca">Biblioteca</label>
             <select id="biblioteca" name="biblioteca" th:field="*{id_biblioteca_prestataria}" >
-              <option th:each="bib : ${bibliotecas}"
-                      th:value="${bib.id_biblioteca}"
-                      th:text="${bib.nombre_biblioteca}"></option>
+
             </select>
           </div>
           <div class="form-group">
@@ -86,9 +84,22 @@
 
 </div>
 <script>
-  function getBibliotecas(id_institucion){
-
+  function ReloadBibliotecas(id){
+  $.ajax({
+    type: "GET",
+    url: "http://localhost:8080/bibliotecas/"+id,
+    success: function (data) {
+    $("#biblioteca").empty();
+    $("#biblioteca").append('<option value="">Seleccione una opción</option>');
+    $.each(data, function (index, value) {
+        console.log(value.nombre_biblioteca);
+        $("#biblioteca").append('<option th:value="'value.id_biblioteca'">' + value.nombre_biblioteca + '</option>');
+    });
+    }
+    });
+  }
 </script>
+
 <script>
   estado = document.getElementById("estado");
   estado.value = 0;
@@ -114,6 +125,19 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var combo1 = document.getElementById("institucion");
+      var newOption1 = document.createElement("option");
+      newOption1.value = "1";
+      newOption1.text = "Seleccione una Opción";
+      combo1.appendChild(newOption1);
+      var combo2 = document.getElementById("biblioteca");
+      var newOption2 = document.createElement("option");
+      newOption2.value = "1";
+      newOption2.text = "Seleccione una Opción";
+      combo2.appendChild(newOption2);
+    });
+</script>
 </body>
 </html>
