@@ -27,8 +27,8 @@
           <input hidden="hidden" id="estado" th:field="*{id_estado}">
           <input type="text" hidden="hidden" id="ip" th:field="*{ip}">
           <div class="form-group">
-            <label for="rut">Rut:</label>
-            <input type="text" class="form-control" id="rut" name="rut" placeholder="Introduce tu rut"  th:field="*{rut_prestatario}" pattern="[0-9kK]+" required>
+            <label for="rut">Rut (sin puntos ni guión):</label>
+            <input type="text" class="form-control" id="rut" name="rut" placeholder="Introduce tu rut"  th:field="*{rut_prestatario}" pattern="[0-9kK]+.{8,9}" required>
             <input hidden="hidden" th:object="${prestatario}" th:value="${peticion.rut_prestatario}">
           </div>
           <div class="form-group">
@@ -56,18 +56,18 @@
             <input type="text" class="form-control" id="link" name="link" placeholder="Introduce la direccion web del libro" th:field="*{link}"  required>
           </div>
           <div class="form-group">
-            <label for="institucion">Institucion Prestataria</label>
+            <label for="institucion">Institucion Prestataria (su institucion)</label>
             <select id="institucion" name="institucion" th:field="*{id_institucion_prestataria}" onchange="ReloadBibliotecas(this.value,'biblioteca')" >
               <option th:each="inst : ${institucion}"  th:value="${inst.id_institucion}" th:text="${inst.nombre_institucion}"></option>
             </select>
           </div>
           <div class="form-group">
-            <label for="biblioteca">Biblioteca Prestataria</label>
+            <label for="biblioteca">Biblioteca Prestataria (su bilbioteca)</label>
             <select id="biblioteca" name="biblioteca" th:field="*{id_biblioteca_prestataria}" >
             </select>
           </div>
           <div class="form-group">
-            <label for="institucion1">Institucion Prestadora</label>
+            <label for="institucion1">Institucion Prestadora </label>
             <select id="institucion1" name="institucion1" th:field="*{id_institucion_prestadora}" onchange="ReloadBibliotecas(this.value,'biblioteca1')" >
               <option th:each="inst : ${institucion}"  th:value="${inst.id_institucion}" th:text="${inst.nombre_institucion}"></option>
             </select>
@@ -152,7 +152,7 @@
       combo2.appendChild(newOption2);
     });
 </script>
-<script>
+    <script>
 		$('form').submit(function(event) {
 			event.preventDefault();
 			var formData = $(this).serialize();

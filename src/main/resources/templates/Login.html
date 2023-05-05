@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Custom CSS -->
+    <link th:href="@{/main.css}" rel="stylesheet" />
+    <!-- estilo propio -->
+</head>
+<body>
+<div th:insert="_fragments :: nav"></div><div th:insert="_fragments :: nav"></div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div class="form-container">
+                <h2>Login</h2>
+                <form action="post">
+                    <div class="form-group">
+                        <label> Rut </label>
+                        <input type="text" class="form-control" pattern="[0-9kK]+.{8,9}" required>
+                    </div>
+                    <div class="form-group">
+                        <label> Contraseña </label>
+                        <input type="password" class="form-control"  required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+		$('form').submit(function(event) {
+			event.preventDefault();
+			var formData = $(this).serialize();
+			$.ajax({
+				url: $(this).attr('action'),
+				type: $(this).attr('method'),
+				data: formData,
+				success: function(response) {
+					Swal.fire({
+					    timer: 2000,
+						title: 'Mensaje enviado',
+						icon: 'success',
+						confirmButtonText: 'OK'
+					}).then((result) => {
+						if (result.isConfirmed) {
+							location.reload();
+						}
+					});
+				},
+				error: function(response) {
+					Swal.fire({
+					    timer: 2000,
+						title: 'Error',
+						text: 'Ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.',
+						icon: 'error',
+						confirmButtonText: 'OK'
+					});
+				}
+			});
+		});
+	</script>
+</body>
+</html>
