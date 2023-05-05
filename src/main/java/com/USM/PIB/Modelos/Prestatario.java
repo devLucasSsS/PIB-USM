@@ -13,7 +13,7 @@ public class Prestatario {
     private String rut_prestatario;
     @Column(length = 45)
     private String nombre;
-    @Column(unique = true)
+    @Column()
     private String email;
 
     public Prestatario() {
