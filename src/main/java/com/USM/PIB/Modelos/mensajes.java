@@ -14,9 +14,8 @@ public class mensajes {
     private String mensaje;
     @Column
     private Date fecha_mensaje;
-    @ManyToOne
-    @JoinColumn(name = "rut_gestor")
-    private gestor rut_gestor;
+    @Column
+    private String rut_gestor;
     @ManyToOne(optional = true)
     @JoinColumn(name = "id_peticion")
     private Peticion id_peticion;
@@ -24,7 +23,15 @@ public class mensajes {
     public mensajes() {
     }
 
-    public mensajes(int id_mensaje, String mensaje, Date fecha_mensaje, gestor rut_gestor, Peticion id_peticion) {
+    public String getRut_gestor() {
+        return rut_gestor;
+    }
+
+    public void setRut_gestor(String rut_gestor) {
+        this.rut_gestor = rut_gestor;
+    }
+
+    public mensajes(int id_mensaje, String mensaje, Date fecha_mensaje, String rut_gestor, Peticion id_peticion) {
         this.id_mensaje = id_mensaje;
         this.mensaje = mensaje;
         this.fecha_mensaje = fecha_mensaje;
@@ -56,13 +63,7 @@ public class mensajes {
         this.fecha_mensaje = fecha_mensaje;
     }
 
-    public gestor getRut_usuario() {
-        return rut_gestor;
-    }
 
-    public void setRut_usuario(gestor rut_gestor) {
-        this.rut_gestor = rut_gestor;
-    }
 
     public Peticion getId_peticion() {
         return id_peticion;

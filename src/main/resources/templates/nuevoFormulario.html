@@ -78,13 +78,13 @@
             </select>
           </div>
           <div class="form-group">
-            <input type="radio" id="libro" name="seleccion" value="Libro">
+            <input type="radio" id="libro" name="seleccion" value="1" th:checked="${seleccion == 1}" th:field="*{id_item}" >
             <label for="libro">Libro</label>
-            <input type="radio" id="Documento" name="seleccion" value="Documento">
+            <input type="radio" id="Documento" name="seleccion" value="2" th:checked="${seleccion == 2}" th:field="*{id_item}" >
             <label for="Documento">Documento</label>
           </div>
 
-            <button type="submit" class="btn btn-primary">Enviar</button>
+            <button type="submit" id="enviar" class="btn btn-primary">Enviar</button>
         </form>
       </div>
     </div>
@@ -103,9 +103,6 @@
           $("#"+idSelect).append('<option value="">Seleccione una opción</option>');
           $.each(data, function (index, value) {
               $("#"+idSelect).append('<option value="' + value.id_biblioteca + '">' + value.nombre_biblioteca + '</option>');
-
-
-
           });
       }
    });
@@ -144,16 +141,22 @@
       var newOption1 = document.createElement("option");
       newOption1.value = "1";
       newOption1.text = "Seleccione una Opción";
-      combo1.appendChild(newOption1);
       var combo2 = document.getElementById("biblioteca");
       var newOption2 = document.createElement("option");
       newOption2.value = "1";
       newOption2.text = "Seleccione una Opción";
       combo2.appendChild(newOption2);
+      combo1.appendChild(newOption1);
+      var combo3 = document.getElementById("biblioteca1");
+      var newOption3 = document.createElement("option");
+      newOption3.value = "1";
+      newOption3.text = "Seleccione una Opción";
+      combo3.appendChild(newOption3);
     });
 </script>
     <script>
 		$('form').submit(function(event) {
+		document.getElementById("enviar").disabled = true;
 			event.preventDefault();
 			var formData = $(this).serialize();
 			$.ajax({

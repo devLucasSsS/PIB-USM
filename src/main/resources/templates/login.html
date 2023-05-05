@@ -14,21 +14,21 @@
     <!-- estilo propio -->
 </head>
 <body>
-<div th:insert="_fragments :: nav"></div><div th:insert="_fragments :: nav"></div>
+<div th:insert="_fragments :: nav"></div>
 
 <div class="container">
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
             <div class="form-container">
                 <h2>Login</h2>
-                <form action="post">
+                <form action="" method="post" th:object="${gestor}" >
                     <div class="form-group">
                         <label> Rut </label>
-                        <input type="text" class="form-control" pattern="[0-9kK]+.{8,9}" required>
+                        <input type="text" class="form-control" pattern="[0-9kK]+.{8,9}" th:field="*{rut_gestor}" required>
                     </div>
                     <div class="form-group">
-                        <label> Contraseña </label>
-                        <input type="password" class="form-control"  required>
+                        <label> Contrasea </label>
+                        <input type="password" class="form-control" th:field="*{password}" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Enviar</button>
                 </form>
@@ -36,37 +36,6 @@
         </div>
     </div>
 </div>
-<script>
-		$('form').submit(function(event) {
-			event.preventDefault();
-			var formData = $(this).serialize();
-			$.ajax({
-				url: $(this).attr('action'),
-				type: $(this).attr('method'),
-				data: formData,
-				success: function(response) {
-					Swal.fire({
-					    timer: 2000,
-						title: 'Mensaje enviado',
-						icon: 'success',
-						confirmButtonText: 'OK'
-					}).then((result) => {
-						if (result.isConfirmed) {
-							location.reload();
-						}
-					});
-				},
-				error: function(response) {
-					Swal.fire({
-					    timer: 2000,
-						title: 'Error',
-						text: 'Ha ocurrido un error. Por favor, inténtalo de nuevo más tarde.',
-						icon: 'error',
-						confirmButtonText: 'OK'
-					});
-				}
-			});
-		});
-	</script>
+
 </body>
 </html>

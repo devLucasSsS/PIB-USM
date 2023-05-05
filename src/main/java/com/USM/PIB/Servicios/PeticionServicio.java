@@ -19,4 +19,10 @@ public class PeticionServicio {
     public ArrayList<Peticion> getPeticion() {
     return (ArrayList<Peticion>) peticionRepositorio.findAll();
     }
+    public ArrayList<Peticion> getPeticionByBiblioteca(int id) {
+    return (ArrayList<Peticion>) peticionRepositorio.findByBiblioteca(id);
+    }
+
+
+
 }

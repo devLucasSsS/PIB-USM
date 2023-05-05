@@ -1,14 +1,12 @@
 package com.USM.PIB.Controladores;
 
+import com.USM.PIB.Modelos.BibliotecaModelo;
 import com.USM.PIB.Modelos.Peticion;
 import com.USM.PIB.Servicios.PeticionServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -25,5 +23,9 @@ public class PeticionControlador {
 
     public ArrayList<Peticion> getPeticiones() {
         return this.peticionServicio.getPeticion();
+    }
+    @GetMapping(path = "/{id}")
+    public ArrayList<Peticion> getPeticionByBibliotecas(@PathVariable("id") int id){
+        return peticionServicio.getPeticionByBiblioteca(id);
     }
 }
