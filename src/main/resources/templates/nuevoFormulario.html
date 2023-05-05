@@ -28,7 +28,7 @@
           <input type="text" hidden="hidden" id="ip" th:field="*{ip}">
           <div class="form-group">
             <label for="rut">Rut:</label>
-            <input type="text" class="form-control" id="rut" name="rut" placeholder="Introduce tu rut"  th:field="*{rut_prestatario}" required>
+            <input type="text" class="form-control" id="rut" name="rut" placeholder="Introduce tu rut"  th:field="*{rut_prestatario}" pattern="[0-9kK]+" required>
             <input hidden="hidden" th:object="${prestatario}" th:value="${peticion.rut_prestatario}">
           </div>
           <div class="form-group">
