@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Contacto</title>
+  <title>Peticiones</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Bootstrap CSS -->
@@ -14,15 +14,20 @@
   <link th:href="@{/main.css}" rel="stylesheet" />
   <!-- estilo propio -->
   <script>
-  $.ajax({
-  url: "http://localhost:8080/gestor",
-  type: "GET",
-  dataType: "json",
-  success: function(data) {
-    console.log(data);
-  }
-});
-</script>
+    var datos;
+    $.ajax({
+    url: "http://localhost:8080/gestor",
+    type: "GET",
+    dataType: "json",
+    success: function(data) {
+      datos = data;
+    },
+    error: function(error){
+      window.location.href='/login'
+    }
+  });
+
+  </script>
 </head>
 <body>
 

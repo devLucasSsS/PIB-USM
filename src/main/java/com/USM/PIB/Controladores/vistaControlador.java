@@ -57,9 +57,15 @@ public class vistaControlador {
     }
 
     @GetMapping(path = "peticiones")
-    public ModelAndView peticiones(){
-        ArrayList<Peticion> pet = peticionControlador.getPeticiones();
-        return new ModelAndView("formularios").addObject("peticiones",pet);
+    public ModelAndView peticiones(HttpSession session){
+        GestorModelo data = gestorControlador.getDataSession(session);
+        if(data!=null){
+            ArrayList<Peticion> pet = peticionControlador.getPeticionByBibliotecas(data.getId_biblioteca());
+            return new ModelAndView("formularios").addObject("peticiones",pet);
+        }else{
+            return new ModelAndView("redirect:/login");
+        }
+
     }
     @GetMapping(path = "login")
     public ModelAndView login(){
