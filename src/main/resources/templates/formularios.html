@@ -26,7 +26,7 @@
 </head>
 <body>
 
-<div th:replace="fragments/navUser1 :: nav"></div>
+<div th:replace="fragments/nav1 :: navUser1"></div>
 
 <div class="container">
   <h1>Peticiones Pendientes</h1>
@@ -39,6 +39,7 @@
         <th>Edicion</th>
         <th>Libro</th>
         <th>Rut</th>
+        <th>email</th>
         <th>Acciones</th>
       </tr>
       </thead>
@@ -47,11 +48,12 @@
         <td th:text="*{id_peticion}"></td>
         <td th:text="*{autor}"></td>
         <td th:text="*{edicion}"></td>
-        <td th:text="*{libro}"></td>
+        <td><a th:href="*{link}" th:text="*{libro}"></a></td>
         <td th:text="*{rut_prestatario}"></td>
+        <td> .</td>
         <td>
-          <!-- <a th:href="@{/formularios/editar/{id}(id=*{id})}">Editar</a>
-          <a th:href="@{/formularios/eliminar/{id}(id=*{id})}">Eliminar</a> -->
+           <a>Editar</a>
+          <a>Eliminar</a>
         </td>
       </tr>
       </tbody>
