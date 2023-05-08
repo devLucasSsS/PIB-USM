@@ -83,4 +83,9 @@ public class vistaControlador {
 
         }
     }
+    @GetMapping(path = "logout")
+    public ModelAndView logout(HttpSession session){
+        session.removeAttribute("gestor");
+        return new ModelAndView("redirect:/login");
+    }
 }
