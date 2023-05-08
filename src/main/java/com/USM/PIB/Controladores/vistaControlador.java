@@ -3,6 +3,7 @@ package com.USM.PIB.Controladores;
 import com.USM.PIB.Modelos.*;
 import com.USM.PIB.Servicios.BibliotecaServicio;
 import com.USM.PIB.Servicios.GestorServicio;
+import com.USM.PIB.Servicios.Tipo_itemServicio;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +32,22 @@ public class vistaControlador {
     private GestorControlador gestorControlador;
     @Autowired
     private GestorServicio gestorServicio;
+
+    @Autowired
+    private Tipo_itemServicio tipoItemServicio;
+
     @GetMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(){
         ArrayList<institucionModelo> institucion = institucionServicio.getInstituciones();
         ArrayList<BibliotecaModelo> bibliotecas = bibliotecaServicio.getBibliotecas();
+        ArrayList<Tipo_item> tipo_item = tipoItemServicio.getTiposItem();
         return new ModelAndView("nuevoFormulario")
                 .addObject("peticion",new Peticion())
                 .addObject("prestatario", new Prestatario())
                 .addObject("institucion",institucion)
-                .addObject("bibliotecas",bibliotecas);
+                .addObject("bibliotecas",bibliotecas)
+                .addObject("tipo_item" ,tipo_item);
+
     }
     @PostMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(Peticion peticion, Prestatario prestatario){

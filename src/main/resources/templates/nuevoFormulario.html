@@ -23,6 +23,7 @@
       <div class="form-container">
         <h2>Nueva Petición</h2>
         <form action="" method="post" th:object="${peticion}">
+          <div class="form-container2">
           <input type="date" hidden="hidden" id="hora_local" th:field="*{fecha_peticion}">
           <input hidden="hidden" id="estado" th:field="*{id_estado}">
           <input type="text" hidden="hidden" id="ip" th:field="*{ip}">
@@ -39,6 +40,8 @@
             <label for="email">Correo:</label>
             <input type="text" class="form-control" id="email" name="email" placeholder="Introduce tu correo electronico" th:object="${prestatario}" th:field="*{email}" required>
           </div>
+          </div>
+          <div class="form-container2">
           <div class="form-group">
             <label for="titulo">Titulo:</label>
             <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Introduce el titulo del libro" th:field="*{libro}" required>
@@ -55,6 +58,14 @@
             <label for="link">URL del libro:</label>
             <input type="text" class="form-control" id="link" name="link" placeholder="Introduce la direccion web del libro" th:field="*{link}"  required>
           </div>
+          <div class="form-group">
+            <label for="Tipo_Item">Tipo documento</label>
+            <select id="Tipo_Item" name="Tipo_Item" th:field="*{id_item}" >
+              <option th:each="tipo : ${tipo_item}"  th:value="${tipo.id_item}" th:text="${tipo.nombre_item}"></option>
+            </select>
+          </div>
+          </div>
+          <div class="form-container2">
           <div class="form-group">
             <label for="institucion">Institucion Prestataria (su institucion)</label>
             <select id="institucion" name="institucion" th:field="*{id_institucion_prestataria}" onchange="ReloadBibliotecas(this.value,'biblioteca')" >
@@ -77,13 +88,7 @@
             <select id="biblioteca1" name="biblioteca" th:field="*{id_biblioteca_prestadora}" >
             </select>
           </div>
-          <div class="form-group">
-            <input type="radio" id="libro" name="seleccion" value="1" th:checked="${seleccion == 1}" th:field="*{id_item}" >
-            <label for="libro">Libro</label>
-            <input type="radio" id="Documento" name="seleccion" value="2" th:checked="${seleccion == 2}" th:field="*{id_item}" >
-            <label for="Documento">Documento</label>
           </div>
-
             <button type="submit" id="enviar" class="btn btn-primary">Enviar</button>
         </form>
       </div>

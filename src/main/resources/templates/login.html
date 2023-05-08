@@ -12,6 +12,10 @@
     <!-- Custom CSS -->
     <link th:href="@{/main.css}" rel="stylesheet" />
     <!-- estilo propio -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
 <div th:insert="_fragments :: nav"></div>
@@ -27,7 +31,7 @@
                         <input type="text" class="form-control" pattern="[0-9kK]+.{8,9}" th:field="*{rut_gestor}" required>
                     </div>
                     <div class="form-group">
-                        <label> Contrasea </label>
+                        <label> Contraseña </label>
                         <input type="password" class="form-control" th:field="*{password}" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Enviar</button>
