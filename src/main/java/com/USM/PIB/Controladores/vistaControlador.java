@@ -40,7 +40,7 @@ public class vistaControlador {
     public ModelAndView nuevaPeticion(){
         ArrayList<institucionModelo> institucion = institucionServicio.getInstituciones();
         ArrayList<BibliotecaModelo> bibliotecas = bibliotecaServicio.getBibliotecas();
-        ArrayList<Tipo_item> tipo_item = tipoItemServicio.getTiposItem();
+        ArrayList<Tipo_itemModelo> tipo_item = tipoItemServicio.getTiposItem();
         return new ModelAndView("nuevoFormulario")
                 .addObject("peticion",new Peticion())
                 .addObject("prestatario", new Prestatario())
@@ -66,12 +66,11 @@ public class vistaControlador {
         return new ModelAndView("login").addObject("gestor",new GestorModelo());
     }
     @PostMapping(path = "login")
-    public ModelAndView login(GestorModelo gestor, HttpServletRequest request){
+    public ModelAndView login(GestorModelo gestor, HttpSession session){
         GestorModelo response = gestorServicio.login(gestor.getRut_gestor(),gestor.getPassword());
         if (response!=null){
             GestorModelo g = gestorServicio.getData(gestor.getRut_gestor());
-            HttpSession session = request.getSession();
-            request.setAttribute("gestor",g);
+            session.setAttribute("gestor",g);
             return new ModelAndView("redirect:/peticiones");
         }else{
             return new ModelAndView("redirect:/login");

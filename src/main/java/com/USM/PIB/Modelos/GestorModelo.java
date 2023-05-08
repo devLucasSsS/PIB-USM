@@ -9,7 +9,7 @@ public class GestorModelo {
     @Column(length = 13)
     private String rut_gestor;
     @Column
-    private String id_nivel;
+    private int id_nivel;
     @Column
     private String password;
     @Column
@@ -28,11 +28,11 @@ public class GestorModelo {
     }
 
 
-    public String getId_nivel() {
+    public int getId_nivel() {
         return id_nivel;
     }
 
-    public void setId_nivel(String id_nivel) {
+    public void setId_nivel(int id_nivel) {
         this.id_nivel = id_nivel;
     }
 

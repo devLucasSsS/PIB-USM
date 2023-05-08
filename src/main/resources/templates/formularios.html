@@ -14,16 +14,15 @@
   <link th:href="@{/main.css}" rel="stylesheet" />
   <!-- estilo propio -->
   <script>
-    $.ajax({
+  $.ajax({
   url: "http://localhost:8080/gestor",
   type: "GET",
   dataType: "json",
   success: function(data) {
-    var g = data;
+    console.log(data);
   }
 });
-  document.write(g);
-  </script>
+</script>
 </head>
 <body>
 

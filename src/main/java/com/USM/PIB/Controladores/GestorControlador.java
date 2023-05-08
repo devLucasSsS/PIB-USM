@@ -19,6 +19,10 @@ public class GestorControlador {
     @GetMapping()
     public GestorModelo getDataSession(HttpSession session){
         GestorModelo dat = (GestorModelo) session.getAttribute("gestor");
-        return dat;
+        GestorModelo g = new GestorModelo();
+        g.setRut_gestor(dat.getRut_gestor());
+        g.setId_biblioteca(dat.getId_biblioteca());
+        g.setId_nivel(dat.getId_nivel());
+        return g;
     }
 }
