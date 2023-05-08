@@ -62,7 +62,7 @@ public class vistaControlador {
         GestorModelo response = gestorServicio.login(gestor.getRut_gestor(),gestor.getPassword());
         if (response!=null){
             GestorModelo g = gestorServicio.getData(gestor.getRut_gestor());
-            HttpSession sesion = request.getSession();
+            HttpSession session = request.getSession();
             request.setAttribute("gestor",g);
             return new ModelAndView("redirect:/peticiones");
         }else{

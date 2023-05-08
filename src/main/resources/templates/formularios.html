@@ -13,6 +13,17 @@
   <!-- Custom CSS -->
   <link th:href="@{/main.css}" rel="stylesheet" />
   <!-- estilo propio -->
+  <script>
+    $.ajax({
+  url: "http://localhost:8080/gestor",
+  type: "GET",
+  dataType: "json",
+  success: function(data) {
+    var g = data;
+  }
+});
+  document.write(g);
+  </script>
 </head>
 <body>
 
