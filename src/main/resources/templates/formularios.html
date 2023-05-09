@@ -7,7 +7,10 @@
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script
+          src="https://code.jquery.com/jquery-3.6.4.js"
+          integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+          crossorigin="anonymous"></script>
   <!-- Bootstrap JS -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <!-- Custom CSS -->
@@ -29,7 +32,6 @@
       window.location.href='/login'
     }
   });
-
   </script>
 </head>
 <body>
@@ -47,7 +49,8 @@
         <th>Edicion</th>
         <th>Libro</th>
         <th>Rut</th>
-        <th>email</th>
+        <th>Email</th>
+        <th>Estado</th>
         <th>Acciones</th>
       </tr>
       </thead>
@@ -57,8 +60,9 @@
         <td th:text="*{autor}"></td>
         <td th:text="*{edicion}"></td>
         <td><a th:href="*{link}" th:text="*{libro}" Target="_blank"></a></td>
-        <td th:text="*{rut_prestatario}"></td>
-        <td> .</td>
+        <td th:text="*{rut_prestatario}"></button></td>
+        <td th:id="'correo-' +*{rut_prestatario}"></td>
+        <td  th:id="'estado-'+*{id_estado}''"></button> </td>
         <td>
           <button type="button" class="btn btn-primary"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
             <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
@@ -74,6 +78,25 @@
     </table>
   </div>
 </div>
+<script>
+  $(document).ready(function() {
+   $('td[id^="estado-"]').each(function() {
+      var id = $(this).attr('id').split('-')[1];
+      $.ajax({
+         url: 'http://localhost:8080/estado/'+id,
+         type: 'GET',
+         success: function (data) {
+            $('#estado-' + id).text(data.estado);
+            //console.log(data.);
+         },
+         error: function () {
+            alert('Ha ocurrido un error');
+         }
+      });
+   });
+});
+</script>
+
 <div class="container">
   <h1>Peticiones Cerradas</h1>
   <div class="table-wrapper-scroll-y my-custom-scrollbar">
@@ -103,7 +126,6 @@
   </div>
 </div>
 <!-- Scripts de Bootstrap -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
         integrity="sha384-g+tH1lUhLj0c6PjLsoQudQLZ/Qptdli1ET62KjxytV2vzjLwW6NHYU6onN05V4B4"
         crossorigin="anonymous"></script>

@@ -52,7 +52,7 @@ public class vistaControlador {
     @PostMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(Peticion peticion, Prestatario prestatario){
         peticionControlador.savePeticion(peticion);
-        prestatarioControlador.savePrestatario(prestatario);
+        //prestatarioControlador.savePrestatario(prestatario);
         return new ModelAndView("redirect:/peticiones");
     }
 

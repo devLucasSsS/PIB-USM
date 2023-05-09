@@ -14,4 +14,8 @@ public class PrestatarioServicio {
     public Prestatario savePrestatario(Prestatario prestatario){
         return prestatarioRepositorio.save(prestatario);
     }
+
+    public String getEmailByRut(String rut) {
+        return prestatarioRepositorio.getEmailByRut(rut);
+    }
 }

@@ -4,17 +4,17 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "estado")
-public class estado {
+public class EstadoModelo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_estado;
     @Column(name = "estado",length = 45)
     private String estado;
 
-    public estado() {
+    public EstadoModelo() {
     }
 
-    public estado(int id_estado, String estado) {
+    public EstadoModelo(int id_estado, String estado) {
         this.id_estado = id_estado;
         this.estado = estado;
     }
