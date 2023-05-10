@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Peticion</title>
+</head>
+<body>
+    <input type="text" th:field="${peticion.id_estado}">
+<p th:object="${peticion}"></p>
+  <!--<div th:if="${peticion.id_estado  == 1}">
+    <input type="text">
+      <label for="ValUsuario">El usuario solicitante existe?</label>
+    <input type="Radio" id="ValUsuario">
+      <label for="VerStock"> Hay Stock disponible?</label>
+    <input type="Radio" id="VerStock">
+
+  </div>-->
+    <h1>VALIDACIÓN</h1>
+</body>
+</html>

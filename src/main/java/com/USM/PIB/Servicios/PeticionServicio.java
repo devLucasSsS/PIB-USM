@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class PeticionServicio {
@@ -19,8 +20,15 @@ public class PeticionServicio {
     public ArrayList<Peticion> getPeticion() {
     return (ArrayList<Peticion>) peticionRepositorio.findAll();
     }
-    public ArrayList<Peticion> getPeticionByBiblioteca(int id) {
-    return (ArrayList<Peticion>) peticionRepositorio.findByBiblioteca(id);
+
+    public Optional<Peticion> getPeticionById(int id){
+        return peticionRepositorio.findById(id);
+    }
+    public ArrayList<Peticion> getPeticionByBibliotecaPrestataria(int id) {
+    return (ArrayList<Peticion>) peticionRepositorio.findByBibliotecaPrestataria(id);
+    }
+    public ArrayList<Peticion> getPeticionByBibliotecaPrestadora(int id) {
+    return (ArrayList<Peticion>) peticionRepositorio.findByBibliotecaPrestadora(id);
     }
 
 

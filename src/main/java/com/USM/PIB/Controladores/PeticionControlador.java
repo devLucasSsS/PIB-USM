@@ -1,6 +1,5 @@
 package com.USM.PIB.Controladores;
 
-import com.USM.PIB.Modelos.BibliotecaModelo;
 import com.USM.PIB.Modelos.Peticion;
 import com.USM.PIB.Servicios.PeticionServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/peticion")
@@ -24,8 +24,16 @@ public class PeticionControlador {
     public ArrayList<Peticion> getPeticiones() {
         return this.peticionServicio.getPeticion();
     }
-    @GetMapping(path = "/{id}")
-    public ArrayList<Peticion> getPeticionByBibliotecas(@PathVariable("id") int id){
-        return peticionServicio.getPeticionByBiblioteca(id);
+
+    public Optional<Peticion> getPeticionById(@PathVariable("id") int id){
+        return peticionServicio.getPeticionById(id);
+    }
+    @GetMapping(path = "/prestataria/{id}")
+    public ArrayList<Peticion> getPeticionByBibliotecasPrestataria(@PathVariable("id") int id){
+        return peticionServicio.getPeticionByBibliotecaPrestataria(id);
+    }
+    @GetMapping(path = "/prestadora/{id}")
+    public ArrayList<Peticion> getPeticionByBibliotecasPrestadora(@PathVariable("id") int id){
+        return peticionServicio.getPeticionByBibliotecaPrestadora(id);
     }
 }

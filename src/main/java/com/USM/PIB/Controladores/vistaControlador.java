@@ -9,13 +9,11 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/")
@@ -41,13 +39,15 @@ public class vistaControlador {
         ArrayList<institucionModelo> institucion = institucionServicio.getInstituciones();
         ArrayList<BibliotecaModelo> bibliotecas = bibliotecaServicio.getBibliotecas();
         ArrayList<Tipo_itemModelo> tipo_item = tipoItemServicio.getTiposItem();
+        GestorModelo nivel = new GestorModelo();
         return new ModelAndView("nuevoFormulario")
                 .addObject("peticion",new Peticion())
                 .addObject("prestatario", new Prestatario())
                 .addObject("institucion",institucion)
                 .addObject("bibliotecas",bibliotecas)
                 .addObject("tipo_item" ,tipo_item)
-                .addObject("nivel",new GestorModelo());
+                .addObject("nivel",nivel)
+                .addObject("miObjeto");
     }
     @PostMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(Peticion peticion, Prestatario prestatario){
@@ -55,13 +55,19 @@ public class vistaControlador {
         //prestatarioControlador.savePrestatario(prestatario);
         return new ModelAndView("redirect:/peticiones");
     }
-
+    @GetMapping(path = "peticion/{id}")
+    public ModelAndView editarPeticion(@PathVariable("id") int id){
+        Optional<Peticion> pet = peticionControlador.getPeticionById(id);
+        return new ModelAndView("EditarPeticion")
+                .addObject("peticion",pet);
+    }
     @GetMapping(path = "peticiones")
     public ModelAndView peticiones(HttpSession session){
         GestorModelo data = gestorControlador.getDataSession(session);
         if(data!=null){
-            ArrayList<Peticion> pet = peticionControlador.getPeticionByBibliotecas(data.getId_biblioteca());
-            return new ModelAndView("formularios").addObject("peticiones",pet);
+            ArrayList<Peticion> PetPrestatarias = peticionControlador.getPeticionByBibliotecasPrestataria(data.getId_biblioteca());
+            ArrayList<Peticion> PetPrestadoras = peticionControlador.getPeticionByBibliotecasPrestadora(data.getId_biblioteca());
+            return new ModelAndView("formularios").addObject("peticionesEntrantes",PetPrestatarias).addObject("peticionesSalientes",PetPrestadoras);
         }else{
             return new ModelAndView("redirect:/login");
         }
