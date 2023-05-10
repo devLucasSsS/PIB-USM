@@ -17,29 +17,81 @@
   <link th:href="@{/main.css}" rel="stylesheet" />
   <!-- estilo propio -->
 
-
-
-  <script>
-    var datos;
-    $.ajax({
-    url: "http://localhost:8080/gestor",
-    type: "GET",
-    dataType: "json",
-    success: function(data) {
-      datos = data;
-    },
-    error: function(error){
-      window.location.href='/login'
-    }
-  });
-  </script>
 </head>
 <body>
+<script th:inline="javascript">
+  function obtenerNivel() {
+    return new Promise(function(resolve, reject) {
+      var nivel = { id_nivel: null };
+      $.ajax({
+        url: "http://localhost:8080/gestor",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+          nivel.id_nivel = data.id_nivel;
+          resolve(nivel);
+        },
+        error: function(error) {
+          reject(error);
+        },
+      });
+    });
+  }
+</script>
 
-<div th:replace="fragments/nav1 :: navUser1"></div>
+<script>
+  obtenerNivel()
+    .then(function(nivel) {
+      console.log(nivel.id_nivel, typeof nivel.id_nive);
+      document.getElementById("nivel").textContent = nivel.id_nivel;
 
+      return nivel.id_nivel;
+    })
+    .then(function(opcion) {
+      document.getElementById("opcionSeleccionada").textContent = opcion;
+      console.log(opcion, typeof opcion);
+      document.getElementById("opcion1").style.display = "none";
+      document.getElementById("opcion2").style.display = "none";
+      document.getElementById("opcion3").style.display = "none";
+
+      switch (opcion) {
+        case 1:
+          document.getElementById("opcion1").style.display = "block";
+          break;
+        case 2:
+          document.getElementById("opcion2").style.display = "block";
+          break;
+        case 3:
+          document.getElementById("opcion3").style.display = "block";
+          break;
+        default:
+          break;
+      }
+    })
+    .catch(function(error) {
+      console.error(error);
+    });
+</script>
+
+<p id="nivel" hidden="hidden"> </p>
+
+<div>
+  <p id="opcionSeleccionada" style="display: none;" ></p>
+
+  <div id="opcion1" style="display: none;">
+    <div th:insert="fragments/nav1 :: navUser1"></div>
+  </div>
+  <div id="opcion2" style="display: none;">
+    <div th:insert="fragments/nav2 :: navUser2"></div>
+  </div>
+  <div id="opcion3" style="display: none;">
+    <div th:insert="fragments/nav2 :: navUser2" ></div>
+  </div>
+</div>
 <div class="container">
   <h1>Peticiones Pendientes</h1>
+</div>
+
   <div class="table-wrapper-scroll-y my-custom-scrollbar">
     <table class="table table-bordered table-striped mb-0">
       <thead>
@@ -62,7 +114,7 @@
         <td><a th:href="*{link}" th:text="*{libro}" Target="_blank"></a></td>
         <td th:text="*{rut_prestatario}"></button></td>
         <td th:id="'correo-' +*{rut_prestatario}"></td>
-        <td  th:id="'estado-'+*{id_estado}''"></button> </td>
+        <td  th:id="'estado-'+*{id_estado}"></button> </td>
         <td>
           <button type="button" class="btn btn-primary"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
             <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>

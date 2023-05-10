@@ -46,8 +46,8 @@ public class vistaControlador {
                 .addObject("prestatario", new Prestatario())
                 .addObject("institucion",institucion)
                 .addObject("bibliotecas",bibliotecas)
-                .addObject("tipo_item" ,tipo_item);
-
+                .addObject("tipo_item" ,tipo_item)
+                .addObject("nivel",new GestorModelo());
     }
     @PostMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(Peticion peticion, Prestatario prestatario){
