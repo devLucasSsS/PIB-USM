@@ -36,4 +36,9 @@ public class PeticionControlador {
     public ArrayList<Peticion> getPeticionByBibliotecasPrestadora(@PathVariable("id") int id){
         return peticionServicio.getPeticionByBibliotecaPrestadora(id);
     }
+    @PutMapping(path = "/{id}/{e}")
+    public Peticion updateEstadoPeticion(@PathVariable("id")int id, @PathVariable("e")int e){
+        return peticionServicio.updateEstadoPeticion(id,e);
+    }
+
 }

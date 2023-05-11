@@ -3,11 +3,12 @@ package com.USM.PIB.Controladores;
 import com.USM.PIB.Modelos.*;
 import com.USM.PIB.Servicios.BibliotecaServicio;
 import com.USM.PIB.Servicios.GestorServicio;
+import com.USM.PIB.Servicios.PeticionServicio;
 import com.USM.PIB.Servicios.Tipo_itemServicio;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,9 +31,10 @@ public class vistaControlador {
     private GestorControlador gestorControlador;
     @Autowired
     private GestorServicio gestorServicio;
-
     @Autowired
     private Tipo_itemServicio tipoItemServicio;
+    @Autowired
+    private PeticionServicio peticionServicio;
 
     @GetMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(){
@@ -67,7 +69,7 @@ public class vistaControlador {
         if(data!=null){
             ArrayList<Peticion> PetPrestatarias = peticionControlador.getPeticionByBibliotecasPrestataria(data.getId_biblioteca());
             ArrayList<Peticion> PetPrestadoras = peticionControlador.getPeticionByBibliotecasPrestadora(data.getId_biblioteca());
-            return new ModelAndView("formularios").addObject("peticionesEntrantes",PetPrestatarias).addObject("peticionesSalientes",PetPrestadoras);
+            return new ModelAndView("formularios").addObject("peticionesEntrantes",PetPrestadoras).addObject("peticionesSalientes",PetPrestatarias);
         }else{
             return new ModelAndView("redirect:/login");
         }

@@ -30,7 +30,10 @@ public class PeticionServicio {
     public ArrayList<Peticion> getPeticionByBibliotecaPrestadora(int id) {
     return (ArrayList<Peticion>) peticionRepositorio.findByBibliotecaPrestadora(id);
     }
+    public Peticion updateEstadoPeticion(int id, int e) {
+        Peticion pet = peticionRepositorio.getById(id);
+        pet.setId_estado(e);
+        return peticionRepositorio.save(pet);
 
-
-
+    }
 }

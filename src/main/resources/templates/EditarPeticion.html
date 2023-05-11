@@ -3,18 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <title>Peticion</title>
+    <script
+            src="https://code.jquery.com/jquery-3.6.4.js"
+            integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+            crossorigin="anonymous"></script>
 </head>
 <body>
-    <input type="text" th:field="${peticion.id_estado}">
 <p th:object="${peticion}"></p>
-  <!--<div th:if="${peticion.id_estado  == 1}">
-    <input type="text">
-      <label for="ValUsuario">El usuario solicitante existe?</label>
-    <input type="Radio" id="ValUsuario">
-      <label for="VerStock"> Hay Stock disponible?</label>
-    <input type="Radio" id="VerStock">
-
-  </div>-->
+  <div th:if="${peticion.isPresent()}">
+      <div th:if="${peticion.get().id_estado == 1}">
+          <form id="form1">
+              <label>El usuario solicitante existe?</label>
+              <input type="radio" id="opcion1U" name="usuario" value="1">
+              <label for="opcion1U">Si</label>
+              <input type="radio" id="opcion2U" name="usuario" value="0">
+              <label for="opcion2U">No</label><br>
+              <button type="button" onclick="Enviar(1)">Enviar</button>
+          </form>
+      </div>
+      <div th:if="${peticion.get().id_estado == 3}">
+          <form id="form2">
+              <label>Hay stock vigente?</label>
+              <input type="radio" id="opcion1S" name="stock" value="1">
+              <label for="opcion1S">Si</label>
+              <input type="radio" id="opcion2S" name="stock" value="0">
+              <label for="opcion2S">No</label>
+              <button type="button" onclick="Enviar(2)">Enviar</button>
+          </form>
+      </div>
+  </div>
+  <div id="Terminos" style="display: none;">
+    <a>HOLA</a>
+  </div>
     <h1>VALIDACIÓN</h1>
+    <div style="background-color:red">
+        <h1>MENSAJES</h1>
+
+    </div>
+<!--<script>
+  const opciones = document.getElementsByName('usuario');
+      opciones.forEach(opcion => {
+        opcion.addEventListener('change', function() {
+          if (this.checked) {
+            const valorSeleccionado = this.value;
+            var div = document.getElementById("pasoUsuario");
+            if(valorSeleccionado == 1){
+                div.style.display = "block";
+            }else{
+                div.style.display = "none";
+            }
+          }
+        });
+      });
+</script>-->
+<script>
+  function Enviar(form) {
+    var url = window.location.href;
+    var id = url.substring(url.lastIndexOf('/') + 1);
+    id = parseInt(id);
+    if(form == 1){
+        const form = document.getElementById("form1");
+        const ValUsuario = form.elements["usuario"].value;
+        //const ValStock = form.elements["stock"].value;
+        if(ValUsuario == 0){
+            //ENVIAR ESTADO 2
+            $.ajax({
+                 url: 'http://localhost:8080/peticion/'+id+'/'+2,
+                 type: 'PUT',
+                 success: function (data) {
+                    window.location.href = "http://localhost:8080/peticiones";
+                 },
+                 error: function () {
+                    alert('Ha ocurrido un error');
+                 }
+            });
+        }else{
+            //ENVIAR ESTADO 3
+            $.ajax({
+             url: 'http://localhost:8080/peticion/'+id+'/'+3,
+             type: 'PUT',
+             success: function (data) {
+                window.location.href = "http://localhost:8080/peticiones";
+             },
+             error: function () {
+                alert('Ha ocurrido un error');
+             }
+          });
+        }
+    }else{
+        const form = document.getElementById("form2");
+        const ValStock = form.elements["stock"].value;
+        if(ValStock == 0){
+            //ENVIAR ESTADO 8
+            $.ajax({
+                 url: 'http://localhost:8080/peticion/'+id+'/'+8,
+                 type: 'PUT',
+                 success: function (data) {
+                    window.location.href = "http://localhost:8080/peticiones";
+                 },
+                 error: function () {
+                    alert('Ha ocurrido un error');
+                 }
+            });
+        }else{
+            //ENVIAR ESTADO 9
+            $.ajax({
+             url: 'http://localhost:8080/peticion/'+id+'/'+9,
+             type: 'PUT',
+             success: function (data) {
+                form.style.display="none";
+                const form = document.getElementById("Terminos");
+                form.style.display="block";
+             },
+             error: function () {
+                alert('Ha ocurrido un error');
+             }
+          });
+        }
+    }
+  }
+</script>
 </body>
 </html>
