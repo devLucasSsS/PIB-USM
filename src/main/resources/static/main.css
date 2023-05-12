@@ -65,5 +65,8 @@
     .table-wrapper-scroll-y {
     display: block;
     }
-
+    .container-2{
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    }
 </style>
