@@ -4,17 +4,17 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tipo_envio")
-public class tipo_envio {
+public class Tipo_envioModelo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int tipo_envio;
     @Column
     private String tipo;
 
-    public tipo_envio() {
+    public Tipo_envioModelo() {
     }
 
-    public tipo_envio(int tipo_envio, String tipo) {
+    public Tipo_envioModelo(int tipo_envio, String tipo) {
         this.tipo_envio = tipo_envio;
         this.tipo = tipo;
     }

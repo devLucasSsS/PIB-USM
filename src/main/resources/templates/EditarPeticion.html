@@ -32,8 +32,17 @@
           </form>
       </div>
   </div>
-  <div id="Terminos" style="display: none;">
-    <a>HOLA</a>
+  <div id="terminosDiv" th:object="${terminos_envio}">
+      <h1>Terminos de envio</h1>
+      <form>
+        <textarea id="terminos" th:field="*{terminos}"></textarea>
+        <label for="terminos">Ingrese los terminos y condiciones para el prestatario</label>
+        <input id="tipoEnvioText" type="text" th:object="${tipo_envio}" th:fiel d="*{tipo}">
+        <label for="tipoEnvioText">Ingresa el tipo de envio</label>
+          <input id="DescripcionEnvio" type="text" th:field="*{descripcion_envio}">
+          <label for="DescripcionEnvio">Ingrese una descripcion del tipo de envio</label>
+          <button type="submit">Enviar Terminos</button>
+      </form>
   </div>
     <h1>VALIDACIÓN</h1>
     <div style="background-color:red">
@@ -41,6 +50,8 @@
 
     </div>
 <!--<script>
+style="display: none;"
+
   const opciones = document.getElementsByName('usuario');
       opciones.forEach(opcion => {
         opcion.addEventListener('change', function() {

@@ -7,8 +7,6 @@ import com.USM.PIB.Servicios.PeticionServicio;
 import com.USM.PIB.Servicios.Tipo_itemServicio;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -61,7 +59,9 @@ public class vistaControlador {
     public ModelAndView editarPeticion(@PathVariable("id") int id){
         Optional<Peticion> pet = peticionControlador.getPeticionById(id);
         return new ModelAndView("EditarPeticion")
-                .addObject("peticion",pet);
+                .addObject("peticion",pet)
+                .addObject("terminos_envio",new Terminos_envioModelo())
+                .addObject("tipo_envio",new Tipo_envioModelo());
     }
     @GetMapping(path = "peticiones")
     public ModelAndView peticiones(HttpSession session){
