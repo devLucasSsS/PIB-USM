@@ -1,10 +1,8 @@
 package com.USM.PIB.Controladores;
 
 import com.USM.PIB.Modelos.*;
-import com.USM.PIB.Servicios.BibliotecaServicio;
-import com.USM.PIB.Servicios.GestorServicio;
-import com.USM.PIB.Servicios.PeticionServicio;
-import com.USM.PIB.Servicios.Tipo_itemServicio;
+import com.USM.PIB.Repositorios.PeticionRepositorio;
+import com.USM.PIB.Servicios.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +31,14 @@ public class vistaControlador {
     private Tipo_itemServicio tipoItemServicio;
     @Autowired
     private PeticionServicio peticionServicio;
+    @Autowired
+    private Terminos_EnvioServicio terminosEnvioServicio;
+    @Autowired
+    private Tipo_envioServicio tipoEnvioServicio;
+    @Autowired
+    private  PeticionRepositorio peticionRepositorio;
+    @Autowired
+    private Tipo_envioControlador tipoEnvioControlador;
 
     @GetMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(){
@@ -52,7 +58,7 @@ public class vistaControlador {
     @PostMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(Peticion peticion, Prestatario prestatario){
         peticionControlador.savePeticion(peticion);
-        //prestatarioControlador.savePrestatario(prestatario);
+        prestatarioControlador.savePrestatario(prestatario);
         return new ModelAndView("redirect:/peticiones");
     }
     @GetMapping(path = "peticion/{id}")
@@ -62,6 +68,19 @@ public class vistaControlador {
                 .addObject("peticion",pet)
                 .addObject("terminos_envio",new Terminos_envioModelo())
                 .addObject("tipo_envio",new Tipo_envioModelo());
+    }
+    @PostMapping(path = "peticion/{id}")
+    public ModelAndView updateEstadoPeticion(@PathVariable("id") int id,
+                                             Tipo_envioModelo tipo_envio,
+                                             Terminos_envioModelo terminos_envio,
+                                             Peticion peticion){
+        Tipo_envioModelo tipoE = tipoEnvioControlador.saveTipoEnvio(tipo_envio);
+        terminos_envio.setTipo_envio(tipoE.getTipo_envio());
+        Terminos_envioModelo terminosE = terminosEnvioServicio.saveTerminosEnvio(terminos_envio);
+        peticionServicio.updateTerminosPeticion(id,terminosE.getId_envio());
+        return new ModelAndView("redirect:/peticiones");
+//        return peticionServicio.savePeticion(peticion);
+
     }
     @GetMapping(path = "peticiones")
     public ModelAndView peticiones(HttpSession session){

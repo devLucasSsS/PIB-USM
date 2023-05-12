@@ -42,12 +42,13 @@
   <div id="terminosDiv" th:object="${terminos_envio}">
       <div class="col-sm-6 col-sm-offset-3">
           <div class="container" >
-              <form>
-              <h1>Terminos de envio</h1>
+              <form method="post" th:object="${terminos_envio}">
+                  <p hidden="hidden" th:object="${peticion}"></p>
+                  <h1>Terminos de envio</h1>
                 <label for="terminos">Ingrese los terminos y condiciones para el prestatario</label><br>
                 <textarea id="terminos" th:field="*{terminos}"></textarea><br>
                 <label for="tipoEnvioText">Ingresa el tipo de envio</label><br>
-                <input id="tipoEnvioText" type="text" th:object="${tipo_envio}" th:fiel d="*{tipo}"><br>
+                <input id="tipoEnvioText" type="text" th:object="${tipo_envio}" th:field="*{tipo}"><br>
                   <label for="DescripcionEnvio">Ingrese una descripcion del tipo de envio</label><br>
                   <input id="DescripcionEnvio" type="text" th:field="*{descripcion_envio}"><br>
                   <button type="submit">Enviar Terminos</button>

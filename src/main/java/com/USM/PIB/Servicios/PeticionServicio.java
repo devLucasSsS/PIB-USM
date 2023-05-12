@@ -1,5 +1,6 @@
 package com.USM.PIB.Servicios;
 
+import com.USM.PIB.Controladores.PeticionControlador;
 import com.USM.PIB.Modelos.Peticion;
 import com.USM.PIB.Repositorios.PeticionRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,11 @@ public class PeticionServicio {
         Peticion pet = peticionRepositorio.getById(id);
         pet.setId_estado(e);
         return peticionRepositorio.save(pet);
-
+    }
+    public Peticion updateTerminosPeticion(int idP, int id) {
+        Peticion pet = peticionRepositorio.getById(idP);
+        pet.setId_terminos_envio(id);
+        pet.setId_estado(5);
+        return peticionRepositorio.save(pet);
     }
 }
