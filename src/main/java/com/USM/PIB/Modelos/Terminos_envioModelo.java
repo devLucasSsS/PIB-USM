@@ -1,6 +1,9 @@
 package com.USM.PIB.Modelos;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "terminos_envio")
@@ -15,6 +18,9 @@ public class Terminos_envioModelo {
     private String terminos;
     @Column
     private String descripcion_envio;
+    @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fecha_vencimiento;
 
     public Terminos_envioModelo() {
     }
@@ -27,11 +33,20 @@ public class Terminos_envioModelo {
         this.tipo_envio = tipo_envio;
     }
 
-    public Terminos_envioModelo(int id_envio, int tipo_envio, String terminos, String descripcion_envio) {
+    public Date getFecha_vencimiento() {
+        return fecha_vencimiento;
+    }
+
+    public void setFecha_vencimiento(Date fecha_vencimiento) {
+        this.fecha_vencimiento = fecha_vencimiento;
+    }
+
+    public Terminos_envioModelo(int id_envio, int tipo_envio, String terminos, String descripcion_envio, Date fecha_vencimiento) {
         this.id_envio = id_envio;
         this.tipo_envio = tipo_envio;
         this.terminos = terminos;
         this.descripcion_envio = descripcion_envio;
+        this.fecha_vencimiento = fecha_vencimiento;
     }
 
     public String getDescripcion_envio() {

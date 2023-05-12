@@ -53,6 +53,8 @@
                 <input id="tipoEnvioText" type="text" th:object="${tipo_envio}" th:field="*{tipo}"><br>
                   <label for="DescripcionEnvio">Ingrese una descripcion del tipo de envio</label><br>
                   <input id="DescripcionEnvio" type="text" th:field="*{descripcion_envio}"><br>
+                  <label for="FechaVencimiento">Ingrese una fecha de vencimiento</label>
+                  <input type="date" id="FechaVencimiento" th:field="*{fecha_vencimiento}"><br>
                   <button type="submit">Enviar Terminos</button>
               </form>
           </div>
