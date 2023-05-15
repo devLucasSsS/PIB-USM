@@ -9,7 +9,7 @@ import java.util.Date;
 @Table(name = "mensajes")
 public class MensajesModelo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_mensaje;
     @Column
     private String mensaje;
