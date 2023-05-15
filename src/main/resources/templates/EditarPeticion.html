@@ -40,7 +40,7 @@
               </form>
           </div>
       </div>
-      <div id="terminosDiv" th:object="${terminos_envio}">
+      <div id="terminosDiv" th:object="${terminos_envio}" th:if="${peticion.get().id_estado == 9}">
           <div class="col-sm-6 col-sm-offset-3">
             <div class="container-2" >
               <h1 style="text-align: center;">VALIDACIÓN</h1>
