@@ -1,26 +1,27 @@
 package com.USM.PIB.Modelos;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "mensajes")
-public class mensajes {
+public class MensajesModelo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id_mensaje;
     @Column
     private String mensaje;
     @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha_mensaje;
     @Column
     private String rut_gestor;
-    @ManyToOne(optional = true)
-    @JoinColumn(name = "id_peticion")
-    private Peticion id_peticion;
+    @Column
+    private int id_peticion;
 
-    public mensajes() {
+    public MensajesModelo() {
     }
 
     public String getRut_gestor() {
@@ -31,13 +32,6 @@ public class mensajes {
         this.rut_gestor = rut_gestor;
     }
 
-    public mensajes(int id_mensaje, String mensaje, Date fecha_mensaje, String rut_gestor, Peticion id_peticion) {
-        this.id_mensaje = id_mensaje;
-        this.mensaje = mensaje;
-        this.fecha_mensaje = fecha_mensaje;
-        this.rut_gestor = rut_gestor;
-        this.id_peticion = id_peticion;
-    }
 
     public int getId_mensaje() {
         return id_mensaje;
@@ -63,13 +57,21 @@ public class mensajes {
         this.fecha_mensaje = fecha_mensaje;
     }
 
-
-
-    public Peticion getId_peticion() {
+    public int getId_peticion() {
         return id_peticion;
     }
 
-    public void setId_peticion(Peticion id_peticion) {
+    public void setId_peticion(int id_peticion) {
+        this.id_peticion = id_peticion;
+    }
+
+    public MensajesModelo(int id_mensaje, String mensaje, Date fecha_mensaje, String rut_gestor, int id_peticion) {
+        this.id_mensaje = id_mensaje;
+        this.mensaje = mensaje;
+        this.fecha_mensaje = fecha_mensaje;
+        this.rut_gestor = rut_gestor;
         this.id_peticion = id_peticion;
     }
 }
+
+

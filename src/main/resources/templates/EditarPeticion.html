@@ -63,6 +63,21 @@
         <div class="col-sm-6 col-sm-offset-3">
             <div class="container-2">
                     <h2>MENSAJES</h2>
+                <div style="background-color:skyblue">
+                    <ul>
+                        <li th:each="mensaje : ${mensajes}">
+                            <p th:text="${mensaje.mensaje}"></p>
+                            <p th:text="${mensaje.fecha_mensaje}"></p>
+                        </li>
+                    </ul>
+                </div>
+                        <form   th:action="@{/mensajes}" th:object="${mensaje}" method="post">
+                            <input hidden="hidden" id="rut_gestor" th:field="*{rut_gestor}">
+                            <input type="date" hidden="hidden" id="hora_local" th:field="*{fecha_mensaje}">
+                            <input type="text" th:field="*{mensaje}">
+                            <input hidden="hidden" th:field="${peticion.id_peticion}">
+                            <button type="submit">Enviar</button>
+                        </form>
             </div>
         </div>
     <!--<script>
@@ -83,6 +98,28 @@
             });
           });
     </script>-->
+<script>
+  hora_local = document.getElementById("hora_local");
+  date = new Date();
+  hora_local.value = date.toISOString().slice(0, 10);
+  document.write(hora_local.value);
+</script>
+    <script>
+  $.ajax({
+        url: "http://localhost:8080/gestor",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+          console.log(data);
+          rut = document.getElementById("rut_gestor");
+          rut_gestor.value = data.rut_gestor;
+        },
+        error: function(error) {
+          reject(error);
+        },
+      });
+
+</script>
     <script>
       function Enviar(form) {
         var url = window.location.href;

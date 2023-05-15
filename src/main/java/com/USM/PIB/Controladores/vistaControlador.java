@@ -39,6 +39,8 @@ public class vistaControlador {
     private  PeticionRepositorio peticionRepositorio;
     @Autowired
     private Tipo_envioControlador tipoEnvioControlador;
+    @Autowired
+    private MensajesControlador mensajesControlador;
 
     @GetMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(){
@@ -64,16 +66,19 @@ public class vistaControlador {
     @GetMapping(path = "peticion/{id}")
     public ModelAndView editarPeticion(@PathVariable("id") int id){
         Optional<Peticion> pet = peticionControlador.getPeticionById(id);
+        ArrayList<MensajesModelo> mensajes = mensajesControlador.getMensajesById(pet.get().getId_peticion());
         return new ModelAndView("EditarPeticion")
                 .addObject("peticion",pet)
                 .addObject("terminos_envio",new Terminos_envioModelo())
-                .addObject("tipo_envio",new Tipo_envioModelo());
+                .addObject("tipo_envio",new Tipo_envioModelo())
+                .addObject("mensajes",mensajes)
+                .addObject("mensaje", new MensajesModelo());
     }
     @PostMapping(path = "peticion/{id}")
     public ModelAndView updateEstadoPeticion(@PathVariable("id") int id,
-                                             Tipo_envioModelo tipo_envio,
-                                             Terminos_envioModelo terminos_envio,
-                                             Peticion peticion){
+         Tipo_envioModelo tipo_envio,
+         Terminos_envioModelo terminos_envio,
+         Peticion peticion){
         Tipo_envioModelo tipoE = tipoEnvioControlador.saveTipoEnvio(tipo_envio);
         terminos_envio.setTipo_envio(tipoE.getTipo_envio());
         Terminos_envioModelo terminosE = terminosEnvioServicio.saveTerminosEnvio(terminos_envio);
@@ -88,7 +93,7 @@ public class vistaControlador {
         if(data!=null){
             ArrayList<Peticion> PetPrestatarias = peticionControlador.getPeticionByBibliotecasPrestataria(data.getId_biblioteca());
             ArrayList<Peticion> PetPrestadoras = peticionControlador.getPeticionByBibliotecasPrestadora(data.getId_biblioteca());
-            return new ModelAndView("formularios").addObject("peticionesEntrantes",PetPrestadoras).addObject("peticionesSalientes",PetPrestatarias);
+            return new ModelAndView("Peticiones").addObject("peticionesEntrantes",PetPrestadoras).addObject("peticionesSalientes",PetPrestatarias);
         }else{
             return new ModelAndView("redirect:/login");
         }
