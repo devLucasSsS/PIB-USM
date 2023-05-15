@@ -64,21 +64,29 @@ public class vistaControlador {
         return new ModelAndView("redirect:/peticiones");
     }
     @GetMapping(path = "peticion/{id}")
-    public ModelAndView editarPeticion(@PathVariable("id") int id){
+    public ModelAndView editarPeticion(@PathVariable("id") int id, HttpSession session){
         Optional<Peticion> pet = peticionControlador.getPeticionById(id);
         ArrayList<MensajesModelo> mensajes = mensajesControlador.getMensajesById(pet.get().getId_peticion());
+        Terminos_envioModelo terms = terminosEnvioServicio.getByIdPet(pet.get().getId_terminos_envio());
+        Tipo_envioModelo TipoEnv = new Tipo_envioModelo();
+        GestorModelo g = gestorControlador.getDataSession(session);
+        if(terms != null){
+            TipoEnv = tipoEnvioServicio.getByIdTerm(terms.getTipo_envio());
+        }
         return new ModelAndView("EditarPeticion")
                 .addObject("peticion",pet)
                 .addObject("terminos_envio",new Terminos_envioModelo())
                 .addObject("tipo_envio",new Tipo_envioModelo())
                 .addObject("mensajes",mensajes)
-                .addObject("mensaje", new MensajesModelo());
+                .addObject("mensaje", new MensajesModelo())
+                .addObject("terminosRes",terms)
+                .addObject("tipoRes",TipoEnv)
+                .addObject("rut",g.getRut_gestor());
     }
     @PostMapping(path = "peticion/{id}")
     public ModelAndView updateEstadoPeticion(@PathVariable("id") int id,
          Tipo_envioModelo tipo_envio,
-         Terminos_envioModelo terminos_envio,
-         Peticion peticion){
+         Terminos_envioModelo terminos_envio){
         Tipo_envioModelo tipoE = tipoEnvioControlador.saveTipoEnvio(tipo_envio);
         terminos_envio.setTipo_envio(tipoE.getTipo_envio());
         Terminos_envioModelo terminosE = terminosEnvioServicio.saveTerminosEnvio(terminos_envio);

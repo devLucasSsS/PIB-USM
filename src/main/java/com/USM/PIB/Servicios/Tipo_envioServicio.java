@@ -12,6 +12,10 @@ public class Tipo_envioServicio {
     @Autowired
     Tipo_envioRepositorio tipoEnvioRepositorio;
 
+    public Tipo_envioModelo getByIdTerm(int tipoEnvio) {
+        return tipoEnvioRepositorio.getByIdTerm(tipoEnvio);
+    }
+
     public Tipo_envioModelo saveTipoEnvio(Tipo_envioModelo tipoEnvio){
         return tipoEnvioRepositorio.save(tipoEnvio);
     }

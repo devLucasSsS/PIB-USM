@@ -15,6 +15,7 @@
     <link th:href="@{/main.css}" rel="stylesheet" />
     <!-- estilo propio -->
 </head>
+
 <body>
     <div th:insert="fragments/nav0 :: navUser0"></div>
     <p th:object="${peticion}"></p>
@@ -37,6 +38,22 @@
                   <input type="radio" id="opcion2S" name="stock" value="0">
                   <label for="opcion2S">No</label>
                   <button type="button" onclick="Enviar(2)">Enviar</button>
+              </form>
+          </div>
+          <div th:if="${peticion.get().id_estado == 5}" >
+              <form id="form3">
+              <p th:object="${terminosRes}"></p>
+              <p th:object="${tipoRes}"></p>
+              <p  th:text="${terminosRes.terminos}"></p>
+              <p th:text="${tipoRes.tipo}"></p>
+              <p th:text="${terminosRes.descripcion_envio}"></p>
+              <p type="date" disabled="disabled" th:text="${terminosRes.fecha_vencimiento}"></p>
+                      <label>Acepta los terminos?</label>
+                      <input type="radio" id="opcion1T" name="acepta" value="1">
+                      <label for="opcion1S">Si</label>
+                      <input type="radio" id="opcion2T" name="acepta" value="0">
+                      <label for="opcion2S">No</label>
+                      <button type="button" onclick="Enviar(3)">Enviar</button>
               </form>
           </div>
       </div>
@@ -64,17 +81,16 @@
             <div class="container-2">
                     <h2>MENSAJES</h2>
                 <div>
+                    <p th:object="${rut}"></p>
                     <ul style="display: flex; flex-direction: column; overflow-y: scroll; height: 550px;">
-                        <div th:each="mensaje : ${mensajes}" style=" padding-top: 10px; padding-bottom: 10px;">
-                            <div class="container" style="background: #b9f8fa; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;border-left-style: solid;float: left; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
-                                <p th:text="${mensaje.mensaje}"></p>
-                                <p th:text="${mensaje.fecha_mensaje}"></p>
+                        <div th:each="mensajeGet : ${mensajes}" style=" padding-top: 10px; padding-bottom: 10px;">
+                            <div th:if="${mensajeGet.rut_gestor != rut  }" class="container" style="background: #b9f8fa; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;border-left-style: solid;float: left; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
+                                <p th:text="${mensajeGet.mensaje}"></p>
+                                <p th:text="${mensajeGet.fecha_mensaje}"></p>
                             </div>
-                        </div>
-                        <div th:each="mensaje : ${mensajes}" style=" padding-top: 10px; padding-bottom: 10px;">
-                            <div class="container" style="background: #b9f8fa; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;border-right-style: solid;float: right; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
-                                <p th:text="${mensaje.mensaje}"></p>
-                                <p th:text="${mensaje.fecha_mensaje}"></p>
+                            <div th:if="${mensajeGet.rut_gestor == rut}" class="container" style="background: #b9f8fa; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;border-right-style: solid;float: right; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
+                                <p th:text="${mensajeGet.mensaje}"></p>
+                                <p th:text="${mensajeGet.fecha_mensaje}"></p>
                             </div>
                         </div>
                     </ul>
@@ -88,31 +104,15 @@
                         </form>
             </div>
         </div>
-    <!--<script>
-    style="display: none;"
-
-      const opciones = document.getElementsByName('usuario');
-          opciones.forEach(opcion => {
-            opcion.addEventListener('change', function() {
-              if (this.checked) {
-                const valorSeleccionado = this.value;
-                var div = document.getElementById("pasoUsuario");
-                if(valorSeleccionado == 1){
-                    div.style.display = "block";
-                }else{
-                    div.style.display = "none";
-                }
-              }
-            });
-          });
-    </script>-->
-<script>
+    <script>
   hora_local = document.getElementById("hora_local");
   date = new Date();
   hora_local.value = date.toISOString().slice(0, 10);
   document.write(hora_local.value);
 </script>
     <script>
+      $(document).ready(function() {
+
   $.ajax({
         url: "http://localhost:8080/gestor",
         type: "GET",
@@ -120,12 +120,13 @@
         success: function(data) {
           console.log(data);
           rut = document.getElementById("rut_gestor");
-          rut_gestor.value = data.rut_gestor;
+          rut.value = data.rut_gestor;
         },
         error: function(error) {
           reject(error);
         },
       });
+    });
 
 </script>
     <script>
@@ -162,7 +163,8 @@
                  }
               });
             }
-        }else{
+        }
+        if(form == 2){
             const form = document.getElementById("form2");
             const ValStock = form.elements["stock"].value;
             if(ValStock == 0){
@@ -186,6 +188,36 @@
                     form.style.display="none";
                     const form = document.getElementById("Terminos");
                     form.style.display="block";
+                 },
+                 error: function () {
+                    alert('Ha ocurrido un error');
+                 }
+              });
+            }
+        }
+        if(form == 3){
+            const form = document.getElementById("form3");
+            const acepta = form.elements["acepta"].value;
+            if(acepta == 0){
+                //ENVIAR ESTADO 7
+                $.ajax({
+                     url: 'http://localhost:8080/peticion/'+id+'/'+7,
+                     type: 'PUT',
+                     success: function (data) {
+                        window.location.href = "http://localhost:8080/peticiones";
+                     },
+                     error: function () {
+                        alert('Ha ocurrido un error');
+                     }
+                });
+            }else{
+                //ENVIAR ESTADO 6
+                $.ajax({
+                 url: 'http://localhost:8080/peticion/'+id+'/'+6,
+                 type: 'PUT',
+                 success: function (data) {
+                    form.style.display="none";
+
                  },
                  error: function () {
                     alert('Ha ocurrido un error');
