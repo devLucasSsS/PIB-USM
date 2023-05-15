@@ -78,17 +78,17 @@
         </div>
       </div>
         <div class="col-sm-6 col-sm-offset-3">
-            <div class="container-2">
+            <div class="container-2" >
                     <h2>MENSAJES</h2>
                 <div>
                     <p th:object="${rut}"></p>
                     <ul style="display: flex; flex-direction: column; overflow-y: scroll; height: 550px;">
                         <div th:each="mensajeGet : ${mensajes}" style=" padding-top: 10px; padding-bottom: 10px;">
-                            <div th:if="${mensajeGet.rut_gestor != rut  }" class="container" style="background: #b9f8fa; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;border-left-style: solid;float: left; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
+                            <div th:if="${mensajeGet.rut_gestor != rut  }" class="container" style="background: #b9f8fa; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;float: left; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
                                 <p th:text="${mensajeGet.mensaje}"></p>
                                 <p th:text="${mensajeGet.fecha_mensaje}"></p>
                             </div>
-                            <div th:if="${mensajeGet.rut_gestor == rut}" class="container" style="background: #b9f8fa; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;border-right-style: solid;float: right; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
+                            <div th:if="${mensajeGet.rut_gestor == rut}" class="container" style="background: #c0f772; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;float: right; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
                                 <p th:text="${mensajeGet.mensaje}"></p>
                                 <p th:text="${mensajeGet.fecha_mensaje}"></p>
                             </div>
