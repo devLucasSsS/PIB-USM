@@ -101,12 +101,12 @@
                         </div>
                     </ul>
                 </div>
-                        <form   th:object="${mensaje}" method="post" id="formMensajes">
+                        <form  th:object="${mensaje}"  id="formMensajes">
                             <input hidden="hidden" id="rut_gestor" th:field="*{rut_gestor}">
                             <input type="date" hidden="hidden" id="hora_local" th:field="*{fecha_mensaje}">
                             <input type="text" class="form-control"  th:field="*{mensaje}">
                             <input hidden="hidden" th:field="${peticion.id_peticion}">
-                            <button type="submit">Enviar</button>
+                            <button onclick="EnviarMensaje()">Enviar</button>
                         </form>
             </div>
         </div>
@@ -114,6 +114,33 @@
   hora_local = document.getElementById("hora_local");
   date = new Date();
   hora_local.value = date.toISOString().slice(0, 10);
+</script>
+    <script>
+  $(document).ready(function() {
+    // Manejar el evento submit del formulario
+    $('#formMensajes').submit(function(event) {
+      // Evitar que el formulario se envíe normalmente
+      event.preventDefault();
+
+      // Obtener los datos del formulario
+      var formData = $(this).serializeArray();
+
+      // Realizar una solicitud AJAX al servidor
+      $.ajax({
+        type: 'POST',
+        url: '/mensajes',
+        data: formData,
+        success: function(response) {
+            var url = window.location.href;
+            window.location.href = url;
+        },
+        error: function(xhr, status, error) {
+          // Manejar errores, si es necesario
+          console.error(error);
+        }
+      });
+    });
+  });
 </script>
 
     <script>
@@ -223,7 +250,6 @@
                  type: 'PUT',
                  success: function (data) {
                     form.style.display="none";
-
                  },
                  error: function () {
                     alert('Ha ocurrido un error');
