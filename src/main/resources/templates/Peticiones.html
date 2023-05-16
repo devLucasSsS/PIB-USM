@@ -117,47 +117,63 @@
             <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
             <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
           </svg></button></a>
-          <button class="btn btn-success" onclick="Alerta()">
+          <button th:value="*{id_peticion}" class="btn btn-success" onclick="Alerta(this.value,1)">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
               <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
             </svg>
           </button>
-          <script>
-    function Alerta() {
-      Swal.fire({
-        title: 'Select field validation',
-        input: 'select',
-        inputOptions: {
-          'Fruits': {
-            apples: 'Apples',
-            bananas: 'Bananas',
-            grapes: 'Grapes',
-            oranges: 'Oranges'
-          },
-          'Vegetables': {
-            potato: 'Potato',
-            broccoli: 'Broccoli',
-            carrot: 'Carrot'
-          },
-          'icecream': 'Ice cream'
-        },
-        inputPlaceholder: 'Select a fruit',
-        showCancelButton: true,
-        inputValidator: (value) => {
-          return new Promise((resolve) => {
-            if (value === 'oranges') {
-              resolve()
-            } else {
-              resolve('You need to select oranges :)')
-            }
-          })
-        }
-      }).then((result) => {
-        if (result.value) {
-          Swal.fire(`You selected: ${result.value}`)
-        }
-      });
+      <script>
+    function Alerta(idP,pet) {
+    var url = '';
+    if(pet==1){
+      url = '/estado/prestador';
+    }else{
+      url = '/estado/prestatario';
     }
+    Swal.fire({
+  title: 'Selecciona un estado para cambiar',
+  input: 'select',
+  inputOptions: {
+    'Estados': {}, // Inicialmente, el objeto estará vacío
+  },
+  didOpen: function() {
+    var selectInput = Swal.getPopup().querySelector('select');
+
+    // Realizar una solicitud AJAX para obtener los datos de los estados
+    $.ajax({
+      url: url, // Reemplaza '/ruta-para-obtener-estados' con la URL correspondiente
+      type: 'GET',
+      dataType: 'json',
+      success: function(response) {
+        // Actualizar las opciones del input select
+        var options = '';
+        for (var i = 0; i < response.length; i++) {
+          options += '<option value="' + response[i].id_estado + '">' + response[i].estado + '</option>';
+        }
+        selectInput.innerHTML = options;
+      },
+      error: function(xhr, status, error) {
+        console.error(error);
+        Swal.close();
+      },
+    });
+  },
+  showCancelButton: true,
+  cancelButtonText: 'Cancelar',
+  confirmButtonText: 'Aceptar',
+  preConfirm: function() {
+    return Swal.getPopup().querySelector('select').value;
+  },
+}).then(function(result) {
+  if (result.isConfirmed) {
+    var selectedValue = result.value;
+    actualizarEstado(idP,selectedValue);
+  }
+});
+    };
+
+
+
   </script>
           <!--MODAL -->
           <!--MODAL -->
@@ -170,40 +186,6 @@
     </table>
   </div>
 </div>
-<script>
-  function OpenModal(){
-    $('#exampleModal').modal('show');
-    /*
-    // Obtener referencia al modal
-    var modal = document.getElementById('ModalPrestatario');
-
-    // Realizar una solicitud AJAX para obtener los datos de la base de datos
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/estado/prestatario', true); // Reemplaza '/ruta-para-obtener-datos' con la URL para obtener los datos
-    xhr.onload = function() {
-      if (xhr.status === 200) {
-        // Actualizar el contenido del modal con los datos obtenidos
-        modal.innerHTML = xhr.responseText;
-        var selectElement = modal.querySelector('#selectEstado');
-
-        // Obtener los datos obtenidos de la base de datos (suponiendo que es un array de objetos)
-        var datos = JSON.parse(xhr.responseText);
-
-        // Generar las opciones del select
-        for (var i = 0; i < datos.length; i++) {
-          var opcion = document.createElement('option');
-          opcion.value = datos[i].id_estado; // Suponiendo que cada objeto tiene una propiedad "id"
-          opcion.textContent = datos[i].estado; // Suponiendo que cada objeto tiene una propiedad "nombre"
-          selectElement.appendChild(opcion);
-        }
-        // Mostrar el modal
-        modal.style.display = 'block';
-      }
-    };
-    xhr.send();
-    */
-  };
-</script>
 <script>
   function actualizarEstado(id,estado){
   console.log(id + ' '+ estado);
@@ -287,12 +269,11 @@
             <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
             </svg></button></a>
           </div>
-          <button type="submit" th:value="*{id_peticion}" onclick="actualizarEstado(this.value,8)" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-          </svg></button>
-          <select th:id="'selectEstados-'+*{id_peticion}" onclick="RecargarEstados(2,this.id)">
-            <option value="">Seleccione una opción</option>
-          </select>
+          <button th:value="*{id_peticion}" class="btn btn-success" onclick="Alerta(this.value,2)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+            </svg>
+          </button>
           <button type="submit" th:value="*{id_peticion}" onclick="actualizarEstado(this.value,7)" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
           </svg><i class="far fa-trash-alt"></i></button>
