@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+
 @Controller
 @RestController
 @RequestMapping("estado")
@@ -20,5 +22,14 @@ public class EstadoControlador {
     @GetMapping(path = "/{id}")
     public EstadoModelo getEstadoById(@PathVariable("id")int id){
         return estadoServicio.getEstado(id);
+    }
+
+    @GetMapping(path = "/prestatario")
+    public ArrayList<EstadoModelo> getEstadosPrestatario(){
+        return estadoServicio.getEstadosPrestatario();
+    }
+    @GetMapping(path = "/prestador")
+    public ArrayList<EstadoModelo> getEstadoPrestador(){
+        return estadoServicio.getEstadosPrestador();
     }
 }

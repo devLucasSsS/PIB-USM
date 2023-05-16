@@ -40,7 +40,7 @@
                   <button type="button" onclick="Enviar(2)">Enviar</button>
               </form>
           </div>
-          <div th:if="${peticion.get().id_estado == 5}" >
+          <div th:if="${peticion.get().id_estado == 4}" >
               <form id="form3">
               <p th:object="${terminosRes}"></p>
               <p th:object="${tipoRes}"></p>
@@ -57,7 +57,7 @@
               </form>
           </div>
       </div>
-      <div id="terminosDiv" th:object="${terminos_envio}" th:if="${peticion.get().id_estado == 9}">
+      <div id="terminosDiv" th:object="${terminos_envio}" th:if="${peticion.get().id_estado == 7}">
           <div class="col-sm-6 col-sm-offset-3">
             <div class="container-2" >
               <h1 style="text-align: center;">VALIDACIÓN</h1>
@@ -80,9 +80,9 @@
         <div class="col-sm-6 col-sm-offset-3">
             <div class="container-2" >
                     <h2>MENSAJES</h2>
-                <div>
+                <div  th:fragment="mensajeFr">
                     <p th:object="${rut}"></p>
-                    <ul style="display: flex; flex-direction: column; overflow-y: scroll; height: 550px;">
+                    <ul id="cuerpoMensajes" style="display: flex; flex-direction: column; overflow-y: scroll; height: 550px;">
                         <div th:each="mensajeGet : ${mensajes}" style=" padding-top: 10px; padding-bottom: 10px;">
                             <div th:if="${mensajeGet.rut_gestor != rut  }" class="container" style="background: #b9f8fa; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;float: left; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
                                 <p th:text="${mensajeGet.mensaje}"></p>
@@ -95,7 +95,7 @@
                         </div>
                     </ul>
                 </div>
-                        <form   th:action="@{/mensajes}" th:object="${mensaje}" method="post">
+                        <form   th:object="${mensaje}" method="post" id="formMensajes">
                             <input hidden="hidden" id="rut_gestor" th:field="*{rut_gestor}">
                             <input type="date" hidden="hidden" id="hora_local" th:field="*{fecha_mensaje}">
                             <input type="text" class="form-control"  th:field="*{mensaje}">
@@ -104,11 +104,12 @@
                         </form>
             </div>
         </div>
-    <script>
+<script>
   hora_local = document.getElementById("hora_local");
   date = new Date();
   hora_local.value = date.toISOString().slice(0, 10);
 </script>
+
     <script>
       $(document).ready(function() {
 
@@ -167,9 +168,9 @@
             const form = document.getElementById("form2");
             const ValStock = form.elements["stock"].value;
             if(ValStock == 0){
-                //ENVIAR ESTADO 8
+                //ENVIAR ESTADO 10
                 $.ajax({
-                     url: 'http://localhost:8080/peticion/'+id+'/'+8,
+                     url: 'http://localhost:8080/peticion/'+id+'/'+10,
                      type: 'PUT',
                      success: function (data) {
                         window.location.href = "http://localhost:8080/peticiones";
@@ -179,9 +180,9 @@
                      }
                 });
             }else{
-                //ENVIAR ESTADO 9
+                //ENVIAR ESTADO 7
                 $.ajax({
-                 url: 'http://localhost:8080/peticion/'+id+'/'+9,
+                 url: 'http://localhost:8080/peticion/'+id+'/'+7,
                  type: 'PUT',
                  success: function (data) {
                     form.style.display="none";
@@ -198,9 +199,9 @@
             const form = document.getElementById("form3");
             const acepta = form.elements["acepta"].value;
             if(acepta == 0){
-                //ENVIAR ESTADO 7
+                //ENVIAR ESTADO 6
                 $.ajax({
-                     url: 'http://localhost:8080/peticion/'+id+'/'+7,
+                     url: 'http://localhost:8080/peticion/'+id+'/'+6,
                      type: 'PUT',
                      success: function (data) {
                         window.location.href = "http://localhost:8080/peticiones";
@@ -210,9 +211,9 @@
                      }
                 });
             }else{
-                //ENVIAR ESTADO 6
+                //ENVIAR ESTADO 5
                 $.ajax({
-                 url: 'http://localhost:8080/peticion/'+id+'/'+6,
+                 url: 'http://localhost:8080/peticion/'+id+'/'+5,
                  type: 'PUT',
                  success: function (data) {
                     form.style.display="none";

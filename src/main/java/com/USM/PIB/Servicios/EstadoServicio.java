@@ -5,6 +5,9 @@ import com.USM.PIB.Repositorios.EstadoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.annotation.ElementType;
+import java.util.ArrayList;
+
 @Service
 public class EstadoServicio {
     @Autowired
@@ -12,5 +15,12 @@ public class EstadoServicio {
 
     public EstadoModelo getEstado(int id){
         return estadoRepositorio.getEstadoById(id);
+    }
+
+    public ArrayList<EstadoModelo> getEstadosPrestatario(){
+        return estadoRepositorio.getEstadosPrestatario();
+    }
+    public ArrayList<EstadoModelo> getEstadosPrestador(){
+        return estadoRepositorio.getEstadosPrestador();
     }
 }
