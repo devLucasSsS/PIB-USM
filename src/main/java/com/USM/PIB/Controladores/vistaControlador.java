@@ -41,6 +41,8 @@ public class vistaControlador {
     private Tipo_envioControlador tipoEnvioControlador;
     @Autowired
     private MensajesControlador mensajesControlador;
+    @Autowired
+    private PrestatarioServicio prestatarioServicio;
 
     @GetMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(){
@@ -60,28 +62,39 @@ public class vistaControlador {
     @PostMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(Peticion peticion, Prestatario prestatario){
         peticionControlador.savePeticion(peticion);
-        prestatarioControlador.savePrestatario(prestatario);
+        Prestatario data = prestatarioServicio.getByRut(prestatario.getRut_prestatario());
+        if(data != null){
+            prestatarioServicio.updatePrestatario(prestatario.getRut_prestatario(),prestatario);
+
+        }else{
+            prestatarioServicio.savePrestatario(prestatario);
+        }
         return new ModelAndView("redirect:/peticiones");
     }
     @GetMapping(path = "peticion/{id}")
     public ModelAndView editarPeticion(@PathVariable("id") int id, HttpSession session){
-        Optional<Peticion> pet = peticionControlador.getPeticionById(id);
-        ArrayList<MensajesModelo> mensajes = mensajesControlador.getMensajesById(pet.get().getId_peticion());
-        Terminos_envioModelo terms = terminosEnvioServicio.getByIdPet(pet.get().getId_terminos_envio());
-        Tipo_envioModelo TipoEnv = new Tipo_envioModelo();
-        GestorModelo g = gestorControlador.getDataSession(session);
-        if(terms != null){
-            TipoEnv = tipoEnvioServicio.getByIdTerm(terms.getTipo_envio());
+        GestorModelo data = gestorControlador.getDataSession(session);
+        if(data!=null){
+            Optional<Peticion> pet = peticionControlador.getPeticionById(id);
+            ArrayList<MensajesModelo> mensajes = mensajesControlador.getMensajesById(pet.get().getId_peticion());
+            Terminos_envioModelo terms = terminosEnvioServicio.getByIdPet(pet.get().getId_terminos_envio());
+            Tipo_envioModelo TipoEnv = new Tipo_envioModelo();
+            if(terms != null){
+                TipoEnv = tipoEnvioServicio.getByIdTerm(terms.getTipo_envio());
+            }
+            return new ModelAndView("EditarPeticion")
+                    .addObject("peticion",pet)
+                    .addObject("terminos_envio",new Terminos_envioModelo())
+                    .addObject("tipo_envio",new Tipo_envioModelo())
+                    .addObject("mensajes",mensajes)
+                    .addObject("mensaje", new MensajesModelo())
+                    .addObject("terminosRes",terms)
+                    .addObject("tipoRes",TipoEnv)
+                    .addObject("rut",data.getRut_gestor());
+
+        }else{
+            return new ModelAndView("redirect:/login");
         }
-        return new ModelAndView("EditarPeticion")
-                .addObject("peticion",pet)
-                .addObject("terminos_envio",new Terminos_envioModelo())
-                .addObject("tipo_envio",new Tipo_envioModelo())
-                .addObject("mensajes",mensajes)
-                .addObject("mensaje", new MensajesModelo())
-                .addObject("terminosRes",terms)
-                .addObject("tipoRes",TipoEnv)
-                .addObject("rut",g.getRut_gestor());
     }
     @PostMapping(path = "peticion/{id}")
     public ModelAndView updateEstadoPeticion(@PathVariable("id") int id,

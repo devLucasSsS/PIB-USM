@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
 @RestController
 @RequestMapping("prestatario")
 public class PrestatarioControlador {
@@ -19,9 +18,9 @@ public class PrestatarioControlador {
     public String getEmailByRut(@PathVariable("rut")String rut){
         return prestatarioServicio.getEmailByRut(rut);
     }
-    @PostMapping("prestatario/nuevo")
-    public Prestatario savePrestatario(@RequestBody Prestatario prestatario){
-        return new ResponseEntity<>(this.prestatarioServicio.savePrestatario(prestatario), HttpStatus.CREATED).getBody();
-    }
+    @GetMapping(path = "/{rut}/1")
+        public Prestatario getPrestatarioByRut(@PathVariable("rut")String rut){
+            return prestatarioServicio.getByRut(rut);
+        }
 
 }

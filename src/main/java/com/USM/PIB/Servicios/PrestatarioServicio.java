@@ -18,4 +18,16 @@ public class PrestatarioServicio {
     public String getEmailByRut(String rut) {
         return prestatarioRepositorio.getEmailByRut(rut);
     }
+
+    public Prestatario getByRut(String rutPrestatario) {
+        return prestatarioRepositorio.findByRut(rutPrestatario);
+    }
+    public Prestatario updatePrestatario(String rut,Prestatario prestatario){
+        Prestatario p = getByRut(rut);
+        p.setRut_prestatario(prestatario.getRut_prestatario());
+        p.setEmail(prestatario.getEmail());
+        p.setNombre(p.getNombre());
+        return prestatarioRepositorio.save(p);
+
+    }
 }

@@ -7,4 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface PrestatarioRepositorio extends JpaRepository<Prestatario,Integer> {
     @Query("SELECT p.email FROM Prestatario p WHERE p.rut_prestatario=?1")
     String getEmailByRut(String rut);
+
+    @Query("SELECT p FROM Prestatario p WHERE p.rut_prestatario=?1")
+    Prestatario findByRut(String rutPrestatario);
 }
