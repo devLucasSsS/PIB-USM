@@ -15,6 +15,7 @@
 
 	.navbar {
 		background-color: #004b85;
+		border: blue;
 	}
 
 	.navbar-nav > li > a {
@@ -66,7 +67,48 @@
     display: block;
     }
     .container-2{
+            margin-top: 5px;
+            margin-bottom: 5px;
             padding: 20px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    }
+    .cristal {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .cristal::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    background-image: linear-gradient(rgba(0, 0, 7, 0.8), rgba(0, 0, 20, 0.93)), url(https://images.pexels.com/photos/1370298/pexels-photo-1370298.jpeg?);
+      background-repeat: no-repeat;
+      background-size: cover;
+      filter: blur(3px);
+      opacity: 0.9;
+      z-index: -1;
+    }
+
+    .contenido {
+      position: relative;
+      z-index: 1;
+      /* Estilos adicionales para el contenido del contenedor */
+    }
+
+    .container-3{
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: #feffcf;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    margin-bottom: 20px;
     }
 </style>

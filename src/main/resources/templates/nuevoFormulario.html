@@ -17,6 +17,7 @@
 </head>
 <body>
 
+<div class="cristal">
 <div th:insert="fragments/nav0 :: navUser0"></div>
 
 <div class="container">
@@ -97,8 +98,6 @@
     </div>
   </div>
 </div>
-<div>
-
 </div>
 <script>
   function ReloadBibliotecas(id,idSelect){
@@ -125,7 +124,6 @@
   hora_local = document.getElementById("hora_local");
   date = new Date();
   hora_local.value = date.toISOString().slice(0, 10);
-  document.write(hora_local.value);
 </script>
 <script>
   const ip = document.getElementById("ip");

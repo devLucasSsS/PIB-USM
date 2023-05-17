@@ -16,45 +16,53 @@
     <!-- estilo propio -->
 </head>
 
-<body>
+<body >
     <div th:insert="fragments/nav0 :: navUser0"></div>
     <p th:object="${peticion}"></p>
       <div th:if="${peticion.isPresent()}">
-          <div th:if="${peticion.get().id_estado == 1}">
-              <form id="form1">
-                  <label>El usuario solicitante existe?</label>
-                  <input type="radio" id="opcion1U" name="usuario" value="1">
-                  <label for="opcion1U">Si</label>
-                  <input type="radio" id="opcion2U" name="usuario" value="0">
-                  <label for="opcion2U">No</label><br>
-                  <button type="button" onclick="Enviar(1)">Enviar</button>
-              </form>
-          </div>
-          <div th:if="${peticion.get().id_estado == 3}">
-              <form id="form2">
-                  <label>Hay stock vigente?</label>
-                  <input type="radio" id="opcion1S" name="stock" value="1">
-                  <label for="opcion1S">Si</label>
-                  <input type="radio" id="opcion2S" name="stock" value="0">
-                  <label for="opcion2S">No</label>
-                  <button type="button" onclick="Enviar(2)">Enviar</button>
-              </form>
-          </div>
-          <div th:if="${peticion.get().id_estado == 4}" >
-              <form id="form3">
-              <p th:object="${terminosRes}"></p>
-              <p th:object="${tipoRes}"></p>
-              <p  th:text="${terminosRes.terminos}"></p>
-              <p th:text="${tipoRes.tipo}"></p>
-              <p th:text="${terminosRes.descripcion_envio}"></p>
-              <p type="date" disabled="disabled" th:text="${terminosRes.fecha_vencimiento}"></p>
-                      <label>Acepta los terminos?</label>
-                      <input type="radio" id="opcion1T" name="acepta" value="1">
-                      <label for="opcion1S">Si</label>
-                      <input type="radio" id="opcion2T" name="acepta" value="0">
-                      <label for="opcion2S">No</label>
-                      <button type="button" onclick="Enviar(3)">Enviar</button>
-              </form>
+          <div class="col-sm-6 col-sm-offset-3">
+              <div th:if="${peticion.get().id_estado == 1}">
+                  <div class="container-3" style="ce" >
+                      <form id="form1">
+                          <label>El usuario solicitante existe?</label>
+                          <input type="radio" id="opcion1U" name="usuario" value="1">
+                          <label for="opcion1U">Si</label>
+                          <input type="radio" id="opcion2U" name="usuario" value="0">
+                          <label for="opcion2U">No</label><br>
+                          <button type="button" onclick="Enviar(1)">Enviar</button>
+                      </form>
+                  </div>
+              </div>
+              <div th:if="${peticion.get().id_estado == 3}">
+                  <div class="container-3" >
+                      <form id="form2">
+                          <label>Hay stock vigente?</label>
+                          <input type="radio" id="opcion1S" name="stock" value="1">
+                          <label for="opcion1S">Si</label>
+                          <input type="radio" id="opcion2S" name="stock" value="0">
+                          <label for="opcion2S">No</label> <br>
+                          <button type="button" onclick="Enviar(2)">Enviar</button>
+                      </form>
+                  </div>
+              </div>
+              <div th:if="${peticion.get().id_estado == 4}" >
+                  <div class="container-3" >
+                      <form id="form3">
+                          <p th:object="${terminosRes}"></p>
+                          <p th:object="${tipoRes}"></p>
+                          <p  th:text="${terminosRes.terminos}"></p>
+                          <p th:text="${tipoRes.tipo}"></p>
+                          <p th:text="${terminosRes.descripcion_envio}"></p>
+                          <p type="date" disabled="disabled" th:text="${terminosRes.fecha_vencimiento}"></p>
+                          <label>Acepta los terminos?</label>
+                          <input type="radio" id="opcion1T" name="acepta" value="1">
+                          <label for="opcion1S">Si</label>
+                          <input type="radio" id="opcion2T" name="acepta" value="0">
+                          <label for="opcion2S">No</label><br>
+                          <button type="button" onclick="Enviar(3)">Enviar</button>
+                      </form>
+                  </div>
+              </div>
           </div>
       </div>
       <div id="terminosDiv" th:object="${terminos_envio}" th:if="${peticion.get().id_estado == 7}">
