@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/")
 public class vistaControlador {
     @Autowired
-    private com.USM.PIB.Servicios.institucionServicio institucionServicio;
+    private InstitucionServicio institucionServicio;
     @Autowired
     private BibliotecaServicio bibliotecaServicio;
     @Autowired
@@ -46,7 +46,7 @@ public class vistaControlador {
 
     @GetMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(){
-        ArrayList<institucionModelo> institucion = institucionServicio.getInstituciones();
+        ArrayList<InstitucionModelo> institucion = institucionServicio.getInstituciones();
         ArrayList<BibliotecaModelo> bibliotecas = bibliotecaServicio.getBibliotecas();
         ArrayList<Tipo_itemModelo> tipo_item = tipoItemServicio.getTiposItem();
         GestorModelo nivel = new GestorModelo();

@@ -2,11 +2,9 @@ package com.USM.PIB.Modelos;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "institucion")
-public class institucionModelo {
+public class InstitucionModelo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_institucion;
@@ -14,7 +12,7 @@ public class institucionModelo {
     private String nombre_institucion;
 
 
-    public institucionModelo() {
+    public InstitucionModelo() {
     }
 
     public int getId_institucion() {

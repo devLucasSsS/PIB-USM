@@ -80,6 +80,7 @@
                   <input id="DescripcionEnvio" class="form-control" type="text" th:field="*{descripcion_envio}"><br>
                   <label for="FechaVencimiento">Ingrese una fecha de vencimiento</label>
                   <input type="date" class="form-control" id="FechaVencimiento" th:field="*{fecha_vencimiento}"><br>
+                  <input hidden="hidden" th:field="*{envio}" th:value="0">
                   <button type="submit">Enviar Terminos</button>
               </form>
           </div>

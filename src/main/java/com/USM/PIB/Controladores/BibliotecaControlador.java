@@ -22,5 +22,9 @@ public class BibliotecaControlador {
     public ArrayList<BibliotecaModelo> getBibliotecasByInstitucion(@PathVariable("id") int id){
         return bibliotecaServicio.getBibliotecasByInstitucion(id);
     }
+    @GetMapping(path = "/bib/{id}")
+    public BibliotecaModelo getBibliotecaByIdPeticion(@PathVariable("id") int id){
+        return bibliotecaServicio.getBibliotecaByIdPeticion(id);
+    }
 
 }

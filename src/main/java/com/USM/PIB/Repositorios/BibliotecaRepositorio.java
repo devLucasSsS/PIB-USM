@@ -9,4 +9,6 @@ import java.util.ArrayList;
 public interface BibliotecaRepositorio extends JpaRepository<BibliotecaModelo,Integer> {
     @Query("SELECT b FROM BibliotecaModelo b WHERE b.id_institucion=?1")
     ArrayList<BibliotecaModelo> findByInstitucion(int id);
+    @Query("SELECT b FROM BibliotecaModelo b WHERE b.id_biblioteca=?1")
+    BibliotecaModelo getByIdPeticion(int id);
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 @Table(name = "terminos_envio")
 public class Terminos_envioModelo {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_envio;
 
     @Column
@@ -21,6 +21,16 @@ public class Terminos_envioModelo {
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha_vencimiento;
+    @Column
+    private byte envio;
+
+    public byte getEnvio() {
+        return envio;
+    }
+
+    public void setEnvio(byte envio) {
+        this.envio = envio;
+    }
 
     public Terminos_envioModelo() {
     }
@@ -41,12 +51,13 @@ public class Terminos_envioModelo {
         this.fecha_vencimiento = fecha_vencimiento;
     }
 
-    public Terminos_envioModelo(int id_envio, int tipo_envio, String terminos, String descripcion_envio, Date fecha_vencimiento) {
+    public Terminos_envioModelo(int id_envio, int tipo_envio, String terminos, String descripcion_envio, Date fecha_vencimiento, byte envio) {
         this.id_envio = id_envio;
         this.tipo_envio = tipo_envio;
         this.terminos = terminos;
         this.descripcion_envio = descripcion_envio;
         this.fecha_vencimiento = fecha_vencimiento;
+        this.envio = envio;
     }
 
     public String getDescripcion_envio() {
