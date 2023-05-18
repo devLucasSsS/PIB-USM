@@ -14,10 +14,100 @@
     <!-- Custom CSS -->
     <link th:href="@{/main.css}" rel="stylesheet" />
     <!-- estilo propio -->
+    <style>
+    th{
+    width: 30%;
+    }
+    th, td {
+            padding: 5px;
+            text-align: left;
+            border: 1px solid black;
+
+        }
+
+
+
+    </style>
 </head>
 
 <body >
 <div th:insert="fragments/nav0 :: navUser0"></div>
+<div class="col-sm-6 col-sm-offset-3">
+    <div class="container-2">
+        <h1 style="text-align: center"> Detalles </h1>
+            <table class="table table-bordered table-striped mb-0">
+                <tr>
+                    <td colspan="2">
+                        <div style="text-align: center">
+                            <h4>Detalle Usuario</h4>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Rut</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Nombre</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div style="text-align: center">
+                            <h4>Detalle Libro</h4>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Titulo</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Autor</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Edicion</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Url</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div style="text-align: center">
+                            <h4>Detalle Instituciones</h4>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Institucion Prestataria</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Desde</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Institucion Prestadora</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>hacia</th>
+                    <td>a</td>
+                </tr>
+                <tr>
+                    <th>Url</th>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+</div>
 <p th:object="${peticion}"></p>
 <div th:if="${peticion.isPresent()}">
     <p th:object="${gestor}"></p>
