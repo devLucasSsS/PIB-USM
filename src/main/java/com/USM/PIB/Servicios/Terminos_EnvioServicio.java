@@ -15,7 +15,11 @@ public class Terminos_EnvioServicio {
         return terminosEnvioRepositorio.save(terminosEnvio);
     }
 
-    public Terminos_envioModelo getByIdPet(int idTerminosEnvio) {
-        return terminosEnvioRepositorio.getByIdPet(idTerminosEnvio);
+    public Terminos_envioModelo getByIdPet0(int idPeticion) {
+        return terminosEnvioRepositorio.getByIdPet0(idPeticion);
     }
+    public Terminos_envioModelo getByIdPet1(int idPeticion) {
+        return terminosEnvioRepositorio.getByIdPet1(idPeticion);
+    }
+
 }

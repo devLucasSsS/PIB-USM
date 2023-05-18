@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface Terminos_EnvioRepositorio extends JpaRepository<Terminos_envioModelo,Integer> {
-    @Query("SELECT t FROM Terminos_envioModelo t WHERE t.id_envio =?1")
-    Terminos_envioModelo getByIdPet(int idTerminosEnvio);
+    @Query("SELECT t FROM Terminos_envioModelo t WHERE t.id_peticion =?1 AND envio=0")
+    Terminos_envioModelo getByIdPet0(int idPeticion);
+        @Query("SELECT t FROM Terminos_envioModelo t WHERE t.id_peticion =?1 AND envio=1 ORDER BY t.id_envio DESC LIMIT 1")
+        Terminos_envioModelo getByIdPet1(int idPeticion);
 }

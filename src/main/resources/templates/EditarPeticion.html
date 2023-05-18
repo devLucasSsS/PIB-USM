@@ -6,7 +6,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-     <script
+    <script
             src="https://code.jquery.com/jquery-3.6.4.js"
             integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
             crossorigin="anonymous"></script>
@@ -17,114 +17,163 @@
 </head>
 
 <body >
-    <div th:insert="fragments/nav0 :: navUser0"></div>
-    <p th:object="${peticion}"></p>
-      <div th:if="${peticion.isPresent()}">
-          <div class="col-sm-6 col-sm-offset-3">
-              <div th:if="${peticion.get().id_estado == 1}">
-                  <div class="container-3" style="ce" >
-                      <form id="form1">
-                          <label>El usuario solicitante existe?</label>
-                          <input type="radio" id="opcion1U" name="usuario" value="1">
-                          <label for="opcion1U">Si</label>
-                          <input type="radio" id="opcion2U" name="usuario" value="0">
-                          <label for="opcion2U">No</label><br>
-                          <button type="button" onclick="Enviar(1)">Enviar</button>
-                      </form>
-                  </div>
-              </div>
-              <div th:if="${peticion.get().id_estado == 3}">
-                  <div class="container-3" >
-                      <form id="form2">
-                          <label>Hay stock vigente?</label>
-                          <input type="radio" id="opcion1S" name="stock" value="1">
-                          <label for="opcion1S">Si</label>
-                          <input type="radio" id="opcion2S" name="stock" value="0">
-                          <label for="opcion2S">No</label> <br>
-                          <button type="button" onclick="Enviar(2)">Enviar</button>
-                      </form>
-                  </div>
-              </div>
-              <div th:if="${peticion.get().id_estado == 4}" >
-                  <div class="container-3" >
-                      <form id="form3">
-                          <p th:object="${terminosRes}"></p>
-                          <p th:object="${tipoRes}"></p>
-                          <p  th:text="${terminosRes.terminos}"></p>
-                          <p th:text="${tipoRes.tipo}"></p>
-                          <p th:text="${terminosRes.descripcion_envio}"></p>
-                          <p type="date" disabled="disabled" th:text="${terminosRes.fecha_vencimiento}"></p>
-                          <label>Acepta los terminos?</label>
-                          <input type="radio" id="opcion1T" name="acepta" value="1">
-                          <label for="opcion1S">Si</label>
-                          <input type="radio" id="opcion2T" name="acepta" value="0">
-                          <label for="opcion2S">No</label><br>
-                          <button type="button" onclick="Enviar(3)">Enviar</button>
-                      </form>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div id="terminosDiv" th:object="${terminos_envio}" th:if="${peticion.get().id_estado == 7}">
-          <div class="col-sm-6 col-sm-offset-3">
-            <div class="container-2" >
-              <h1 style="text-align: center;">VALIDACIÓN</h1>
-              <form method="post" th:object="${terminos_envio}">
-                  <p hidden="hidden" th:object="${peticion}"></p>
-                  <h1>Terminos de envio</h1>
+<div th:insert="fragments/nav0 :: navUser0"></div>
+<p th:object="${peticion}"></p>
+<div th:if="${peticion.isPresent()}">
+    <p th:object="${gestor}"></p>
+    <div class="col-sm-6 col-sm-offset-3">
+        <div th:if="${peticion.get().id_estado == 1}">
+            <div class="container-3" style="ce" >
+                <form id="form1">
+                    <label>El usuario solicitante existe?</label>
+                    <input type="radio" id="opcion1U" name="usuario" value="1">
+                    <label for="opcion1U">Si</label>
+                    <input type="radio" id="opcion2U" name="usuario" value="0">
+                    <label for="opcion2U">No</label><br>
+                    <button type="button" onclick="Enviar(1)">Enviar</button>
+                </form>
+            </div>
+        </div>
+        <div th:if="${peticion.get().id_estado == 3 && peticion.get().id_biblioteca_prestadora == gestor.id_biblioteca}">
+            <div class="container-3" >
+                <form id="form2">
+                    <label>Hay stock vigente?</label>
+                    <input type="radio" id="opcion1S" name="stock" value="1">
+                    <label for="opcion1S">Si</label>
+                    <input type="radio" id="opcion2S" name="stock" value="0">
+                    <label for="opcion2S">No</label> <br>
+                    <button type="button" onclick="Enviar(2)">Enviar</button>
+                </form>
+            </div>
+        </div>
+        <p th:object="${terminosDevolucion}"></p>
+        <div th:if="${peticion.get().id_estado == 4 && peticion.get().id_biblioteca_prestataria == gestor.id_biblioteca && terminosDevolucion == null}" >
+            <div class="container-3" >
+                <form id="form3">
+                    <p th:object="${terminosEnvio}"></p>
+                    <p th:object="${tipoEnvio}"></p>
+                    <p  th:text="${terminosEnvio.terminos}"></p>
+                    <p th:text="${tipoEnvio.tipo}"></p>
+                    <p th:text="${terminosEnvio.descripcion_envio}"></p>
+                    <p type="date" disabled="disabled" th:text="${terminosEnvio.fecha_vencimiento}"></p>
+                    <label>Acepta los terminos?</label>
+                    <input type="radio" id="opcion1T" name="acepta" value="1">
+                    <label for="opcion1S">Si</label>
+                    <input type="radio" id="opcion2T" name="acepta" value="0">
+                    <label for="opcion2S">No</label><br>
+                    <button type="button" onclick="Enviar(3)">Enviar</button>
+                </form>
+            </div>
+        </div>
+        <p th:object="${terminosDevolucion}"></p>
+        <p th:object="${tipoEnvioDevolucion}"></p>
+        <div th:if="${peticion.get().id_estado == 4 && peticion.get().id_biblioteca_prestadora == gestor.id_biblioteca && terminosDevolucion != null }" >
+            <div class="container-3" >
+                <form id="form4">
+                    <p th:object="${terminosDevolucion}"></p>
+                    <p th:object="${tipoEnvioDevolucion}"></p>
+                    <p  th:text="${terminosDevolucion.terminos}"></p>
+                    <p th:text="${tipoEnvioDevolucion.tipo}"></p>
+                    <p th:text="${terminosDevolucion.descripcion_envio}"></p>
+                    <label>Acepta los terminos?</label>
+                    <input type="radio" id="opcion1D" name="acepta" value="1">
+                    <label for="opcion1S">Si</label>
+                    <input type="radio" id="opcion2D" name="acepta" value="0">
+                    <label for="opcion2S">No</label><br>
+                    <button type="button" onclick="Enviar(4)">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<p th:object="${gestor}"></p>
+<div id="terminosDivEnvio" th:object="${terminos_envio}" th:if="${peticion.get().id_estado == 9 && peticion.get().id_biblioteca_prestadora == gestor.id_biblioteca}">
+    <div class="col-sm-6 col-sm-offset-3">
+        <div class="container-2" >
+            <h1 style="text-align: center;">Terminos de envio</h1>
+            <form method="post" th:object="${terminos_envio}">
+                <p hidden="hidden" th:object="${peticion}"></p>
+                <h1>Terminos de envio</h1>
                 <label for="terminos">Ingrese los terminos y condiciones para el prestatario</label><br>
                 <textarea id="terminos" class="form-control" th:field="*{terminos}"></textarea><br>
                 <label for="tipoEnvioText">Ingresa el tipo de envio</label><br>
                 <input id="tipoEnvioText" class="form-control" type="text" th:object="${tipo_envio}" th:field="*{tipo}"><br>
-                  <label for="DescripcionEnvio">Ingrese una descripcion del tipo de envio</label><br>
-                  <input id="DescripcionEnvio" class="form-control" type="text" th:field="*{descripcion_envio}"><br>
-                  <label for="FechaVencimiento">Ingrese una fecha de vencimiento</label>
-                  <input type="date" class="form-control" id="FechaVencimiento" th:field="*{fecha_vencimiento}"><br>
-                  <input hidden="hidden" th:field="*{envio}" th:value="0">
-                  <button type="submit">Enviar Terminos</button>
-              </form>
-          </div>
+                <label for="DescripcionEnvio">Ingrese una descripcion del tipo de envio</label><br>
+                <input id="DescripcionEnvio" class="form-control" type="text" th:field="*{descripcion_envio}"><br>
+                <label for="FechaVencimiento">Ingrese una fecha de vencimiento</label>
+                <input type="date" class="form-control" id="FechaVencimiento" th:field="*{fecha_vencimiento}"><br>
+                <input hidden="hidden" th:field="*{envio}" th:value="0">
+                <button type="submit">Enviar Terminos</button>
+            </form>
         </div>
-      </div>
-    <script>
+    </div>
+</div>
+<div id="terminosDivDevolucion" th:object="${terminos_envio}" th:if="${(peticion.get().id_estado == 10 && peticion.get().id_biblioteca_prestataria == gestor.id_biblioteca) ||(peticion.get().id_estado == 8 && peticion.get().id_biblioteca_prestataria == gestor.id_biblioteca)}">
+    <div class="col-sm-6 col-sm-offset-3">
+        <div class="container-2" >
+            <h1 style="text-align: center;">Terminos de envio</h1>
+            <form method="post" th:object="${terminos_envio}">
+                <p hidden="hidden" th:object="${peticion}"></p>
+                <h1>Terminos de envio</h1>
+                <label for="terminosDevolucion">Ingrese los terminos y condiciones para el Prestador</label><br>
+                <textarea id="terminosDevolucion" class="form-control" th:field="*{terminos}"></textarea><br>
+                <label for="tipoEnvioTextDevolucion">Ingresa el tipo de envio</label><br>
+                <input id="tipoEnvioTextDevolucion" class="form-control" type="text" th:object="${tipo_envio}" th:field="*{tipo}"><br>
+                <label for="DescripcionEnvioDevolucion">Ingrese una descripcion del tipo de envio</label><br>
+                <input id="DescripcionEnvioDevolucion" class="form-control" type="text" th:field="*{descripcion_envio}"><br>
+<!--                <label for="FechaVencimientoDevolucion">Ingrese una fecha de vencimiento</label>-->
+<!--                <input type="date" class="form-control" id="FechaVencimientoDevolucion" th:field="*{fecha_vencimiento}"><br>-->
+                <input hidden="hidden" th:field="*{envio}" id="envioDevolucion">
+                <button type="submit">Enviar Terminos</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
     window.addEventListener('DOMContentLoaded', (event) => {
       const cuerpoMensajes = document.getElementById('cuerpoMensajes');
       cuerpoMensajes.scrollTop = cuerpoMensajes.scrollHeight;
     });
   </script>
-        <div class="col-sm-6 col-sm-offset-3">
-            <div class="container-2" >
-                    <h2>MENSAJES</h2>
-                <div  th:fragment="mensajeFr">
-                    <p th:object="${rut}"></p>
-                    <ul id="cuerpoMensajes" style="display: flex; flex-direction: column; overflow-y: scroll; height: 550px;">
-                        <div th:each="mensajeGet : ${mensajes}" style=" padding-top: 10px; padding-bottom: 10px;">
-                            <div th:if="${mensajeGet.rut_gestor != rut  }" class="container" style="background: #b9f8fa; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;float: left; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
-                                <p th:text="${mensajeGet.mensaje}"></p>
-                                <p th:text="${mensajeGet.fecha_mensaje}"></p>
-                            </div>
-                            <div th:if="${mensajeGet.rut_gestor == rut}" class="container" style="background: #c0f772; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;float: right; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
-                                <p th:text="${mensajeGet.mensaje}"></p>
-                                <p th:text="${mensajeGet.fecha_mensaje}"></p>
-                            </div>
-                        </div>
-                    </ul>
+<div class="col-sm-6 col-sm-offset-3">
+    <div class="container-2" >
+        <h2>MENSAJES</h2>
+        <div  th:fragment="mensajeFr">
+            <p th:object="${gestor}"></p>
+            <ul id="cuerpoMensajes" style="display: flex; flex-direction: column; overflow-y: scroll; height: 550px;">
+                <div th:each="mensajeGet : ${mensajes}" style=" padding-top: 10px; padding-bottom: 10px;">
+                    <div th:if="${mensajeGet.rut_gestor != gestor.rut_gestor  }" class="container" style="background: #b9f8fa; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;float: left; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
+                        <p th:text="${mensajeGet.mensaje}"></p>
+                        <p th:text="${mensajeGet.fecha_mensaje}"></p>
+                    </div>
+                    <div th:if="${mensajeGet.rut_gestor == gestor.rut_gestor}" class="container" style="background: #c0f772; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;float: right; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
+                        <p th:text="${mensajeGet.mensaje}"></p>
+                        <p th:text="${mensajeGet.fecha_mensaje}"></p>
+                    </div>
                 </div>
-                        <form  th:object="${mensaje}"  id="formMensajes">
-                            <input hidden="hidden" id="rut_gestor" th:field="*{rut_gestor}">
-                            <input type="date" hidden="hidden" id="hora_local" th:field="*{fecha_mensaje}">
-                            <input type="text" class="form-control"  th:field="*{mensaje}">
-                            <input hidden="hidden" th:field="${peticion.id_peticion}">
-                            <button onclick="EnviarMensaje()">Enviar</button>
-                        </form>
-            </div>
+            </ul>
         </div>
+        <form  th:object="${mensaje}"  id="formMensajes">
+            <input hidden="hidden" id="rut_gestor" th:field="*{rut_gestor}">
+            <input type="date" hidden="hidden" id="hora_local" th:field="*{fecha_mensaje}">
+            <input type="text" class="form-control"  th:field="*{mensaje}">
+            <input hidden="hidden" th:field="${peticion.id_peticion}">
+            <button onclick="EnviarMensaje()">Enviar</button>
+        </form>
+    </div>
+</div>
+<script>
+  envio = document.getElementById("envioDevolucion");
+  if(envio){
+    envio.value = 1;
+  }
+</script>
 <script>
   hora_local = document.getElementById("hora_local");
   date = new Date();
   hora_local.value = date.toISOString().slice(0, 10);
 </script>
-    <script>
+<script>
   $(document).ready(function() {
     // Manejar el evento submit del formulario
     $('#formMensajes').submit(function(event) {
@@ -152,7 +201,7 @@
   });
 </script>
 
-    <script>
+<script>
       $(document).ready(function() {
 
   $.ajax({
@@ -171,7 +220,7 @@
     });
 
 </script>
-    <script>
+<script>
       function Enviar(form) {
         var url = window.location.href;
         var id = url.substring(url.lastIndexOf('/') + 1);
@@ -210,9 +259,9 @@
             const form = document.getElementById("form2");
             const ValStock = form.elements["stock"].value;
             if(ValStock == 0){
-                //ENVIAR ESTADO 10
+                //ENVIAR ESTADO 13 PENDIENTE
                 $.ajax({
-                     url: 'http://localhost:8080/peticion/'+id+'/'+10,
+                     url: 'http://localhost:8080/peticion/'+id+'/'+13,
                      type: 'PUT',
                      success: function (data) {
                         window.location.href = "http://localhost:8080/peticiones";
@@ -222,13 +271,13 @@
                      }
                 });
             }else{
-                //ENVIAR ESTADO 7
+                //ENVIAR ESTADO 9 PETICION VALIDADA
                 $.ajax({
-                 url: 'http://localhost:8080/peticion/'+id+'/'+7,
+                 url: 'http://localhost:8080/peticion/'+id+'/'+9,
                  type: 'PUT',
                  success: function (data) {
                     form.style.display="none";
-                    const form = document.getElementById("Terminos");
+                    const form = document.getElementById("terminosDivEnvio");
                     form.style.display="block";
                  },
                  error: function () {
@@ -241,7 +290,7 @@
             const form = document.getElementById("form3");
             const acepta = form.elements["acepta"].value;
             if(acepta == 0){
-                //ENVIAR ESTADO 6
+                //ENVIAR ESTADO 6 TERMINOS ENVIO RECHAZADOS
                 $.ajax({
                      url: 'http://localhost:8080/peticion/'+id+'/'+6,
                      type: 'PUT',
@@ -253,9 +302,38 @@
                      }
                 });
             }else{
-                //ENVIAR ESTADO 5
+                //ENVIAR ESTADO 5 TERMINOS ENVIO ACEPTADOS
                 $.ajax({
                  url: 'http://localhost:8080/peticion/'+id+'/'+5,
+                 type: 'PUT',
+                 success: function (data) {
+                    form.style.display="none";
+                 },
+                 error: function () {
+                    alert('Ha ocurrido un error');
+                 }
+              });
+            }
+        }
+        if(form == 4){
+            const form = document.getElementById("form4");
+            const acepta = form.elements["acepta"].value;
+            if(acepta == 0){
+                //ENVIAR ESTADO 8 TERMINOS DEVOLUCION RECHAZADOS
+                $.ajax({
+                     url: 'http://localhost:8080/peticion/'+id+'/'+8,
+                     type: 'PUT',
+                     success: function (data) {
+                        window.location.href = "http://localhost:8080/peticiones";
+                     },
+                     error: function () {
+                        alert('Ha ocurrido un error');
+                     }
+                });
+            }else{
+                //ENVIAR ESTADO 7 TERMINOS DEVOLUCION ACEPTADOS
+                $.ajax({
+                 url: 'http://localhost:8080/peticion/'+id+'/'+7,
                  type: 'PUT',
                  success: function (data) {
                     form.style.display="none";

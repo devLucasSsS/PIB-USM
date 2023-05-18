@@ -74,24 +74,31 @@ public class vistaControlador {
     @GetMapping(path = "peticion/{id}")
     public ModelAndView editarPeticion(@PathVariable("id") int id, HttpSession session){
         GestorModelo data = gestorControlador.getDataSession(session);
+        var vista = new ModelAndView("EditarPeticion");
         if(data!=null){
             Optional<Peticion> pet = peticionControlador.getPeticionById(id);
             ArrayList<MensajesModelo> mensajes = mensajesControlador.getMensajesById(pet.get().getId_peticion());
-            Terminos_envioModelo terms = terminosEnvioServicio.getByIdPet(pet.get().getId_terminos_envio());
-            Tipo_envioModelo TipoEnv = new Tipo_envioModelo();
-            if(terms != null){
-                TipoEnv = tipoEnvioServicio.getByIdTerm(terms.getTipo_envio());
+            Terminos_envioModelo terms0 = terminosEnvioServicio.getByIdPet0(pet.get().getId_peticion());
+            Terminos_envioModelo terms1 = terminosEnvioServicio.getByIdPet1(pet.get().getId_peticion());
+            Tipo_envioModelo TipoEnv0 = new Tipo_envioModelo();
+            Tipo_envioModelo TipoEnv1 = new Tipo_envioModelo();
+            if(terms0 != null){
+                TipoEnv0 = tipoEnvioServicio.getByIdTerm(terms0.getTipo_envio());
+                    vista.addObject("terminosEnvio",terms0);
+                    vista.addObject("tipoEnvio",TipoEnv0);
             }
-            return new ModelAndView("EditarPeticion")
-                    .addObject("peticion",pet)
+            if(terms1 != null){
+                TipoEnv1 = tipoEnvioServicio.getByIdTerm(terms1.getTipo_envio());
+                vista.addObject("tipoEnvioDevolucion",TipoEnv1);
+                    vista.addObject("terminosDevolucion",terms1);
+            }
+                    vista.addObject("peticion",pet)
                     .addObject("terminos_envio",new Terminos_envioModelo())
                     .addObject("tipo_envio",new Tipo_envioModelo())
                     .addObject("mensajes",mensajes)
                     .addObject("mensaje", new MensajesModelo())
-                    .addObject("terminosRes",terms)
-                    .addObject("tipoRes",TipoEnv)
-                    .addObject("rut",data.getRut_gestor());
-
+                    .addObject("gestor",data);
+            return vista;
         }else{
             return new ModelAndView("redirect:/login");
         }
@@ -102,8 +109,9 @@ public class vistaControlador {
          Terminos_envioModelo terminos_envio){
         Tipo_envioModelo tipoE = tipoEnvioControlador.saveTipoEnvio(tipo_envio);
         terminos_envio.setTipo_envio(tipoE.getTipo_envio());
-        Terminos_envioModelo terminosE = terminosEnvioServicio.saveTerminosEnvio(terminos_envio);
-        peticionServicio.updateTerminosPeticion(id,terminosE.getId_envio());
+        terminos_envio.setId_peticion(id);
+        terminosEnvioServicio.saveTerminosEnvio(terminos_envio);
+        peticionServicio.updateTerminosPeticion(id);// NO OLVIDAR ACTUALIZAR EL ESTADOOO
         return new ModelAndView("redirect:/peticiones");
 //        return peticionServicio.savePeticion(peticion);
 
