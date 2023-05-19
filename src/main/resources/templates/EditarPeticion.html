@@ -220,7 +220,7 @@
                 </tr>
                 <tr>
                     <th>Enlace</th>
-                    <td><a th:href="${peticion.get().link}" th:text="${peticion.get().link}" Target="_blank"></a></td>
+                    <td><a th:href="${peticion.get().link}" Target="_blank">Aqui Va el link</a></td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -250,7 +250,7 @@
                         <p th:text="${mensajeGet.mensaje}"></p>
                         <p th:text="${mensajeGet.fecha_mensaje}"></p>
                     </div>
-                    <div th:if="${mensajeGet.rut_gestor == gestor.rut_gestor}" class="container" style="background: #c0f772; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;float: right; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px,; align-items: flex-end;">
+                    <div th:if="${mensajeGet.rut_gestor == gestor.rut_gestor}" class="container" style="background: #c0f772; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;float: right; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
                         <p style="opacity: 0.4;" th:id="'rut2-'+${mensajeGet.rut_gestor}+'-idM2-'+${mensajeGet.id_mensaje}"></p>
                         <p th:text="${mensajeGet.mensaje}"></p>
                         <p th:text="${mensajeGet.fecha_mensaje}"></p>
