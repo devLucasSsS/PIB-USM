@@ -162,8 +162,6 @@
                 <input id="tipoEnvioTextDevolucion" class="form-control" type="text" th:object="${tipo_envio}" th:field="*{tipo}"><br>
                 <label for="DescripcionEnvioDevolucion">Ingrese una descripcion del tipo de envio</label><br>
                 <input id="DescripcionEnvioDevolucion" class="form-control" type="text" th:field="*{descripcion_envio}"><br>
-<!--                <label for="FechaVencimientoDevolucion">Ingrese una fecha de vencimiento</label>-->
-<!--                <input type="date" class="form-control" id="FechaVencimientoDevolucion" th:field="*{fecha_vencimiento}"><br>-->
                 <input hidden="hidden" th:field="*{envio}" id="envioDevolucion">
                 <button type="submit">Enviar Terminos</button>
             </form>
@@ -248,12 +246,12 @@
             <ul id="cuerpoMensajes" style="display: flex; flex-direction: column; overflow-y: scroll; height: 550px;">
                 <div th:each="mensajeGet : ${mensajes}" style=" padding-top: 10px; padding-bottom: 10px;">
                     <div th:if="${mensajeGet.rut_gestor != gestor.rut_gestor  }" class="container" style="background: #b9f8fa; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;float: left; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
-                        <p style="opacity: 0.4;">Lucas</p>
+                        <p style="opacity: 0.4;" th:id="'rut1-'+${mensajeGet.rut_gestor}+'-idM1-'+${mensajeGet.id_mensaje}"></p>
                         <p th:text="${mensajeGet.mensaje}"></p>
                         <p th:text="${mensajeGet.fecha_mensaje}"></p>
                     </div>
                     <div th:if="${mensajeGet.rut_gestor == gestor.rut_gestor}" class="container" style="background: #c0f772; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;float: right; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px,; align-items: flex-end;">
-                        <p style="opacity: 0.4;">Lucas</p>
+                        <p style="opacity: 0.4;" th:id="'rut2-'+${mensajeGet.rut_gestor}+'-idM2-'+${mensajeGet.id_mensaje}"></p>
                         <p th:text="${mensajeGet.mensaje}"></p>
                         <p th:text="${mensajeGet.fecha_mensaje}"></p>
                     </div>
@@ -495,8 +493,44 @@ var bib2="";
         $.when(ajax3, ajax4).done(function() {
            $('#institucion2-' + id + '-bib2-' + id1).text(inst2 + " - " + bib2);
         });
-
-
+   });
+   $('td[id^="rut1-"]').each(function() {
+      var id = $(this).attr('id').split('-')[1];
+      var id1 = $(this).attr('id').split('-')[3];
+      $.ajax({
+           url: 'http://localhost:8080/gestor/' + id,
+           type: 'GET'
+        }).done(function(data) {
+           $('#rut1-' + id + '-idM1-' + id1).text(data.nombre);
+      });
+   });
+   $('p[id^="rut1-"]').each(function() {
+      var id = $(this).attr('id').split('-')[1];
+      var id1 = $(this).attr('id').split('-')[3];
+      $.ajax({
+         url: 'http://localhost:8080/gestor/'+id,
+         type: 'GET',
+         success: function (data) {
+           $('#rut1-' + id + '-idM1-' + id1).text(data.nombre);
+         },
+         error: function () {
+            alert('Ha ocurrido un error');
+         }
+      });
+   });
+   $('p[id^="rut2-"]').each(function() {
+      var id = $(this).attr('id').split('-')[1];
+      var id1 = $(this).attr('id').split('-')[3];
+      $.ajax({
+         url: 'http://localhost:8080/gestor/'+id,
+         type: 'GET',
+         success: function (data) {
+           $('#rut2-' + id + '-idM2-' + id1).text(data.nombre);
+         },
+         error: function () {
+            alert('Ha ocurrido un error');
+         }
+      });
    });
 
 </script>

@@ -17,4 +17,8 @@ public class GestorServicio {
     public GestorModelo getData(String rut){
         return gestorRepositorio.findByRut(rut);
     }
+
+    public GestorModelo getByRut(String rut) {
+        return gestorRepositorio.findByRut(rut);
+    }
 }

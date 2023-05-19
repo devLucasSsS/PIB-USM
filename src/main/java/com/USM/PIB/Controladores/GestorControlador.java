@@ -16,18 +16,24 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping("/gestor")
 public class GestorControlador {
+    @Autowired
+    private GestorServicio gestorServicio;
     @GetMapping()
     public GestorModelo getDataSession(HttpSession session){
-
         GestorModelo dat = (GestorModelo) session.getAttribute("gestor");
         if(dat != null){
             GestorModelo g = new GestorModelo();
             g.setRut_gestor(dat.getRut_gestor());
             g.setId_biblioteca(dat.getId_biblioteca());
             g.setId_nivel(dat.getId_nivel());
+            g.setNombre(dat.getNombre());
             return g;
         }else{
             return null;
         }
+    }
+    @GetMapping(path = "/{rut}")
+    public GestorModelo getGestorByrut(@PathVariable("rut") String rut){
+        return gestorServicio.getByRut(rut);
     }
 }
