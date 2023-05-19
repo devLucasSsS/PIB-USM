@@ -82,6 +82,7 @@ public class vistaControlador {
             Terminos_envioModelo terms1 = terminosEnvioServicio.getByIdPet1(pet.get().getId_peticion());
             Tipo_envioModelo TipoEnv0 = new Tipo_envioModelo();
             Tipo_envioModelo TipoEnv1 = new Tipo_envioModelo();
+            Prestatario prestatario = prestatarioControlador.getPrestatarioByRut(pet.get().getRut_prestatario());
             if(terms0 != null){
                 TipoEnv0 = tipoEnvioServicio.getByIdTerm(terms0.getTipo_envio());
                     vista.addObject("terminosEnvio",terms0);
@@ -97,6 +98,7 @@ public class vistaControlador {
                     .addObject("tipo_envio",new Tipo_envioModelo())
                     .addObject("mensajes",mensajes)
                     .addObject("mensaje", new MensajesModelo())
+                    .addObject("prestatario",prestatario)
                     .addObject("gestor",data);
             return vista;
         }else{

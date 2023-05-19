@@ -18,8 +18,7 @@ public class BibliotecaServicio {
     public ArrayList<BibliotecaModelo> getBibliotecasByInstitucion(int id){
         return (ArrayList<BibliotecaModelo>) bibliotecaRepositorio.findByInstitucion(id);
     }
-
-    public BibliotecaModelo getBibliotecaByIdPeticion(int id) {
-        return bibliotecaRepositorio.getByIdPeticion(id);
+    public BibliotecaModelo getBibliotecaById(int id) {
+        return bibliotecaRepositorio.findByIdB(id);
     }
 }

@@ -266,7 +266,7 @@
       var id = $(this).attr('id').split('-')[1];
       var id1 = $(this).attr('id').split('-')[3];
       $.ajax({
-         url: 'http://localhost:8080/bibliotecas/bib/'+id,
+         url: 'http://localhost:8080/bibliotecas/'+id+'/bib',
          type: 'GET',
          success: function (data) {
             $('#biblioteca-'+id+'-idP-'+id1).text(data.nombre_biblioteca);

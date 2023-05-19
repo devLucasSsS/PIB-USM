@@ -36,4 +36,13 @@ public class BibliotecaModelo {
     public void setId_institucion(int id_institucion) {
         this.id_institucion = id_institucion;
     }
+
+    public BibliotecaModelo(int id_biblioteca, String nombre_biblioteca, int id_institucion) {
+        this.id_biblioteca = id_biblioteca;
+        this.nombre_biblioteca = nombre_biblioteca;
+        this.id_institucion = id_institucion;
+    }
+
+    public BibliotecaModelo() {
+    }
 }

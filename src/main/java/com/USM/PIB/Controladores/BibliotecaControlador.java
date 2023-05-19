@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 
-@Controller
 @RestController
-@RequestMapping("bibliotecas")
+@RequestMapping("/bibliotecas")
 public class BibliotecaControlador {
     @Autowired
     BibliotecaServicio bibliotecaServicio;
@@ -22,9 +21,9 @@ public class BibliotecaControlador {
     public ArrayList<BibliotecaModelo> getBibliotecasByInstitucion(@PathVariable("id") int id){
         return bibliotecaServicio.getBibliotecasByInstitucion(id);
     }
-    @GetMapping(path = "/bib/{id}")
-    public BibliotecaModelo getBibliotecaByIdPeticion(@PathVariable("id") int id){
-        return bibliotecaServicio.getBibliotecaByIdPeticion(id);
+    @GetMapping(path = "/{id}/bib")
+    public BibliotecaModelo getBibliotecaById(@PathVariable("id") int id){
+        return bibliotecaServicio.getBibliotecaById(id);
     }
 
 }
