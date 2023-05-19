@@ -15,103 +15,46 @@
     <link th:href="@{/main.css}" rel="stylesheet" />
     <!-- estilo propio -->
     <style>
+            table {
+            width: 20%; /* Ajusta el ancho total de la tabla */
+            border-collapse: collapse; /* Combina los bordes de las celdas */
+        }
     th{
-    width: 30%;
+    width: 10%;
     }
-    th, td {
-            padding: 5px;
+     td {
+            width:30%;
             text-align: left;
-            border: 1px solid black;
-
         }
 
+    .container-2 {
+        margin: 10px;
+        height: 720px;
+        width: 520px;
+    }
+    .col-sm-6{
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: 12%;
+    width: 1200px;
 
+    }
 
     </style>
 </head>
 
 <body >
 <div th:insert="fragments/nav0 :: navUser0"></div>
-<div class="col-sm-6 col-sm-offset-3">
-    <div class="container-2">
-        <h1 style="text-align: center"> Detalles </h1>
-            <table class="table table-bordered table-striped mb-0">
-                <tr>
-                    <td colspan="2">
-                        <div style="text-align: center">
-                            <h4>Detalle Usuario</h4>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Rut</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>Nombre</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>Email</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <div style="text-align: center">
-                            <h4>Detalle Libro</h4>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Titulo</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>Autor</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>Edicion</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>Url</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <div style="text-align: center">
-                            <h4>Detalle Instituciones</h4>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Institucion Prestataria</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>Desde</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>Institucion Prestadora</th>
-                    <td></td>
-                </tr>
-                <tr>
-                    <th>hacia</th>
-                    <td>a</td>
-                </tr>
-                <tr>
-                    <th>Url</th>
-                    <td></td>
-                </tr>
-            </table>
-        </div>
-</div>
 <p th:object="${peticion}"></p>
 <div th:if="${peticion.isPresent()}">
     <p th:object="${gestor}"></p>
     <div class="col-sm-6 col-sm-offset-3">
+
         <div th:if="${peticion.get().id_estado == 1}">
             <div class="container-3" style="ce" >
                 <form id="form1">
@@ -226,6 +169,80 @@
     });
   </script>
 <div class="col-sm-6 col-sm-offset-3">
+    <div class="container-2">
+        <h1 style="text-align: center"> Detalles </h1>
+            <table class="table table-bordered table-striped mb-0">
+                <tr>
+                    <td colspan="2">
+                        <div style="text-align: center">
+                            <h4>Detalle Usuario</h4>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Rut</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Nombre</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div style="text-align: center">
+                            <h4>Detalle Libro</h4>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Titulo</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Autor</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Edicion</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Url</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div style="text-align: center">
+                            <h4>Detalle Instituciones</h4>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Institucion Prestataria</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Desde</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>Institucion Prestadora</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>hacia</th>
+                    <td>a</td>
+                </tr>
+                <tr>
+                    <th>Url</th>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
     <div class="container-2" >
         <h2>MENSAJES</h2>
         <div  th:fragment="mensajeFr">

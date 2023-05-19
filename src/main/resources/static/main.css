@@ -67,10 +67,11 @@
     display: block;
     }
     .container-2{
-            margin-top: 5px;
-            margin-bottom: 5px;
-            padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        height: fit-content;
     }
     .cristal {
       position: relative;
@@ -116,5 +117,9 @@
       top: 0;
       background-color: #fff;
       }
+    .table>tbody>tr>th{
+      padding: 1px;
+
+    }
 
 </style>
