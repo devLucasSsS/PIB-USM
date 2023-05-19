@@ -168,12 +168,7 @@
         </div>
     </div>
 </div>
-<script>
-    window.addEventListener('DOMContentLoaded', (event) => {
-      const cuerpoMensajes = document.getElementById('cuerpoMensajes');
-      cuerpoMensajes.scrollTop = cuerpoMensajes.scrollHeight;
-    });
-  </script>
+
 <div class="col-sm-6 col-sm-offset-3">
     <div class="container-2">
         <h1 style="text-align: center"> Detalles </h1>
@@ -314,7 +309,6 @@
         type: "GET",
         dataType: "json",
         success: function(data) {
-          console.log(data);
           rut = document.getElementById("rut_gestor");
           rut.value = data.rut_gestor;
         },
@@ -452,10 +446,13 @@
       }
     </script>
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
 var inst1 = "";
 var bib1="";
 var inst2 = "";
 var bib2="";
+var titulo1 = "";
+var titulo2 = "";
     $('td[id^="institucion1-"]').each(function() {
       var id = $(this).attr('id').split('-')[1];
       var id1 = $(this).attr('id').split('-')[3];
@@ -464,6 +461,7 @@ var bib2="";
            type: 'GET'
         }).done(function(data) {
            inst1 = data.siglas_institucion;
+           titulo1 = data.nombre_institucion;
       });
       var ajax2 = $.ajax({
            url: 'http://localhost:8080/bibliotecas/' + id1 + '/bib',
@@ -472,7 +470,8 @@ var bib2="";
            bib1 = data.nombre_biblioteca;
       });
         $.when(ajax1, ajax2).done(function() {
-           $('#institucion1-' + id + '-bib1-' + id1).text(inst1 + " - " + bib1);
+           $('#institucion1-' + id + '-bib1-' + id1).text(inst1 + " - " + bib1)
+           .attr('title',titulo1);
         });
    });
    $('td[id^="institucion2-"]').each(function() {
@@ -483,6 +482,8 @@ var bib2="";
            type: 'GET'
         }).done(function(data) {
            inst2 = data.siglas_institucion;
+           titulo2 = data.nombre_institucion;
+
       });
       var ajax4 = $.ajax({
            url: 'http://localhost:8080/bibliotecas/' + id1 + '/bib',
@@ -491,20 +492,21 @@ var bib2="";
            bib2 = data.nombre_biblioteca;
       });
         $.when(ajax3, ajax4).done(function() {
-           $('#institucion2-' + id + '-bib2-' + id1).text(inst2 + " - " + bib2);
+           $('#institucion2-' + id + '-bib2-' + id1).text(inst2 + " - " + bib2)
+           .attr('title',titulo2);
         });
    });
-   $('td[id^="rut1-"]').each(function() {
-      var id = $(this).attr('id').split('-')[1];
-      var id1 = $(this).attr('id').split('-')[3];
-      $.ajax({
-           url: 'http://localhost:8080/gestor/' + id,
-           type: 'GET'
-        }).done(function(data) {
-           $('#rut1-' + id + '-idM1-' + id1).text(data.nombre);
-      });
-   });
-   $('p[id^="rut1-"]').each(function() {
+   BajarScroll();
+    });
+</script>
+<script>
+   function BajarScroll(){
+       const cuerpoMensajes = document.getElementById('cuerpoMensajes');
+       cuerpoMensajes.scrollTop = cuerpoMensajes.scrollHeight;
+   }
+</script>
+<script>
+       $('p[id^="rut1-"]').each(function() {
       var id = $(this).attr('id').split('-')[1];
       var id1 = $(this).attr('id').split('-')[3];
       $.ajax({
@@ -532,8 +534,6 @@ var bib2="";
          }
       });
    });
-
 </script>
-
 </body>
 </html>

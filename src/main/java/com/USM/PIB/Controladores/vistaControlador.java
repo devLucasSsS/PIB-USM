@@ -151,4 +151,15 @@ public class vistaControlador {
         session.removeAttribute("gestor");
         return new ModelAndView("redirect:/login");
     }
-}
+    @GetMapping(path = "/GestionarUsuarios")
+    public ModelAndView GestionarUsuarios(){
+        return new ModelAndView("GestionarUsuarios");
+    }
+    @GetMapping(path = "/GestionarBibliotecas")
+    public ModelAndView GestionarBibliotecas(){
+        return new ModelAndView("GestionarBibliotecas");
+    }
+    @GetMapping(path = "/GestionarInstituciones")
+    public ModelAndView GestionarInstituciones(){
+        return new ModelAndView("GestionarInstituciones");
+}   }

@@ -72,6 +72,7 @@
           <div class="form-group">
             <label for="institucion">Institucion Prestataria (su institucion)</label>
             <select id="institucion" name="institucion" th:field="*{id_institucion_prestataria}" onchange="ReloadBibliotecas(this.value,'biblioteca')" >
+              <option th:value="0">Seleccione una opción</option>
               <option th:each="inst : ${institucion}"  th:value="${inst.id_institucion}" th:text="${inst.nombre_institucion}"></option>
             </select>
           </div>
@@ -83,6 +84,7 @@
           <div class="form-group">
             <label for="institucion1">Institucion Prestadora </label>
             <select id="institucion1" name="institucion1" th:field="*{id_institucion_prestadora}" onchange="ReloadBibliotecas(this.value,'biblioteca1')" >
+              <option th:value="0">Seleccione una opción</option>
               <option th:each="inst : ${institucion}"  th:value="${inst.id_institucion}" th:text="${inst.nombre_institucion}"></option>
             </select>
           </div>
@@ -142,20 +144,15 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-      var combo1 = document.getElementById("institucion");
-      var newOption1 = document.createElement("option");
-      newOption1.value = "1";
-      newOption1.text = "Seleccione una Opción";
       var combo2 = document.getElementById("biblioteca");
       var newOption2 = document.createElement("option");
       newOption2.value = "1";
-      newOption2.text = "Seleccione una Opción";
+      newOption2.text = "Seleccione una opción";
       combo2.appendChild(newOption2);
-      combo1.appendChild(newOption1);
       var combo3 = document.getElementById("biblioteca1");
       var newOption3 = document.createElement("option");
       newOption3.value = "1";
-      newOption3.text = "Seleccione una Opción";
+      newOption3.text = "Seleccione una opción";
       combo3.appendChild(newOption3);
     });
 </script>
