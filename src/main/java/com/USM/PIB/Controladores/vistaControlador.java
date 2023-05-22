@@ -155,9 +155,9 @@ public class vistaControlador {
     public ModelAndView GestionarUsuarios(){
         return new ModelAndView("GestionarUsuarios");
     }
-    @GetMapping(path = "/GestionarBibliotecas")
+    @GetMapping(path = "/GestonarRevisores")
     public ModelAndView GestionarBibliotecas(){
-        return new ModelAndView("GestionarBibliotecas");
+        return new ModelAndView("GestonarRevisores");
     }
     @GetMapping(path = "/GestionarInstituciones")
     public ModelAndView GestionarInstituciones(){
