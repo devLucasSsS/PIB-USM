@@ -195,6 +195,7 @@ public class vistaControlador {
     }
     @GetMapping(path = "/GestionarInstituciones")
     public ModelAndView GestionarInstituciones(){
-        return new ModelAndView("GestionarInstituciones");
+        ArrayList<InstitucionModelo> institucion = institucionServicio.getInstituciones();
+        return new ModelAndView("GestionarInstituciones").addObject("institucion",institucion);
     }
 }

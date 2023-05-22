@@ -87,7 +87,9 @@
                     <div class="form-group">
                         <label for="id_institucion1">ID Institución:</label>
                         <select id="id_institucion1" name="id_institucion" class="form-control"> <!--th:field="*{id_institucion}" required-->
-                            <option> <!--th:each="institucion : ${instituciones}" th:value="${institucion.id}" th:text="${institucion.nombre}"--></option>
+<!--                            <option> &lt;!&ndash;th:each="institucion : ${instituciones}" th:value="${institucion.id}" th:text="${institucion.nombre}"&ndash;&gt;</option>-->
+                            <option th:value="0">Seleccione una opción</option>
+                            <option th:each="inst : ${institucion}"  th:value="${inst.id_institucion}" th:text="${inst.nombre_institucion}"></option>
                         </select>
                     </div>
                     <thead>
