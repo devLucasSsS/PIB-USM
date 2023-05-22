@@ -86,42 +86,64 @@
                 <table class="table table-bordered table-striped mb-0">
                     <div class="form-group">
                         <label for="id_institucion1">ID Institución:</label>
-                        <select id="id_institucion1" name="id_institucion" class="form-control"> <!--th:field="*{id_institucion}" required-->
-<!--                            <option> &lt;!&ndash;th:each="institucion : ${instituciones}" th:value="${institucion.id}" th:text="${institucion.nombre}"&ndash;&gt;</option>-->
+                        <select id="id_institucion1" name="id_institucion" class="form-control" onchange="actualizarTabla()">
                             <option th:value="0">Seleccione una opción</option>
-                            <option th:each="inst : ${institucion}"  th:value="${inst.id_institucion}" th:text="${inst.nombre_institucion}"></option>
+                            <option th:each="inst : ${institucion}" th:value="${inst.id_institucion}" th:text="${inst.nombre_institucion}"></option>
                         </select>
                     </div>
                     <thead>
-                    <tr>
-                        <th>Column 1</th>
-                        <th>Column 2</th>
-                        <th>Column 3</th>
-                    </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>Value 1</td>
-                        <td>Value 2</td>
-                        <td>Value 3</td>
-                    </tr>
-                    <tr>
-                        <td>Value 4</td>
-                        <td>Value 5</td>
-                        <td>Value 6</td>
-                    </tr>
-                    <tr>
-                        <td>Value 7</td>
-                        <td>Value 8</td>
-                        <td>Value 9</td>
-                    </tr>
+                    <tbody id="tablaBibliotecas">
                     </tbody>
                 </table>
             </div>
         </div>
-
     </div>
 </div>
-
 </body>
+<script th:inline="javascript">
+  function actualizarTabla() {
+    var select = document.getElementById("id_institucion1");
+    var idInstitucion = select.value;
+
+    // Realizar una solicitud al servidor para obtener las bibliotecas correspondientes a la universidad seleccionada
+    // Puedes utilizar fetch o jQuery.ajax para enviar una solicitud AJAX al servidor
+
+    // Ejemplo utilizando fetch:
+    fetch("/bibliotecas/" + idInstitucion)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        var tablaBibliotecas = document.getElementById("tablaBibliotecas");
+        tablaBibliotecas.innerHTML = "";
+
+        data.forEach(function(biblioteca) {
+          var fila = document.createElement("tr");
+          var columna1 = document.createElement("td");
+          columna1.textContent = biblioteca.nombre_biblioteca;
+          fila.appendChild(columna1);
+
+
+          var columnaBoton = document.createElement("td");
+          var boton = document.createElement("button");
+          boton.textContent = "Borrar";
+          // Agregar el evento onclick del botón según tus necesidades
+          // Por ejemplo, puedes llamar a una función pasando el ID de la biblioteca
+          boton.onclick = function() {
+            // Tu lógica aquí
+            console.log("Botón presionado para la biblioteca con ID " + biblioteca.id_biblioteca);
+          };
+
+          columnaBoton.appendChild(boton);
+          fila.appendChild(columnaBoton);
+
+          tablaBibliotecas.appendChild(fila);
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
+</script>
 </html>
