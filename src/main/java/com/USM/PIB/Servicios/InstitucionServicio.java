@@ -18,4 +18,8 @@ public class InstitucionServicio {
     public InstitucionModelo getInstitucionById(int id){
         return institucionRepositorio.getInstitucionById(id);
     }
+
+    public InstitucionModelo addInstitucion(InstitucionModelo institucion) {
+        return institucionRepositorio.save(institucion);
+    }
 }

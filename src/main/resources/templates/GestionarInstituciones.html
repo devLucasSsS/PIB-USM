@@ -64,15 +64,15 @@
             </div>
             <div class="form-container">
                 <h2> Agregar institucion </h2>
-                <form action="" method="post" th:object="${formulario}">
+                <form action="" method="post" th:object="${institucionNueva}">
                     <div class="form-container2">
                         <div class="form-group">
                             <label for="nombre_institucion">Nombre Institución:</label>
-                            <input type="text" class="form-control" id="nombre_institucion" name="nombre_institucion" placeholder="Introduce el nombre de la institución"> <!--th:field="*{nombre_institucion}" required>-->
+                            <input type="text" class="form-control" id="nombre_institucion" name="nombre_institucion" th:field="*{nombre_institucion}" placeholder="Introduce el nombre de la institución"> <!--th:field="*{nombre_institucion}" required>-->
                         </div>
                         <div class="form-group">
                             <label for="siglas_institucion">Siglas Institución:</label>
-                            <input type="text" class="form-control" id="siglas_institucion" name="siglas_institucion" placeholder="Introduce las siglas de la institución"> <!-- th:field="*{siglas_institucion}" required> -->
+                            <input type="text" class="form-control" id="siglas_institucion" name="siglas_institucion" th:field="*{siglas_institucion}" placeholder="Introduce las siglas de la institución"> <!-- th:field="*{siglas_institucion}" required> -->
                         </div>
                     </div>
                     <button type="submit" id="enviar2" class="btn btn-primary">Enviar</button>
