@@ -17,24 +17,27 @@
 </head>
 <body>
 <div th:insert="fragments/nav0 :: navUser0"></div>
-<div class="container">
+<div class="container" th:if="${gestorExistente.id_nivel == 2}">
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
             <div class="form-container">
                 <h2>Agregar revisor</h2>
-                <form action="" method="post" th:object="${peticion}">
+                    <p th:object="${gestorExistente}"></p>
+                <form  method="post" th:object="${nuevoGestor}">
+                    <input hidden="hidden" th:field="*{id_biblioteca}" id="idBib" >
+                    <input hidden="hidden" th:field="${nuevoGestor.id_nivel}" id="idNivel">
                     <div class="form-container2">
                         <div class="form-group">
                             <label for="rut">Rut (sin puntos ni guión):</label>
-                            <input type="text" class="form-control" id="rut" name="rut" placeholder="Introduce tu rut" pattern="[0-9kK]+.{8,9}"  required>
+                            <input type="text" class="form-control" id="rut" name="rut" placeholder="Introduce tu rut" pattern="[0-9kK]+.{8,9}" th:field="*{rut_gestor}" required>
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre y apellido:</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Introduce tu nombre" th:object="${prestatario}"required>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Introduce tu nombre" th:field="*{nombre}"required>
                         </div>
                         <div class="form-group">
                             <label for="contraseña">Contraseña:</label>
-                            <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Introduce tu contraseña" th:object="${prestatario}" required>
+                            <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Introduce tu contraseña" th:field="*{password}" required>
                         </div>
                     </div>
                     <button type="submit" id="enviar" class="btn btn-primary">Enviar</button>
@@ -43,5 +46,23 @@
         </div>
     </div>
 </div>
+<script>
+  nivel = document.getElementById("idNivel");
+  idBib = document.getElementById("idBib");
+  if(nivel){
+    nivel.value = 3;
+  }
+  $.ajax({
+        url: "http://localhost:8080/gestor",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+           idBib.value = data.id_biblioteca;
+        },
+        error: function(error) {
+          reject(error);
+        },
+      });
+</script>
 </body>
 </html>

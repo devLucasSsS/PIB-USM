@@ -115,8 +115,6 @@ public class vistaControlador {
         terminosEnvioServicio.saveTerminosEnvio(terminos_envio);
         peticionServicio.updateTerminosPeticion(id);// NO OLVIDAR ACTUALIZAR EL ESTADOOO
         return new ModelAndView("redirect:/peticiones");
-//        return peticionServicio.savePeticion(peticion);
-
     }
     @GetMapping(path = "peticiones")
     public ModelAndView peticiones(HttpSession session){
@@ -151,13 +149,37 @@ public class vistaControlador {
         session.removeAttribute("gestor");
         return new ModelAndView("redirect:/login");
     }
-    @GetMapping(path = "/GestionarUsuarios")
-    public ModelAndView GestionarUsuarios(){
-        return new ModelAndView("GestionarUsuarios");
+    @GetMapping(path = "/GestionarGestores")
+    public ModelAndView GestionarGestores(HttpSession session){
+        GestorModelo data = gestorControlador.getDataSession(session);
+        if(data!=null){
+            return new ModelAndView("GestionarGestores")
+                    .addObject("nuevoGestor",new GestorModelo())
+                    .addObject("gestorExistente",data);
+
+        }else{
+            return new ModelAndView("redirect:/login");
+        }
     }
-    @GetMapping(path = "/GestonarRevisores")
-    public ModelAndView GestionarBibliotecas(){
-        return new ModelAndView("GestonarRevisores");
+    @GetMapping(path = "/GestionarRevisores")
+    public ModelAndView GestionarRevisores(HttpSession session){
+        GestorModelo data = gestorControlador.getDataSession(session);
+        if(data!=null){
+            return new ModelAndView("GestionarRevisores")
+                    .addObject("nuevoGestor",new GestorModelo())
+                    .addObject("gestorExistente",data);
+
+        }else{
+            return new ModelAndView("redirect:/login");
+        }
+    }
+    @PostMapping(path = "/GestionarRevisores")
+    public ModelAndView AgregarRevisores(GestorModelo gestor){
+        GestorModelo verificar = gestorControlador.getGestorByrut(gestor.getRut_gestor());
+        if (verificar == null){
+            gestorControlador.addGestor(gestor);
+        }
+        return new ModelAndView("redirect:/peticiones");
     }
     @GetMapping(path = "/GestionarInstituciones")
     public ModelAndView GestionarInstituciones(){

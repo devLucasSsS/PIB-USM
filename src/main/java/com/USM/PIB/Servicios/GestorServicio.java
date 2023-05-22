@@ -21,4 +21,8 @@ public class GestorServicio {
     public GestorModelo getByRut(String rut) {
         return gestorRepositorio.findByRut(rut);
     }
+
+    public GestorModelo addGestor(GestorModelo gestor) {
+        return gestorRepositorio.save(gestor);
+    }
 }

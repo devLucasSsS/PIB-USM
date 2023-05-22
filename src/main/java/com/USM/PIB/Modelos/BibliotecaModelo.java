@@ -12,6 +12,8 @@ public class BibliotecaModelo {
     private String nombre_biblioteca;
     @Column
     private int id_institucion;
+    @Column
+    private int habilitado;
 
     public int getId_biblioteca() {
         return id_biblioteca;
@@ -37,10 +39,11 @@ public class BibliotecaModelo {
         this.id_institucion = id_institucion;
     }
 
-    public BibliotecaModelo(int id_biblioteca, String nombre_biblioteca, int id_institucion) {
+    public BibliotecaModelo(int id_biblioteca, String nombre_biblioteca, int id_institucion, int habilitado) {
         this.id_biblioteca = id_biblioteca;
         this.nombre_biblioteca = nombre_biblioteca;
         this.id_institucion = id_institucion;
+        this.habilitado = habilitado;
     }
 
     public BibliotecaModelo() {

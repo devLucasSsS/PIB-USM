@@ -36,4 +36,9 @@ public class GestorControlador {
     public GestorModelo getGestorByrut(@PathVariable("rut") String rut){
         return gestorServicio.getByRut(rut);
     }
+
+    @PostMapping
+    public GestorModelo addGestor(GestorModelo gestor){
+        return gestorServicio.addGestor(gestor);
+    }
 }
