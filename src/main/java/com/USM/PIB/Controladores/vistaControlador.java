@@ -162,4 +162,5 @@ public class vistaControlador {
     @GetMapping(path = "/GestionarInstituciones")
     public ModelAndView GestionarInstituciones(){
         return new ModelAndView("GestionarInstituciones");
-}   }
+    }
+}
