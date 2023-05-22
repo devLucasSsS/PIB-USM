@@ -15,6 +15,14 @@ public class BibliotecaModelo {
     @Column
     private int habilitado;
 
+    public int getHabilitado() {
+        return habilitado;
+    }
+
+    public void setHabilitado(int habilitado) {
+        this.habilitado = habilitado;
+    }
+
     public int getId_biblioteca() {
         return id_biblioteca;
     }

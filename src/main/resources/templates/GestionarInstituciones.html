@@ -14,7 +14,8 @@
     <!-- estilo propio -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-<style>
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    <style>
     .form-container {
     background-color: #fff;
     padding: 20px;
@@ -42,21 +43,19 @@
         <div class="col-sm-6 col-sm-offset-3">
             <div class="form-container">
                 <h2>Agregar Biblioteca</h2>
-                <form action="" method="post" th:object="${formulario}">
+                <form action="" method="post" th:object="${biblioteca}">
                     <div class="form-container2">
                         <div class="form-group">
-                            <label for="id_biblioteca">ID Biblioteca:</label>
-                            <input type="text" class="form-control" id="id_biblioteca" name="id_biblioteca" placeholder="Introduce el ID de la biblioteca"> <!--th:field="*{id_biblioteca}" required-->
+                            <label for="id_institucion">ID Institución:</label>
+                            <select id="id_institucion" name="id_institucion" class="form-control" th:field="*{id_institucion}"> <!--th:field="*{id_institucion}" required-->
+                                <option th:value="0">Seleccione una opción</option>
+                                <option th:each="inst : ${institucion}"  th:value="${inst.id_institucion}" th:text="${inst.nombre_institucion}"></option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="nombre_biblioteca">Nombre Biblioteca:</label>
-                            <input type="text" class="form-control" id="nombre_biblioteca" name="nombre_biblioteca" placeholder="Introduce el nombre de la biblioteca"> <!--th:field="*{nombre_biblioteca}" required>-->
-                        </div>
-                        <div class="form-group">
-                            <label for="id_institucion">ID Institución:</label>
-                            <select id="id_institucion" name="id_institucion" class="form-control"> <!--th:field="*{id_institucion}" required-->
-                                <option> <!--th:each="institucion : ${instituciones}" th:value="${institucion.id}" th:text="${institucion.nombre}"--></option>
-                            </select>
+                            <input type="text" class="form-control" id="nombre_biblioteca" th:field="*{nombre_biblioteca}" name="nombre_biblioteca" placeholder="Introduce el nombre de la biblioteca"> <!--th:field="*{nombre_biblioteca}" required>-->
+                            <input hidden="hidden" id="bibHabilitado" th:field="*{habilitado}">
                         </div>
                     </div>
                     <button type="submit" id="enviar" class="btn btn-primary">Enviar</button>
@@ -100,6 +99,12 @@
         </div>
     </div>
 </div>
+<script>
+  habilitado = document.getElementById("bibHabilitado");
+  if(habilitado){
+    habilitado.value = 1;
+  }
+</script>
 </body>
 <script th:inline="javascript">
   function actualizarTabla() {
@@ -132,6 +137,7 @@
           // Por ejemplo, puedes llamar a una función pasando el ID de la biblioteca
           boton.onclick = function() {
             // Tu lógica aquí
+            deshabilitarBiblioteca(biblioteca.id_biblioteca);
             console.log("Botón presionado para la biblioteca con ID " + biblioteca.id_biblioteca);
           };
 
@@ -145,5 +151,21 @@
         console.log(error);
       });
   }
+</script>
+<script>
+    function deshabilitarBiblioteca(id){
+        $.ajax({
+            type: 'POST',
+            url: '/bibliotecas/'+id,
+            success: function(response) {
+                var url = window.location.href;
+                window.location.href = url;
+            },
+            error: function(xhr, status, error) {
+              // Manejar errores, si es necesario
+              console.error(error);
+            }
+          });
+    }
 </script>
 </html>

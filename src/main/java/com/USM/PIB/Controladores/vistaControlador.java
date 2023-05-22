@@ -46,6 +46,8 @@ public class vistaControlador {
     @Autowired
     private Nivel_GestorControlador nivelGestorControlador;
 
+    @Autowired
+    private BibliotecaControlador bibliotecaControlador;
     @GetMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(){
         ArrayList<InstitucionModelo> institucion = institucionServicio.getInstituciones();
@@ -196,6 +198,15 @@ public class vistaControlador {
     @GetMapping(path = "/GestionarInstituciones")
     public ModelAndView GestionarInstituciones(){
         ArrayList<InstitucionModelo> institucion = institucionServicio.getInstituciones();
-        return new ModelAndView("GestionarInstituciones").addObject("institucion",institucion);
+        return new ModelAndView("GestionarInstituciones")
+                .addObject("institucion",institucion)
+                .addObject("biblioteca",new BibliotecaModelo());
+    }
+    @PostMapping(path = "/GestionarInstituciones")
+    public ModelAndView AgregarInstituciones(InstitucionModelo institucionModelo, BibliotecaModelo bibliotecaModelo){
+        if(bibliotecaModelo != null){
+            bibliotecaControlador.addBiblioteca(bibliotecaModelo);
+        }
+        return new ModelAndView("redirect:/peticiones");
     }
 }

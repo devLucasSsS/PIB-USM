@@ -21,4 +21,14 @@ public class BibliotecaServicio {
     public BibliotecaModelo getBibliotecaById(int id) {
         return bibliotecaRepositorio.findByIdB(id);
     }
+
+    public BibliotecaModelo addBibliotecas(BibliotecaModelo bibliotecaModelo) {
+        return bibliotecaRepositorio.save(bibliotecaModelo);
+    }
+
+    public void deshabilitarBiblioteca(int id) {
+        BibliotecaModelo bib = getBibliotecaById(id);
+        bib.setHabilitado(0);
+        bibliotecaRepositorio.save(bib);
+    }
 }
