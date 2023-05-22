@@ -22,37 +22,41 @@
         <div class="col-sm-6 col-sm-offset-3">
             <div class="form-container">
                 <h2>Agregar usuario</h2>
-                <form action="" method="post" th:object="${peticion}">
+                <form action="" method="post" th:object="${nuevoGestor}">
                     <div class="form-container2">
                         <div class="form-group">
                             <label for="rut">Rut (sin puntos ni guión):</label>
-                            <input type="text" class="form-control" id="rut" name="rut" placeholder="Introduce tu rut" pattern="[0-9kK]+.{8,9}"  required>
+                            <input type="text" class="form-control" id="rut" name="rut" placeholder="Introduce tu rut" pattern="[0-9kK]+.{8,9}" th:field="*{rut_gestor}" required>
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre y apellido:</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Introduce tu nombre" th:object="${prestatario}"required>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Introduce tu nombre" th:field="*{nombre}"required>
                         </div>
                         <div class="form-group">
                             <label for="contraseña">Contraseña:</label>
-                            <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Introduce tu contraseña" th:object="${prestatario}" required>
+                            <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Introduce tu contraseña" th:field="*{password}" required>
                         </div>
                         <div class="form-group">
                             <label for="institucion">Institucion:  </label>
-                            <select id="institucion" name="institucion"> <!--th:field="*{id_institucion}" onchange="ReloadBibliotecas(this.value,'biblioteca')"-->
+                            <select id="institucion" name="institucion" onchange="ReloadBibliotecas(this.value,'biblioteca')">
                                 <option th:value="0">Seleccione una opción</option>
                                 <option th:each="inst : ${institucion}"  th:value="${inst.id_institucion}" th:text="${inst.nombre_institucion}"></option>
                             </select>
+
                         </div>
                         <div class="form-group">
                             <label for="biblioteca">Biblioteca:  </label>
-                            <select id="biblioteca" name="biblioteca"> <!--th:field="*{id_biblioteca}"-->
+                            <select id="biblioteca" name="biblioteca" th:field="*{id_biblioteca}">
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="nivel">Nivel:  </label>
-                            <select id="nivel" name="nivel"> <!--th:field="*{id_nivel}"-->
+                            <select id="nivel" name="nivel" th:field="*{id_nivel}">
+                                <option th:value="0">Seleccione una opción</option>
+                                <option th:each="niv : ${niveles}" th:value="${niv.id_nivel}" th:text="${niv.nivel}"></option>
                             </select>
                         </div>
+                        <input hidden="hidden" id="habilitado" th:field="*{habilitado}">
                     </div>
                     <button type="submit" id="enviar" class="btn btn-primary">Enviar</button>
                 </form>
@@ -60,5 +64,26 @@
         </div>
     </div>
 </div>
+<script>
+  function ReloadBibliotecas(id,idSelect){
+    $.ajax({
+      type: "GET",
+      url: "http://localhost:8080/bibliotecas/"+id,
+      success: function (data) {
+          $("#"+idSelect).empty();
+          $("#"+idSelect).append('<option value="">Seleccione una opción</option>');
+          $.each(data, function (index, value) {
+              $("#"+idSelect).append('<option value="' + value.id_biblioteca + '">' + value.nombre_biblioteca + '</option>');
+          });
+      }
+   });
+  }
+</script>
+<script>
+    habilitado = document.getElementById("habilitado");
+  if(habilitado){
+    habilitado.value = 1;
+  }
+</script>
 </body>
 </html>

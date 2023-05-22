@@ -43,6 +43,8 @@ public class vistaControlador {
     private MensajesControlador mensajesControlador;
     @Autowired
     private PrestatarioServicio prestatarioServicio;
+    @Autowired
+    private Nivel_GestorControlador nivelGestorControlador;
 
     @GetMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(){
@@ -152,14 +154,24 @@ public class vistaControlador {
     @GetMapping(path = "/GestionarGestores")
     public ModelAndView GestionarGestores(HttpSession session){
         GestorModelo data = gestorControlador.getDataSession(session);
+        ArrayList<InstitucionModelo> institucion = institucionServicio.getInstituciones();
+        ArrayList<Nivel_GestorModelo> niveles = nivelGestorControlador.getAll();
+
         if(data!=null){
             return new ModelAndView("GestionarGestores")
                     .addObject("nuevoGestor",new GestorModelo())
-                    .addObject("gestorExistente",data);
+                    .addObject("institucion",institucion)
+                    .addObject("gestorExistente",data)
+                    .addObject("niveles",niveles);
 
         }else{
             return new ModelAndView("redirect:/login");
         }
+    }
+    @PostMapping(path = "/GestionarGestores")
+    public ModelAndView AgregarGestores(GestorModelo gestorModelo){
+        gestorControlador.addGestor(gestorModelo);
+        return new ModelAndView("redirect:/peticiones");
     }
     @GetMapping(path = "/GestionarRevisores")
     public ModelAndView GestionarRevisores(HttpSession session){

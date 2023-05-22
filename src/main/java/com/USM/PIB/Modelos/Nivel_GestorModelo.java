@@ -4,17 +4,17 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "nivel_gestor")
-public class nivel_gestor {
+public class Nivel_GestorModelo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_nivel;
     @Column(length = 45)
     private String nivel;
 
-    public nivel_gestor() {
+    public Nivel_GestorModelo() {
     }
 
-    public nivel_gestor(int id_nivel, String nivel) {
+    public Nivel_GestorModelo(int id_nivel, String nivel) {
         this.id_nivel = id_nivel;
         this.nivel = nivel;
     }
