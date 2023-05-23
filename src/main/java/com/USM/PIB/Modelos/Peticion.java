@@ -22,7 +22,7 @@ public class Peticion {
     @Column(length = 20)
     private String ip;
     @Column
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date fecha_peticion;
     @Column
     private Date fecha_prestamo;

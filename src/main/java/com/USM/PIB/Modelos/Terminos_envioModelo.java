@@ -19,7 +19,7 @@ public class Terminos_envioModelo {
     @Column
     private String descripcion_envio;
     @Column
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date fecha_vencimiento;
     @Column
     private byte envio;

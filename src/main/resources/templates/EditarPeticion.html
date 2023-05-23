@@ -96,7 +96,7 @@
                     <p  th:text="${terminosEnvio.terminos}"></p>
                     <p th:text="${tipoEnvio.tipo}"></p>
                     <p th:text="${terminosEnvio.descripcion_envio}"></p>
-                    <p type="date" disabled="disabled" th:text="${terminosEnvio.fecha_vencimiento}"></p>
+                    <p  id="fechaEnvio" disabled="disabled" th:value="${terminosEnvio.fecha_vencimiento}" th:text="${#dates.format(terminosEnvio.fecha_vencimiento, 'dd-MM-yyyy')}"></p>
                     <label>Acepta los terminos?</label>
                     <input type="radio" id="opcion1T" name="acepta" value="1">
                     <label for="opcion1S">Si</label>
@@ -142,7 +142,7 @@
                 <label for="DescripcionEnvio">Ingrese una descripcion del tipo de envio</label><br>
                 <input id="DescripcionEnvio" class="form-control" type="text" th:field="*{descripcion_envio}"><br>
                 <label for="FechaVencimiento">Ingrese una fecha de vencimiento</label>
-                <input type="date" class="form-control" id="FechaVencimiento" th:field="*{fecha_vencimiento}"><br>
+                <input type="datetime-local" class="form-control" id="FechaVencimiento" th:field="*{fecha_vencimiento}"><br>
                 <input hidden="hidden" th:field="*{envio}" th:value="0">
                 <button type="submit">Enviar Terminos</button>
             </form>
@@ -243,22 +243,22 @@
                     <div th:if="${mensajeGet.rut_gestor != gestor.rut_gestor  }" class="container" style="background: #b9f8fa; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;float: left; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
                         <p style="opacity: 0.4;" th:id="'rut1-'+${mensajeGet.rut_gestor}+'-idM1-'+${mensajeGet.id_mensaje}"></p>
                         <p th:text="${mensajeGet.mensaje}"></p>
-                        <p th:text="${mensajeGet.fecha_mensaje}"></p>
+                        <p th:text="${#dates.format(mensajeGet.fecha_mensaje, 'dd-MM-yyyy HH:mm')}"></p>
                     </div>
                     <div th:if="${mensajeGet.rut_gestor == gestor.rut_gestor}" class="container" style="background: #c0f772; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;float: right; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
                         <p style="opacity: 0.4;" th:id="'rut2-'+${mensajeGet.rut_gestor}+'-idM2-'+${mensajeGet.id_mensaje}"></p>
                         <p th:text="${mensajeGet.mensaje}"></p>
-                        <p th:text="${mensajeGet.fecha_mensaje}"></p>
+                        <p th:text="${#dates.format(mensajeGet.fecha_mensaje, 'dd-MM-yyyy HH:mm')}"></p>
                     </div>
                 </div>
             </ul>
         </div>
         <form  th:object="${mensaje}"  id="formMensajes">
             <input hidden="hidden" id="rut_gestor" th:field="*{rut_gestor}">
-            <input type="date" hidden="hidden" id="hora_local" th:field="*{fecha_mensaje}">
+            <input type="datetime-local" hidden="hidden" id="hora_local" th:field="*{fecha_mensaje}">
             <input type="text" class="form-control"  th:field="*{mensaje}">
             <input hidden="hidden" th:field="${peticion.id_peticion}">
-            <button onclick="EnviarMensaje()">Enviar</button>
+            <button type="submit">Enviar</button>
         </form>
     </div>
 </div>
@@ -269,9 +269,21 @@
   }
 </script>
 <script>
-  hora_local = document.getElementById("hora_local");
-  date = new Date();
-  hora_local.value = date.toISOString().slice(0, 10);
+hora_local = document.getElementById("hora_local");
+
+var fechaHoraActual = new Date();
+
+// Obtener la hora actual en UTC
+var horaUTC = fechaHoraActual.getUTCHours();
+var minutosUTC = fechaHoraActual.getUTCMinutes();
+
+// Ajustar la hora según UTC-4
+var offsetUTC4 = 4 * 60 * 60 * 1000; // Offset de 4 horas en milisegundos
+var horaAjustada = new Date(fechaHoraActual.getTime() - offsetUTC4);
+
+// Formatear la fecha y hora ajustadas en el formato deseado
+var fechaHoraFormateada = horaAjustada.toISOString().slice(0, 16).replace(' ', 'T');
+hora_local.value = fechaHoraFormateada;
 </script>
 <script>
   $(document).ready(function() {
@@ -302,10 +314,10 @@
 </script>
 
 <script>
-      $(document).ready(function() {
-
+document.addEventListener('readystatechange', function() {
+  if (document.readyState === 'interactive') {
   $.ajax({
-        url: "http://localhost:8080/gestor",
+        url: "/gestor",
         type: "GET",
         dataType: "json",
         success: function(data) {
@@ -316,7 +328,9 @@
           reject(error);
         },
       });
-    });
+  }
+});
+
 
 </script>
 <script>
@@ -331,10 +345,10 @@
             if(ValUsuario == 0){
                 //ENVIAR ESTADO 2
                 $.ajax({
-                     url: 'http://localhost:8080/peticion/'+id+'/'+2,
+                     url: '/peticion/'+id+'/'+2,
                      type: 'PUT',
                      success: function (data) {
-                        window.location.href = "http://localhost:8080/peticiones";
+                        window.location.href = "/peticiones";
                      },
                      error: function () {
                         alert('Ha ocurrido un error');
@@ -343,10 +357,10 @@
             }else{
                 //ENVIAR ESTADO 3
                 $.ajax({
-                 url: 'http://localhost:8080/peticion/'+id+'/'+3,
+                 url: '/peticion/'+id+'/'+3,
                  type: 'PUT',
                  success: function (data) {
-                    window.location.href = "http://localhost:8080/peticiones";
+                    window.location.href = "/peticiones";
                  },
                  error: function () {
                     alert('Ha ocurrido un error');
@@ -360,10 +374,10 @@
             if(ValStock == 0){
                 //ENVIAR ESTADO 13 PENDIENTE
                 $.ajax({
-                     url: 'http://localhost:8080/peticion/'+id+'/'+13,
+                     url: '/peticion/'+id+'/'+13,
                      type: 'PUT',
                      success: function (data) {
-                        window.location.href = "http://localhost:8080/peticiones";
+                        window.location.href = "/peticiones";
                      },
                      error: function () {
                         alert('Ha ocurrido un error');
@@ -372,12 +386,11 @@
             }else{
                 //ENVIAR ESTADO 9 PETICION VALIDADA
                 $.ajax({
-                 url: 'http://localhost:8080/peticion/'+id+'/'+9,
+                 url: '/peticion/'+id+'/'+9,
                  type: 'PUT',
                  success: function (data) {
-                    form.style.display="none";
-                    const form = document.getElementById("terminosDivEnvio");
-                    form.style.display="block";
+                    var url = window.location.href;
+                    window.location.href = url;
                  },
                  error: function () {
                     alert('Ha ocurrido un error');
@@ -391,10 +404,10 @@
             if(acepta == 0){
                 //ENVIAR ESTADO 6 TERMINOS ENVIO RECHAZADOS
                 $.ajax({
-                     url: 'http://localhost:8080/peticion/'+id+'/'+6,
+                     url: '/peticion/'+id+'/'+6,
                      type: 'PUT',
                      success: function (data) {
-                        window.location.href = "http://localhost:8080/peticiones";
+                        window.location.href = "/peticiones";
                      },
                      error: function () {
                         alert('Ha ocurrido un error');
@@ -403,7 +416,7 @@
             }else{
                 //ENVIAR ESTADO 5 TERMINOS ENVIO ACEPTADOS
                 $.ajax({
-                 url: 'http://localhost:8080/peticion/'+id+'/'+5,
+                 url: '/peticion/'+id+'/'+5,
                  type: 'PUT',
                  success: function (data) {
                     form.style.display="none";
@@ -420,10 +433,10 @@
             if(acepta == 0){
                 //ENVIAR ESTADO 8 TERMINOS DEVOLUCION RECHAZADOS
                 $.ajax({
-                     url: 'http://localhost:8080/peticion/'+id+'/'+8,
+                     url: '/peticion/'+id+'/'+8,
                      type: 'PUT',
                      success: function (data) {
-                        window.location.href = "http://localhost:8080/peticiones";
+                        window.location.href = "/peticiones";
                      },
                      error: function () {
                         alert('Ha ocurrido un error');
@@ -432,7 +445,7 @@
             }else{
                 //ENVIAR ESTADO 7 TERMINOS DEVOLUCION ACEPTADOS
                 $.ajax({
-                 url: 'http://localhost:8080/peticion/'+id+'/'+7,
+                 url: '/peticion/'+id+'/'+7,
                  type: 'PUT',
                  success: function (data) {
                     form.style.display="none";
@@ -447,24 +460,24 @@
     </script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-var inst1 = "";
-var bib1="";
-var inst2 = "";
-var bib2="";
-var titulo1 = "";
-var titulo2 = "";
+    var inst1 = "";
+    var bib1="";
+    var inst2 = "";
+    var bib2="";
+    var titulo1 = "";
+    var titulo2 = "";
     $('td[id^="institucion1-"]').each(function() {
       var id = $(this).attr('id').split('-')[1];
       var id1 = $(this).attr('id').split('-')[3];
       var ajax1 = $.ajax({
-           url: 'http://localhost:8080/institucion/' + id,
+           url: '/institucion/' + id,
            type: 'GET'
         }).done(function(data) {
            inst1 = data.siglas_institucion;
            titulo1 = data.nombre_institucion;
       });
       var ajax2 = $.ajax({
-           url: 'http://localhost:8080/bibliotecas/' + id1 + '/bib',
+           url: '/bibliotecas/' + id1 + '/bib',
            type: 'GET'
         }).done(function(data) {
            bib1 = data.nombre_biblioteca;
@@ -478,7 +491,7 @@ var titulo2 = "";
       var id = $(this).attr('id').split('-')[1];
       var id1 = $(this).attr('id').split('-')[3];
       var ajax3 = $.ajax({
-           url: 'http://localhost:8080/institucion/' + id,
+           url: '/institucion/' + id,
            type: 'GET'
         }).done(function(data) {
            inst2 = data.siglas_institucion;
@@ -486,7 +499,7 @@ var titulo2 = "";
 
       });
       var ajax4 = $.ajax({
-           url: 'http://localhost:8080/bibliotecas/' + id1 + '/bib',
+           url: '/bibliotecas/' + id1 + '/bib',
            type: 'GET'
         }).done(function(data) {
            bib2 = data.nombre_biblioteca;
@@ -497,6 +510,7 @@ var titulo2 = "";
         });
    });
    BajarScroll();
+
     });
 </script>
 <script>
@@ -510,7 +524,7 @@ var titulo2 = "";
       var id = $(this).attr('id').split('-')[1];
       var id1 = $(this).attr('id').split('-')[3];
       $.ajax({
-         url: 'http://localhost:8080/gestor/'+id,
+         url: '/gestor/'+id,
          type: 'GET',
          success: function (data) {
            $('#rut1-' + id + '-idM1-' + id1).text(data.nombre);

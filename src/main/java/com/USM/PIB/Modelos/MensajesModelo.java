@@ -14,7 +14,7 @@ public class MensajesModelo {
     @Column
     private String mensaje;
     @Column
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date fecha_mensaje;
     @Column
     private String rut_gestor;

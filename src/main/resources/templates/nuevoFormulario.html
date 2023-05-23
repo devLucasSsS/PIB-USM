@@ -27,7 +27,7 @@
         <h2>Nueva Petición</h2>
         <form action="" method="post" th:object="${peticion}">
           <div class="form-container2">
-          <input type="date" hidden="hidden" id="hora_local" th:field="*{fecha_peticion}">
+          <input type="datetime-local" id="hora_local" hidden="hidden" th:field="*{fecha_peticion}">
           <input hidden="hidden" id="estado" th:field="*{id_estado}">
           <input type="text" hidden="hidden" id="ip" th:field="*{ip}">
           <div class="form-group">
@@ -105,7 +105,7 @@
   function ReloadBibliotecas(id,idSelect){
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/bibliotecas/"+id,
+      url: "/bibliotecas/"+id,
       success: function (data) {
           $("#"+idSelect).empty();
           $("#"+idSelect).append('<option value="">Seleccione una opción</option>');
@@ -113,18 +113,29 @@
               $("#"+idSelect).append('<option value="' + value.id_biblioteca + '">' + value.nombre_biblioteca + '</option>');
           });
       }
-   });
-  }
+    });
+}
 </script>
-
 <script>
   estado = document.getElementById("estado");
   estado.value = 1;
 </script>
 <script>
   hora_local = document.getElementById("hora_local");
-  date = new Date();
-  hora_local.value = date.toISOString().slice(0, 10);
+var fechaHoraActual = new Date();
+
+// Obtener la hora actual en UTC
+var horaUTC = fechaHoraActual.getUTCHours();
+var minutosUTC = fechaHoraActual.getUTCMinutes();
+
+// Ajustar la hora según UTC-4
+var offsetUTC4 = 4 * 60 * 60 * 1000; // Offset de 4 horas en milisegundos
+var horaAjustada = new Date(fechaHoraActual.getTime() - offsetUTC4);
+
+// Formatear la fecha y hora ajustadas en el formato deseado
+var fechaHoraFormateada = horaAjustada.toISOString().slice(0, 16).replace(' ', 'T');
+hora_local.value = fechaHoraFormateada;
+console.log(fechaHoraFormateada);
 </script>
 <script>
   const ip = document.getElementById("ip");

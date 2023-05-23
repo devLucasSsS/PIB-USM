@@ -218,7 +218,9 @@
   }
 </script>
 <script>
-  $(document).ready(function() {
+document.addEventListener('readystatechange', function() {
+  if (document.readyState === 'interactive') {
+
    $('td[id^="estado-"]').each(function() {
       var id = $(this).attr('id').split('-')[1];
       var id1 = $(this).attr('id').split('-')[3];
@@ -275,8 +277,9 @@
          }
       });
    });
-
+  }
 });
+
 </script>
 
 <div class="container">
