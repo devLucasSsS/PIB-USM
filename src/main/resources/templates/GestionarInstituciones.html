@@ -79,37 +79,37 @@
                 </form>
             </div>
             <div class="form-container">
-                <table class="table table-bordered table-striped mb-0">
-                    <div class="form-group">
-                        <label for="id_institucion1">ID Institución:</label>
-                        <select id="id_institucion1" name="id_institucion" class="form-control" onchange="actualizarTabla()">
-                            <option th:value="0">Seleccione una opción</option>
-                            <option th:each="inst : ${institucion}" th:value="${inst.id_institucion}" th:text="${inst.nombre_institucion}"></option>
-                        </select>
+                <div class="form-group">
+                    <label for="id_institucion1">ID Institución:</label>
+                    <select id="id_institucion1" name="id_institucion" class="form-control" onchange="actualizarTabla()">
+                        <option th:value="0">Seleccione una opción</option>
+                        <option th:each="inst : ${institucion}" th:value="${inst.id_institucion}" th:text="${inst.nombre_institucion}"></option>
+                    </select>
+                    <div class="container1" style="max-height: 350px; overflow-x: overlay;">
+                        <table class="table table-bordered table-striped mb-0">
+                            <tbody id="tablaBibliotecas">
+                            </tbody>
+                        </table>
                     </div>
-                    <thead>
-                    </thead>
-                    <tbody id="tablaBibliotecas">
-                    </tbody>
-                </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
 <script>
-            function deshabilitar(id){
-              Swal.fire({
-                title: '¿Desea Borrar la biblioteca?',
-                showCancelButton: true,
-                confirmButtonText: 'Aceptar',
-                cancelButtonText: `Cancelar`,
-              }).then((result) => {
-                if (result.isConfirmed) {
-                    deshabilitarBiblioteca(id);; //ESTADO CANCELADO
-                  Swal.fire('Borrada!', '', 'Aceptar')
-                }
-                })
-            }
+    function deshabilitar(id){
+      Swal.fire({
+        title: '¿Desea Borrar la biblioteca?',
+        showCancelButton: true,
+        confirmButtonText: 'Aceptar',
+        cancelButtonText: `Cancelar`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+            deshabilitarBiblioteca(id);; //ESTADO CANCELADO
+          Swal.fire('Borrada!', '', 'Aceptar')
+        }
+        })
+    }
 </script>
 <script>
   habilitado = document.getElementById("bibHabilitado");
