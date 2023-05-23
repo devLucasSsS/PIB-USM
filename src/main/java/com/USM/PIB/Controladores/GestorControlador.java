@@ -48,7 +48,7 @@ public class GestorControlador {
     public ArrayList<GestorModelo> getGestorByBib(@PathVariable("id")int id){
         return gestorServicio.getByBib(id);
     }
-    @PostMapping(path = "/bib/{rut}")
+    @PostMapping(path = "/d/{rut}")
     public void deshabilitarRevisor(@PathVariable("rut") String rut){
         gestorServicio.deshabilitarRevisor(rut);
     }

@@ -184,7 +184,7 @@ public class vistaControlador {
             return new ModelAndView("GestionarRevisores")
                     .addObject("nuevoGestor",new GestorModelo())
                     .addObject("gestorExistente",data)
-                    .addObject("gestores",gestores);
+                        .addObject("gestores",gestores);
 
         }else{
             return new ModelAndView("redirect:/login");

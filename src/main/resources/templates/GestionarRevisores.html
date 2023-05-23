@@ -75,7 +75,7 @@
                                 <td th:text="*{nombre}"></td>
                                 <td th:text="*{rut_gestor}"></td>
                                 <td>
-                                    <button onclick="deshabilitar(this)">Borrar</button>
+                                    <button th:value="*{rut_gestor}" onclick="deshabilitar(this.value)">Borrar</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -87,7 +87,8 @@
     </div>
 </div>
 <script>
-  function deshabilitar(id){
+  function deshabilitar(rut){
+      console.log(rut);
       Swal.fire({
         title: '¿Desea Borrar al revisor?',
         showCancelButton: true,
@@ -95,7 +96,7 @@
         cancelButtonText: `Cancelar`,
       }).then((result) => {
         if (result.isConfirmed) {
-          deshabilitarRevisor(id);; //ESTADO CANCELADO
+          deshabilitarRevisor(rut);; //ESTADO CANCELADO
           Swal.fire('Borrado!', '', 'Aceptar')
         }
         })
