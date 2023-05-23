@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+
 
 @RestController
 @RequestMapping("/gestor")
@@ -40,5 +42,14 @@ public class GestorControlador {
     @PostMapping
     public GestorModelo addGestor(GestorModelo gestor){
         return gestorServicio.addGestor(gestor);
+    }
+
+    @GetMapping(path = "/bib/{id}")
+    public ArrayList<GestorModelo> getGestorByBib(@PathVariable("id")int id){
+        return gestorServicio.getByBib(id);
+    }
+    @PostMapping(path = "/bib/{rut}")
+    public void deshabilitarRevisor(@PathVariable("rut") String rut){
+        gestorServicio.deshabilitarRevisor(rut);
     }
 }

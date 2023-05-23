@@ -180,9 +180,11 @@ public class vistaControlador {
     public ModelAndView GestionarRevisores(HttpSession session){
         GestorModelo data = gestorControlador.getDataSession(session);
         if(data!=null){
+            ArrayList<GestorModelo> gestores = gestorControlador.getGestorByBib(data.getId_biblioteca());
             return new ModelAndView("GestionarRevisores")
                     .addObject("nuevoGestor",new GestorModelo())
-                    .addObject("gestorExistente",data);
+                    .addObject("gestorExistente",data)
+                    .addObject("gestores",gestores);
 
         }else{
             return new ModelAndView("redirect:/login");
