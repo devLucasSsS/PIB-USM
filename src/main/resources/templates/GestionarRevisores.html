@@ -47,7 +47,8 @@
                     <p th:object="${gestorExistente}"></p>
                 <form  method="post" th:object="${nuevoGestor}">
                     <input hidden="hidden" th:field="${nuevoGestor.id_nivel}" id="idNivel">
-                    <input hidden="hidden" th:field="*{id_institucion}" id="IdInst">
+                    <input hidden="hidden" th:field="${nuevoGestor.id_institucion}" id="idInst">
+                    <input hidden="hidden" th:field="${nuevoGestor.habilitado}" id="habilitado">
                     <div class="form-container2">
                         <div class="form-group">
                             <label for="rut">Rut (sin puntos ni guión):</label>
@@ -126,18 +127,20 @@
 </script>
 <script>
   nivel = document.getElementById("idNivel");
-  idBib = document.getElementById("idBib");
   idInst = document.getElementById("idInst");
+  habilitado = document.getElementById("habilitado");
   if(nivel){
     nivel.value = 3;
+  }
+  if(habilitado){
+    habilitado.value = 1;
   }
   $.ajax({
         url: "http://localhost:8080/gestor",
         type: "GET",
         dataType: "json",
         success: function(data) {
-           idBib.value = data.id_biblioteca;
-           idInst.value = data.id_institucion;
+0           idInst.value = data.id_institucion;
         },
         error: function(error) {
           reject(error);
