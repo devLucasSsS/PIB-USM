@@ -87,13 +87,14 @@ public class vistaControlador {
             ArrayList<MensajesModelo> mensajes = mensajesControlador.getMensajesById(pet.get().getId_peticion());
             Terminos_envioModelo terms0 = terminosEnvioServicio.getByIdPet0(pet.get().getId_peticion());
             Terminos_envioModelo terms1 = terminosEnvioServicio.getByIdPet1(pet.get().getId_peticion());
+            ArrayList<Tipo_envioModelo> tipoEnvio = tipoEnvioControlador.getTipos();
             Tipo_envioModelo TipoEnv0 = new Tipo_envioModelo();
             Tipo_envioModelo TipoEnv1 = new Tipo_envioModelo();
             Prestatario prestatario = prestatarioControlador.getPrestatarioByRut(pet.get().getRut_prestatario());
             if(terms0 != null){
                 TipoEnv0 = tipoEnvioServicio.getByIdTerm(terms0.getTipo_envio());
                     vista.addObject("terminosEnvio",terms0);
-                    vista.addObject("tipoEnvio",TipoEnv0);
+                    vista.addObject("tipoEnvioP",TipoEnv0);
             }
             if(terms1 != null){
                 TipoEnv1 = tipoEnvioServicio.getByIdTerm(terms1.getTipo_envio());
@@ -106,7 +107,8 @@ public class vistaControlador {
                     .addObject("mensajes",mensajes)
                     .addObject("mensaje", new MensajesModelo())
                     .addObject("prestatario",prestatario)
-                    .addObject("gestor",data);
+                    .addObject("gestor",data)
+                    .addObject("tipoEnvio", tipoEnvio);
             return vista;
         }else{
             return new ModelAndView("redirect:/login");
@@ -114,10 +116,7 @@ public class vistaControlador {
     }
     @PostMapping(path = "peticion/{id}")
     public ModelAndView updateEstadoPeticion(@PathVariable("id") int id,
-         Tipo_envioModelo tipo_envio,
          Terminos_envioModelo terminos_envio){
-        Tipo_envioModelo tipoE = tipoEnvioControlador.saveTipoEnvio(tipo_envio);
-        terminos_envio.setTipo_envio(tipoE.getTipo_envio());
         terminos_envio.setId_peticion(id);
         terminosEnvioServicio.saveTerminosEnvio(terminos_envio);
         peticionServicio.updateTerminosPeticion(id);// NO OLVIDAR ACTUALIZAR EL ESTADOOO

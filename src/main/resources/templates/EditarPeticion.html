@@ -92,9 +92,9 @@
             <div class="container-3" >
                 <form id="form3">
                     <p th:object="${terminosEnvio}"></p>
-                    <p th:object="${tipoEnvio}"></p>
+                    <p th:object="${tipoEnvioP}"></p>
                     <p  th:text="${terminosEnvio.terminos}"></p>
-                    <p th:text="${tipoEnvio.tipo}"></p>
+                    <p th:text="${tipoEnvioP.tipo}"></p>
                     <p th:text="${terminosEnvio.descripcion_envio}"></p>
                     <p  id="fechaEnvio" disabled="disabled" th:value="${terminosEnvio.fecha_vencimiento}" th:text="${#dates.format(terminosEnvio.fecha_vencimiento, 'dd-MM-yyyy')}"></p>
                     <label>Acepta los terminos?</label>
@@ -137,8 +137,11 @@
                 <h1>Terminos de envio</h1>
                 <label for="terminos">Ingrese los terminos y condiciones para el prestatario</label><br>
                 <textarea id="terminos" class="form-control" th:field="*{terminos}"></textarea><br>
-                <label for="tipoEnvioText">Ingresa el tipo de envio</label><br>
-                <input id="tipoEnvioText" class="form-control" type="text" th:object="${tipo_envio}" th:field="*{tipo}"><br>
+                <label for="tipoEnvio">Ingresa el tipo de envio</label><br>
+                <select id="TipoEnvio" name="TipoEnvio" th:field="*{tipo_envio}">
+                    <option th:value="0">Seleccione una opción</option>
+                    <option th:each="tipo : ${tipoEnvio}"  th:value="${tipo.tipo_envio}" th:text="${tipo.tipo}"></option>
+                </select>
                 <label for="DescripcionEnvio">Ingrese una descripcion del tipo de envio</label><br>
                 <input id="DescripcionEnvio" class="form-control" type="text" th:field="*{descripcion_envio}"><br>
                 <label for="FechaVencimiento">Ingrese una fecha de vencimiento</label>
@@ -158,8 +161,12 @@
                 <h1>Terminos de envio</h1>
                 <label for="terminosDevolucion">Ingrese los terminos y condiciones para el Prestador</label><br>
                 <textarea id="terminosDevolucion" class="form-control" th:field="*{terminos}"></textarea><br>
-                <label for="tipoEnvioTextDevolucion">Ingresa el tipo de envio</label><br>
-                <input id="tipoEnvioTextDevolucion" class="form-control" type="text" th:object="${tipo_envio}" th:field="*{tipo}"><br>
+
+                <label for="tipoEnvioDevolucion">Tipo de envio:  </label><br>
+                <select id="TipoEnvioDevolucion" name="TipoEnvioDevolucion" th:field="*{tipo_envio}">
+                    <option th:value="0">Seleccione una opción</option>
+                    <option th:each="tipo : ${tipoEnvio}"  th:value="${tipo.tipo_envio}" th:text="${tipo.tipo}"></option>
+                </select>
                 <label for="DescripcionEnvioDevolucion">Ingrese una descripcion del tipo de envio</label><br>
                 <input id="DescripcionEnvioDevolucion" class="form-control" type="text" th:field="*{descripcion_envio}"><br>
                 <input hidden="hidden" th:field="*{envio}" id="envioDevolucion">

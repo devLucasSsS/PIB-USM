@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("/tipo-envio")
 public class Tipo_envioControlador {
@@ -14,5 +16,9 @@ public class Tipo_envioControlador {
 
     public Tipo_envioModelo saveTipoEnvio(@RequestBody Tipo_envioModelo tipoEnvio){
         return tipoEnvioServicio.saveTipoEnvio(tipoEnvio);
+    }
+
+    public ArrayList<Tipo_envioModelo> getTipos() {
+            return tipoEnvioServicio.getTipos();
     }
 }
