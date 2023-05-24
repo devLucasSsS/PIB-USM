@@ -187,10 +187,12 @@ public class vistaControlador {
         GestorModelo data = gestorControlador.getDataSession(session);
         if(data!=null){
             ArrayList<GestorModelo> gestores = gestorControlador.getGestorByInst(data.getId_institucion(),data.getRut_gestor());
+            ArrayList<BibliotecaModelo> bibliotecas = bibliotecaControlador.getBibliotecasByInstitucion(data.getId_institucion());
             return new ModelAndView("GestionarRevisores")
                     .addObject("nuevoGestor",new GestorModelo())
                     .addObject("gestorExistente",data)
-                        .addObject("gestores",gestores);
+                    .addObject("gestores",gestores)
+                    .addObject("bibliotecas",bibliotecas);
 
         }else{
             return new ModelAndView("redirect:/login");

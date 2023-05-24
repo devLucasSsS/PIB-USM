@@ -46,8 +46,8 @@
                 <h2>Agregar revisor</h2>
                     <p th:object="${gestorExistente}"></p>
                 <form  method="post" th:object="${nuevoGestor}">
-                    <input hidden="hidden" th:field="*{id_biblioteca}" id="idBib" >
                     <input hidden="hidden" th:field="${nuevoGestor.id_nivel}" id="idNivel">
+                    <input hidden="hidden" th:field="*{id_institucion}" id="IdInst">
                     <div class="form-container2">
                         <div class="form-group">
                             <label for="rut">Rut (sin puntos ni guión):</label>
@@ -61,7 +61,13 @@
                             <label for="contraseña">Contraseña:</label>
                             <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Introduce tu contraseña" th:field="*{password}" required>
                         </div>
+                        <label for="biblioteca">Biblioteca:  </label>
+                        <select id="biblioteca" name="biblioteca" th:field="*{id_biblioteca}">
+                            <option th:value="0">Seleccione una opción</option>
+                            <option th:each="bib : ${bibliotecas}"  th:value="${bib.id_biblioteca}" th:text="${bib.nombre_biblioteca}"></option>
+                        </select>
                     </div>
+
                     <button type="submit" id="enviar" class="btn btn-primary">Enviar</button>
                 </form>
             </div>
@@ -121,6 +127,7 @@
 <script>
   nivel = document.getElementById("idNivel");
   idBib = document.getElementById("idBib");
+  idInst = document.getElementById("idInst");
   if(nivel){
     nivel.value = 3;
   }
@@ -130,6 +137,7 @@
         dataType: "json",
         success: function(data) {
            idBib.value = data.id_biblioteca;
+           idInst.value = data.id_institucion;
         },
         error: function(error) {
           reject(error);
