@@ -88,13 +88,17 @@
 </div>
 <div class="container">
   <h1>Peticiones Entrantes</h1>
+  <input type="text" id="rut-buscador" placeholder="Buscar por RUT" />
+  <input type="text" id="id-buscador" placeholder="Buscar por ID" />
+  <select id="estado-buscador">
+    <option value="">Todos los estados</option>
+    <option th:each="pet : ${peticionesEntrantes}" th:object="${pet}" th:value="*{id_estado}" th:text="*{id_estado}"></option>
+  </select>
   <div class="table-wrapper-scroll-y my-custom-scrollbar">
     <table class="table table-bordered table-striped mb-0">
       <thead>
       <tr>
         <th>Id</th>
-        <!--<th>Autor</th>
-        <th>Edicion</th>-->
         <th>Libro</th>
         <th>Rut</th>
         <th>Email</th>
@@ -107,11 +111,8 @@
       <tbody>
       <tr th:each="pet : ${peticionesEntrantes}" th:object="${pet}">
         <td th:text="*{id_peticion}"></td>
-<!--
-        <td th:text="*{autor}"></td>
-        <td th:text="*{edicion}"></td>
--->
-        <td th:text="*{libro}"><!--<a th:href="*{link}" th:text="*{libro}" Target="_blank"></a>--></td>
+
+        <td th:text="*{libro}"></td>
         <td th:text="*{rut_prestatario}"></button></td>
         <td th:id="'correo-'+*{rut_prestatario}+'-idP-'+*{id_peticion}"></td>
         <td th:id="'institucion-'+*{id_institucion_prestataria}+'-idP-'+*{id_peticion}"></td>
@@ -281,7 +282,74 @@ document.addEventListener('readystatechange', function() {
 });
 
 </script>
+<script>
+  // Función para filtrar las filas de la tabla por ID
+  function filtrarPorId() {
+    var id = document.getElementById("id-buscador").value.trim().toLowerCase();
+    var filas = document.getElementsByTagName("tr");
 
+    for (var i = 0; i < filas.length; i++) {
+      var celdaId = filas[i].querySelector("td:first-child");
+
+      if (celdaId && filas[i].parentNode.nodeName !== "THEAD") {
+        if (celdaId.textContent.toLowerCase().includes(id)) {
+          filas[i].style.display = "";
+        } else {
+          filas[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  // Función para filtrar las filas de la tabla por RUT
+  function filtrarPorRut() {
+    var rut = document.getElementById("rut-buscador").value.trim().toLowerCase();
+    var filas = document.getElementsByTagName("tr");
+
+    for (var i = 0; i < filas.length; i++) {
+      var celdaRut = filas[i].querySelector("td:nth-child(3)");
+
+      if (celdaRut && filas[i].parentNode.nodeName !== "THEAD") {
+        if (celdaRut.textContent.toLowerCase().includes(rut)) {
+          filas[i].style.display = "";
+        } else {
+          filas[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  document.getElementById("id-buscador").addEventListener("input", filtrarPorId);
+  document.getElementById("rut-buscador").addEventListener("input", filtrarPorRut);
+</script>
+<script>
+  // Función para filtrar las filas de la tabla por estado
+  function filtrarPorEstado() {
+    // Obtener el valor seleccionado en el select
+    var estadoSeleccionado = document.getElementById("estado-buscador").value;
+
+    // Obtener todas las filas de la tabla
+    var filas = document.getElementsByTagName("tr");
+
+    // Iterar sobre las filas y mostrar u ocultar según el estado
+    for (var i = 0; i < filas.length; i++) {
+      var celdaEstado = filas[i].querySelector("td[id^='estado-']");
+
+      // Verificar si la celda de estado existe y comparar su valor con el estado seleccionado
+      if (celdaEstado) {
+        var estadoFila = celdaEstado.textContent.trim();
+        if (estadoSeleccionado === "" || estadoFila === estadoSeleccionado) {
+          filas[i].style.display = "";
+        } else {
+          filas[i].style.display = "none";
+        }
+      }
+    }
+  }
+
+  // Asignar el evento 'change' al select
+  document.getElementById("estado-buscador").addEventListener("change", filtrarPorEstado);
+</script>
 <div class="container">
   <h1>Peticiones Salientes</h1>
   <div class="table-wrapper-scroll-y my-custom-scrollbar">
@@ -333,7 +401,6 @@ document.addEventListener('readystatechange', function() {
   </div>
 </div>
     <br>
-
 <script>
   function RecargarEstados(tipo,id){
   var url = "";
