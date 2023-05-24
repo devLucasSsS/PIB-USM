@@ -18,6 +18,16 @@ public class GestorModelo {
     private String nombre;
     @Column
     private int habilitado;
+    @Column
+    private int id_institucion;
+
+    public int getId_institucion() {
+        return id_institucion;
+    }
+
+    public void setId_institucion(int id_institucion) {
+        this.id_institucion = id_institucion;
+    }
 
     public int getHabilitado() {
         return habilitado;
@@ -35,13 +45,14 @@ public class GestorModelo {
         this.nombre = nombre;
     }
 
-    public GestorModelo(String rut_gestor, int id_nivel, String password, int id_biblioteca, String nombre, int habilitado) {
+    public GestorModelo(String rut_gestor, int id_nivel, String password, int id_biblioteca, String nombre, int habilitado, int id_institucion) {
         this.rut_gestor = rut_gestor;
         this.id_nivel = id_nivel;
         this.password = password;
         this.id_biblioteca = id_biblioteca;
         this.nombre = nombre;
         this.habilitado = habilitado;
+        this.id_institucion = id_institucion;
     }
 
     public String getRut_gestor() {

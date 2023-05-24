@@ -186,7 +186,7 @@ public class vistaControlador {
     public ModelAndView GestionarRevisores(HttpSession session){
         GestorModelo data = gestorControlador.getDataSession(session);
         if(data!=null){
-            ArrayList<GestorModelo> gestores = gestorControlador.getGestorByBib(data.getId_biblioteca());
+            ArrayList<GestorModelo> gestores = gestorControlador.getGestorByInst(data.getId_institucion(),data.getRut_gestor());
             return new ModelAndView("GestionarRevisores")
                     .addObject("nuevoGestor",new GestorModelo())
                     .addObject("gestorExistente",data)

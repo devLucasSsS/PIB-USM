@@ -38,4 +38,8 @@ public class GestorServicio {
             g.setHabilitado(0);
             gestorRepositorio.save(g);
     }
+
+    public ArrayList<GestorModelo> getByInst(int id, String rut) {
+        return gestorRepositorio.getByInst(id,rut);
+    }
 }

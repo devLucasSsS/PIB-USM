@@ -29,6 +29,7 @@ public class GestorControlador {
             g.setId_biblioteca(dat.getId_biblioteca());
             g.setId_nivel(dat.getId_nivel());
             g.setNombre(dat.getNombre());
+            g.setId_institucion(dat.getId_institucion());
             return g;
         }else{
             return null;
@@ -47,6 +48,10 @@ public class GestorControlador {
     @GetMapping(path = "/bib/{id}")
     public ArrayList<GestorModelo> getGestorByBib(@PathVariable("id")int id){
         return gestorServicio.getByBib(id);
+    }
+    @GetMapping(path = "/inst/{id}")
+    public ArrayList<GestorModelo> getGestorByInst(@PathVariable("id")int id,String rut){
+        return gestorServicio.getByInst(id,rut);
     }
     @PostMapping(path = "/d/{rut}")
     public void deshabilitarRevisor(@PathVariable("rut") String rut){
