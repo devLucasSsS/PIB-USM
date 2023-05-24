@@ -4,6 +4,7 @@ import com.USM.PIB.Modelos.BibliotecaModelo;
 import com.USM.PIB.Modelos.GestorModelo;
 import com.USM.PIB.Repositorios.GestorRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,7 +15,13 @@ public class GestorServicio {
     GestorRepositorio gestorRepositorio;
 
     public GestorModelo login(String rut, String password){
-        return gestorRepositorio.login(rut,password);
+        BCryptPasswordEncoder hash = new BCryptPasswordEncoder();
+        GestorModelo user = getByRut(rut);
+        if(hash.matches(password,user.getPassword())){
+            return user;
+        }else {
+            return null;
+        }
     }
 
     public GestorModelo getData(String rut){
@@ -26,6 +33,9 @@ public class GestorServicio {
     }
 
     public GestorModelo addGestor(GestorModelo gestor) {
+        BCryptPasswordEncoder hash = new BCryptPasswordEncoder();
+        String pwhash = hash.encode(gestor.getPassword());
+        gestor.setPassword(pwhash);
         return gestorRepositorio.save(gestor);
     }
 
