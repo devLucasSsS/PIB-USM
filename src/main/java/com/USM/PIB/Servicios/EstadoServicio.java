@@ -23,4 +23,8 @@ public class EstadoServicio {
     public ArrayList<EstadoModelo> getEstadosPrestador(){
         return estadoRepositorio.getEstadosPrestador();
     }
+
+    public ArrayList<EstadoModelo> getEstados() {
+        return (ArrayList<EstadoModelo>) estadoRepositorio.findAll();
+    }
 }

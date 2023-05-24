@@ -32,4 +32,9 @@ public class EstadoControlador {
     public ArrayList<EstadoModelo> getEstadoPrestador(){
         return estadoServicio.getEstadosPrestador();
     }
+
+    @GetMapping
+    public ArrayList<EstadoModelo> getEstados(){
+        return estadoServicio.getEstados();
+    }
 }

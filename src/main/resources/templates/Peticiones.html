@@ -92,7 +92,7 @@
   <input type="text" id="id-buscador" placeholder="Buscar por ID" />
   <select id="estado-buscador">
     <option value="">Todos los estados</option>
-    <option th:each="pet : ${peticionesEntrantes}" th:object="${pet}" th:value="*{id_estado}" th:text="*{id_estado}"></option>
+    <option th:each="estado : ${estados}" th:object="${estado}" th:value="*{estado}" th:text="*{estado}"></option>
   </select>
   <div class="table-wrapper-scroll-y my-custom-scrollbar">
     <table class="table table-bordered table-striped mb-0">
@@ -327,7 +327,6 @@ document.addEventListener('readystatechange', function() {
   function filtrarPorEstado() {
     // Obtener el valor seleccionado en el select
     var estadoSeleccionado = document.getElementById("estado-buscador").value;
-
     // Obtener todas las filas de la tabla
     var filas = document.getElementsByTagName("tr");
 

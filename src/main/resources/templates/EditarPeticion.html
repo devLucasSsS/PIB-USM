@@ -256,9 +256,9 @@
         <form  th:object="${mensaje}"  id="formMensajes">
             <input hidden="hidden" id="rut_gestor" th:field="*{rut_gestor}">
             <input type="datetime-local" hidden="hidden" id="hora_local" th:field="*{fecha_mensaje}">
-            <input type="text" class="form-control"  th:field="*{mensaje}">
+            <input type="text" class="form-control"  th:field="*{mensaje}" th:minlength="1"> <!-- VALIDAR QUE NO SEA VACIO EL MENSAJE-->
             <input hidden="hidden" th:field="${peticion.id_peticion}">
-            <button type="submit">Enviar</button>
+            <button id="enviarMensaje" type="submit">Enviar</button>
         </form>
     </div>
 </div>
@@ -289,6 +289,7 @@ hora_local.value = fechaHoraFormateada;
   $(document).ready(function() {
     // Manejar el evento submit del formulario
     $('#formMensajes').submit(function(event) {
+      document.getElementById("enviarMensaje").disabled = true;
       // Evitar que el formulario se envíe normalmente
       event.preventDefault();
 
@@ -329,6 +330,35 @@ document.addEventListener('readystatechange', function() {
         },
       });
   }
+       $('p[id^="rut1-"]').each(function() {
+      var id = $(this).attr('id').split('-')[1];
+      var id1 = $(this).attr('id').split('-')[3];
+      $.ajax({
+         url: '/gestor/'+id,
+         type: 'GET',
+         success: function (data) {
+           $('#rut1-' + id + '-idM1-' + id1).text(data.nombre);
+         },
+         error: function () {
+            alert('Ha ocurrido un error');
+         }
+      });
+   });
+   $('p[id^="rut2-"]').each(function() {
+      var id = $(this).attr('id').split('-')[1];
+      var id1 = $(this).attr('id').split('-')[3];
+      $.ajax({
+         url: 'http://localhost:8080/gestor/'+id,
+         type: 'GET',
+         success: function (data) {
+           $('#rut2-' + id + '-idM2-' + id1).text(data.nombre);
+         },
+         error: function () {
+            alert('Ha ocurrido un error');
+         }
+      });
+   });
+   BajarScroll();
 });
 
 
@@ -518,36 +548,6 @@ document.addEventListener('readystatechange', function() {
        const cuerpoMensajes = document.getElementById('cuerpoMensajes');
        cuerpoMensajes.scrollTop = cuerpoMensajes.scrollHeight;
    }
-</script>
-<script>
-       $('p[id^="rut1-"]').each(function() {
-      var id = $(this).attr('id').split('-')[1];
-      var id1 = $(this).attr('id').split('-')[3];
-      $.ajax({
-         url: '/gestor/'+id,
-         type: 'GET',
-         success: function (data) {
-           $('#rut1-' + id + '-idM1-' + id1).text(data.nombre);
-         },
-         error: function () {
-            alert('Ha ocurrido un error');
-         }
-      });
-   });
-   $('p[id^="rut2-"]').each(function() {
-      var id = $(this).attr('id').split('-')[1];
-      var id1 = $(this).attr('id').split('-')[3];
-      $.ajax({
-         url: 'http://localhost:8080/gestor/'+id,
-         type: 'GET',
-         success: function (data) {
-           $('#rut2-' + id + '-idM2-' + id1).text(data.nombre);
-         },
-         error: function () {
-            alert('Ha ocurrido un error');
-         }
-      });
-   });
 </script>
 </body>
 </html>

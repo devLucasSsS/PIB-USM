@@ -49,6 +49,8 @@ public class vistaControlador {
     private BibliotecaControlador bibliotecaControlador;
     @Autowired
     private InstitucionControlador institucionControlador;
+    @Autowired
+    private EstadoControlador estadoControlador;
     @GetMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(){
         ArrayList<InstitucionModelo> institucion = institucionServicio.getInstituciones();
@@ -127,7 +129,11 @@ public class vistaControlador {
         if(data!=null){
             ArrayList<Peticion> PetPrestatarias = peticionControlador.getPeticionByBibliotecasPrestataria(data.getId_biblioteca());
             ArrayList<Peticion> PetPrestadoras = peticionControlador.getPeticionByBibliotecasPrestadora(data.getId_biblioteca());
-            return new ModelAndView("Peticiones").addObject("peticionesEntrantes",PetPrestadoras).addObject("peticionesSalientes",PetPrestatarias);
+            ArrayList<EstadoModelo> Estados = estadoControlador.getEstados();
+            return new ModelAndView("Peticiones")
+                    .addObject("peticionesEntrantes",PetPrestadoras)
+                    .addObject("peticionesSalientes",PetPrestatarias)
+                    .addObject("estados",Estados);
         }else{
             return new ModelAndView("redirect:/login");
         }

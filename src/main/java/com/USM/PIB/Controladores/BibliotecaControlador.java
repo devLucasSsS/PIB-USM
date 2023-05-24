@@ -31,5 +31,4 @@ public class BibliotecaControlador {
     public void deshabilitarBiblioteca(@PathVariable("id") int id){
         bibliotecaServicio.deshabilitarBiblioteca(id);
     }
-
 }
