@@ -2,12 +2,14 @@ package com.USM.PIB.Servicios;
 
 import com.USM.PIB.Modelos.BibliotecaModelo;
 import com.USM.PIB.Repositorios.BibliotecaRepositorio;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 @Service
+@Slf4j
 public class BibliotecaServicio {
     @Autowired
     BibliotecaRepositorio bibliotecaRepositorio;
@@ -19,7 +21,14 @@ public class BibliotecaServicio {
         return (ArrayList<BibliotecaModelo>) bibliotecaRepositorio.findByInstitucion(id);
     }
     public BibliotecaModelo getBibliotecaById(int id) {
-        return bibliotecaRepositorio.findByIdB(id);
+            BibliotecaModelo bib = bibliotecaRepositorio.findByIdB(id);
+            return bib;
+            /*if (bib == null){
+            }
+        }catch (Exception e){
+            log.error("Error lol..",e);
+            return null;
+        }*/
     }
 
     public BibliotecaModelo addBibliotecas(BibliotecaModelo bibliotecaModelo) {

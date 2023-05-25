@@ -1,0 +1,25 @@
+<configuration>
+    <!-- Appender para los eventos de nivel INFO -->
+    <appender name="INFO_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/info.log</file>
+        <encoder>
+            <pattern>%-5level %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender para los eventos de nivel ERROR -->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/error.log</file>
+        <encoder>
+            <pattern>%-5level %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Definición de los niveles de log para cada appender -->
+    <logger name="com.USM.PIB" level="info" additivity="false">
+        <appender-ref ref="INFO_FILE" />
+    </logger>
+    <root level="error" additivity="false">
+        <appender-ref ref="ERROR_FILE" />
+    </root>
+</configuration>

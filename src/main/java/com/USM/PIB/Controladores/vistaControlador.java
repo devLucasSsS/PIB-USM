@@ -4,6 +4,8 @@ import com.USM.PIB.Modelos.*;
 import com.USM.PIB.Repositorios.PeticionRepositorio;
 import com.USM.PIB.Servicios.*;
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -151,7 +153,6 @@ public class vistaControlador {
             return new ModelAndView("redirect:/peticiones");
         }else{
             return new ModelAndView("redirect:/login");
-
         }
     }
     @GetMapping(path = "logout")

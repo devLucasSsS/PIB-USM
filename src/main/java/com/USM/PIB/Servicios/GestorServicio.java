@@ -3,6 +3,9 @@ package com.USM.PIB.Servicios;
 import com.USM.PIB.Modelos.BibliotecaModelo;
 import com.USM.PIB.Modelos.GestorModelo;
 import com.USM.PIB.Repositorios.GestorRepositorio;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,16 +13,19 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
+@Slf4j
 public class GestorServicio {
     @Autowired
     GestorRepositorio gestorRepositorio;
-
+    private static final Logger log = (Logger) LoggerFactory.getLogger(GestorModelo.class);
     public GestorModelo login(String rut, String password){
         BCryptPasswordEncoder hash = new BCryptPasswordEncoder();
         GestorModelo user = getByRut(rut);
         if(hash.matches(password,user.getPassword())){
+            log.info("Inicio de sesión correcto Rut:{}, Nombre:{}, IdBib:{}, IdInst:{}",user.getRut_gestor(),user.getNombre(),user.getId_biblioteca(),user.getId_institucion());
             return user;
         }else {
+            log.info("Inicio de sesión fallido Rut:{}",rut);
             return null;
         }
     }
@@ -36,7 +42,16 @@ public class GestorServicio {
         BCryptPasswordEncoder hash = new BCryptPasswordEncoder();
         String pwhash = hash.encode(gestor.getPassword());
         gestor.setPassword(pwhash);
-        return gestorRepositorio.save(gestor);
+        GestorModelo g= gestorRepositorio.save(gestor);
+        log.info("Se ha guardado un nuevo gestor: Rut={}, Nombre={}, Contrasenia={}, Id_Bib={}, Id_Inst={}, Id_Nivel={}, Habilitado={}",
+                g.getRut_gestor(),
+                g.getNombre(),
+                g.getPassword(),
+                g.getId_biblioteca(),
+                g.getId_institucion(),
+                g.getId_nivel(),
+                g.getHabilitado());
+        return g;
     }
 
     public ArrayList<GestorModelo> getByBib(int id) {
@@ -47,6 +62,7 @@ public class GestorServicio {
             GestorModelo g = getByRut(rut);
             g.setHabilitado(0);
             gestorRepositorio.save(g);
+            log.info("Se ha deshabilitado el siguiente gestor: Rut={}, Nombre={}",g.getRut_gestor(),g.getNombre());
     }
 
     public ArrayList<GestorModelo> getByInst(int id, String rut) {

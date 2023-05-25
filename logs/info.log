@@ -1,0 +1,21 @@
+INFO  2023-05-25 15:28:22.358 [restartedMain] com.USM.PIB.PibApplication - Starting PibApplication using Java 20.0.1 with PID 13596 (C:\Users\User\Documents\PIB\target\classes started by User in C:\Users\User\Documents\PIB)
+INFO  2023-05-25 15:28:22.372 [restartedMain] com.USM.PIB.PibApplication - No active profile set, falling back to 1 default profile: "default"
+INFO  2023-05-25 15:28:31.484 [restartedMain] com.USM.PIB.PibApplication - Started PibApplication in 9.515 seconds (process running for 10.18)
+INFO  2023-05-25 15:28:44.505 [http-nio-8080-exec-6] com.USM.PIB.Modelos.GestorModelo - Inicio de sesión fallido Rut:212790206
+ERROR 2023-05-25 15:29:11.393 [http-nio-8080-exec-10] com.USM.PIB.Modelos.GestorModelo - Institucion con ID 2666 no se encuentra
+INFO  2023-05-25 15:32:44.105 [restartedMain] com.USM.PIB.PibApplication - Starting PibApplication using Java 20.0.1 with PID 13744 (C:\Users\User\Documents\PIB\target\classes started by User in C:\Users\User\Documents\PIB)
+INFO  2023-05-25 15:32:44.114 [restartedMain] com.USM.PIB.PibApplication - No active profile set, falling back to 1 default profile: "default"
+INFO  2023-05-25 15:32:53.986 [restartedMain] com.USM.PIB.PibApplication - Started PibApplication in 10.271 seconds (process running for 10.925)
+INFO  2023-05-25 15:33:02.875 [http-nio-8080-exec-5] com.USM.PIB.Modelos.GestorModelo - Inicio de sesión fallido Rut:212790206
+ERROR 2023-05-25 15:33:23.533 [http-nio-8080-exec-9] com.USM.PIB.Modelos.GestorModelo - Institucion con ID 2666 no se encuentra
+INFO  2023-05-25 15:35:54.278 [restartedMain] com.USM.PIB.PibApplication - Starting PibApplication using Java 20.0.1 with PID 8548 (C:\Users\User\Documents\PIB\target\classes started by User in C:\Users\User\Documents\PIB)
+INFO  2023-05-25 15:35:54.291 [restartedMain] com.USM.PIB.PibApplication - No active profile set, falling back to 1 default profile: "default"
+INFO  2023-05-25 15:36:03.953 [restartedMain] com.USM.PIB.PibApplication - Started PibApplication in 10.067 seconds (process running for 10.72)
+INFO  2023-05-25 15:38:28.834 [restartedMain] com.USM.PIB.PibApplication - Starting PibApplication using Java 20.0.1 with PID 4684 (C:\Users\User\Documents\PIB\target\classes started by User in C:\Users\User\Documents\PIB)
+INFO  2023-05-25 15:38:28.848 [restartedMain] com.USM.PIB.PibApplication - No active profile set, falling back to 1 default profile: "default"
+INFO  2023-05-25 15:38:37.883 [restartedMain] com.USM.PIB.PibApplication - Started PibApplication in 9.446 seconds (process running for 10.397)
+ERROR 2023-05-25 15:38:39.102 [http-nio-8080-exec-1] com.USM.PIB.Modelos.GestorModelo - Institucion con ID 2666 no se encuentra
+INFO  2023-05-25 15:43:30.203 [restartedMain] com.USM.PIB.PibApplication - Starting PibApplication using Java 20.0.1 with PID 11120 (C:\Users\User\Documents\PIB\target\classes started by User in C:\Users\User\Documents\PIB)
+INFO  2023-05-25 15:43:30.208 [restartedMain] com.USM.PIB.PibApplication - No active profile set, falling back to 1 default profile: "default"
+INFO  2023-05-25 15:43:39.719 [restartedMain] com.USM.PIB.PibApplication - Started PibApplication in 9.913 seconds (process running for 10.609)
+ERROR 2023-05-25 15:44:33.663 [http-nio-8080-exec-2] com.USM.PIB.Modelos.GestorModelo - Institucion con ID 2666 no se encuentra
