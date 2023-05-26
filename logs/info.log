@@ -402,3 +402,8 @@ INFO  2023-05-26 15:21:51.217 [restartedMain] com.USM.PIB.PibApplication - No ac
 INFO  2023-05-26 15:22:00.226 [restartedMain] com.USM.PIB.PibApplication - Started PibApplication in 9.402 seconds (process running for 10.139)
 INFO  2023-05-26 15:22:06.959 [http-nio-8080-exec-4] com.USM.PIB.Modelos.GestorModelo - Inicio de sesión correcto Rut:123456789, Nombre:TEST TEST, IdBib:1, IdInst:4
 INFO  2023-05-26 15:39:04.173 [http-nio-8080-exec-4] com.USM.PIB.Modelos.GestorModelo - Inicio de sesión correcto Rut:212790206, Nombre:Lucas Ossandón, IdBib:4, IdInst:0
+INFO  2023-05-26 15:45:15.413 [restartedMain] com.USM.PIB.PibApplication - Starting PibApplication using Java 20.0.1 with PID 6892 (C:\Users\User\Documents\PIB\target\classes started by User in C:\Users\User\Documents\PIB)
+INFO  2023-05-26 15:45:15.416 [restartedMain] com.USM.PIB.PibApplication - No active profile set, falling back to 1 default profile: "default"
+INFO  2023-05-26 15:45:27.129 [restartedMain] com.USM.PIB.PibApplication - Started PibApplication in 12.101 seconds (process running for 12.744)
+INFO  2023-05-26 15:46:21.656 [http-nio-8080-exec-4] com.USM.PIB.Modelos.GestorModelo - Inicio de sesión correcto Rut:212790206, Nombre:Lucas Ossandón, IdBib:4, IdInst:0
+INFO  2023-05-26 15:47:04.809 [http-nio-8080-exec-7] com.USM.PIB.Modelos.GestorModelo - Inicio de sesión correcto Rut:123456789, Nombre:TEST TEST, IdBib:1, IdInst:4
