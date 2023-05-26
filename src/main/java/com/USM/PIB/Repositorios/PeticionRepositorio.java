@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public interface PeticionRepositorio extends JpaRepository<Peticion,Integer> {
     @Query("SELECT p FROM Peticion p WHERE p.id_biblioteca_prestataria=?1")
     ArrayList<Peticion> findByBibliotecaPrestataria(int id);
-    @Query("SELECT p FROM Peticion p WHERE p.id_biblioteca_prestadora=?1 AND p.id_estado >= 3")
+    @Query("SELECT p FROM Peticion p WHERE p.id_biblioteca_prestadora=?1 AND p.id_estado >= 4")
     ArrayList<Peticion> findByBibliotecaPrestadora(int id);
 
 }

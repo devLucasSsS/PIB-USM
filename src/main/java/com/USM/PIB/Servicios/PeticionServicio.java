@@ -38,7 +38,7 @@ public class PeticionServicio {
     }
     public Peticion updateTerminosPeticion(int idP) {
         Peticion pet = peticionRepositorio.getById(idP);
-        pet.setId_estado(4);
+        pet.setId_estado(5);
         return peticionRepositorio.save(pet);
     }
 }

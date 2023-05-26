@@ -122,7 +122,12 @@ public class vistaControlador {
         terminos_envio.setId_peticion(id);
         terminosEnvioServicio.saveTerminosEnvio(terminos_envio);
         Tipo_envioModelo nombreEnvio = tipoEnvioControlador.getById(terminos_envio.getTipo_envio());
-        String TerminosMensaje = "Terminos: "+terminos_envio.getTerminos()+" Tipo envio: " + nombreEnvio.getTipo() + " Descripcion tipo de envio: " + terminos_envio.getDescripcion_envio() + " Fecha Vencimiento: " + terminos_envio.getFecha_vencimiento();
+        String TerminosMensaje = "";
+        if(terminos_envio.getEnvio() == 0){
+            TerminosMensaje = "Terminos: "+terminos_envio.getTerminos()+" Tipo envio: " + nombreEnvio.getTipo() + " Descripcion tipo de envio: " + terminos_envio.getDescripcion_envio() + " Fecha Vencimiento: " + terminos_envio.getFecha_vencimiento();
+        }else{
+            TerminosMensaje = "Terminos: "+terminos_envio.getTerminos()+" Tipo envio: " + nombreEnvio.getTipo() + " Descripcion tipo de envio: " + terminos_envio.getDescripcion_envio();
+        }
         MensajesModelo terminosM = new MensajesModelo();
         terminosM.setFecha_mensaje(new Date());
         terminosM.setId_peticion(id);

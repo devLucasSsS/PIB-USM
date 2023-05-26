@@ -11,8 +11,8 @@ import java.util.ArrayList;
 public interface EstadoRepositorio extends JpaRepository<EstadoModelo,Integer> {
     @Query("SELECT e FROM EstadoModelo e where e.id_estado=?1")
     EstadoModelo getEstadoById(int id);
-    @Query("SELECT e from EstadoModelo e where e.id_estado BETWEEN 10 AND 11")
+    @Query("SELECT e from EstadoModelo e where e.id_estado BETWEEN 11 AND 12")
     ArrayList<EstadoModelo> getEstadosPrestatario();
-    @Query("SELECT e from EstadoModelo e where e.id_estado BETWEEN 13 AND 15")
+    @Query("SELECT e from EstadoModelo e where e.id_estado BETWEEN 14 AND 16")
     ArrayList<EstadoModelo> getEstadosPrestador();
 }

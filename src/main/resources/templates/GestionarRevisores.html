@@ -107,7 +107,7 @@
         cancelButtonText: `Cancelar`,
       }).then((result) => {
         if (result.isConfirmed) {
-          deshabilitarRevisor(rut);; //ESTADO CANCELADO
+          deshabilitarRevisor(rut);;
           Swal.fire('Borrado!', '', 'Aceptar')
         }
         })

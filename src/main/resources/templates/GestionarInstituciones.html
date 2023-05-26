@@ -105,7 +105,7 @@
         cancelButtonText: `Cancelar`,
       }).then((result) => {
         if (result.isConfirmed) {
-            deshabilitarBiblioteca(id);; //ESTADO CANCELADO
+            deshabilitarBiblioteca(id);;
           Swal.fire('Borrada!', '', 'Aceptar')
         }
         })
@@ -150,7 +150,6 @@
           boton.onclick = function() {
             // Tu lógica aquí
             deshabilitar(biblioteca.id_biblioteca);
-            console.log("Botón presionado para la biblioteca con ID " + biblioteca.id_biblioteca);
           };
 
           columnaBoton.appendChild(boton);

@@ -75,7 +75,19 @@
                 </form>
             </div>
         </div>
-        <div th:if="${peticion.get().id_estado == 3 && peticion.get().id_biblioteca_prestadora == gestor.id_biblioteca}">
+        <div th:if="${peticion.get().id_estado == 1}" id="existeBib" style="display: none;">
+            <div class="container-3" style="ce" >
+                <form id="form5">
+                    <label>Existe el libro/documento en su biblioteca?</label>
+                    <input type="radio" id="opcion1Eb" name="existe" value="1">
+                    <label for="opcion1U">Si</label>
+                    <input type="radio" id="opcion2Eb" name="existe" value="0">
+                    <label for="opcion2U">No</label><br>
+                    <button type="button" onclick="Enviar(5)">Enviar</button>
+                </form>
+            </div>
+        </div>
+        <div th:if="${peticion.get().id_estado == 4 && peticion.get().id_biblioteca_prestadora == gestor.id_biblioteca}">
             <div class="container-3" >
                 <form id="form2">
                     <label>Hay stock vigente?</label>
@@ -88,7 +100,7 @@
             </div>
         </div>
         <p th:object="${terminosDevolucion}"></p>
-        <div th:if="${peticion.get().id_estado == 4 && peticion.get().id_biblioteca_prestataria == gestor.id_biblioteca && terminosDevolucion == null}" >
+        <div th:if="${peticion.get().id_estado == 5 && peticion.get().id_biblioteca_prestataria == gestor.id_biblioteca && terminosDevolucion == null}" >
             <div class="container-3" >
                 <form id="form3">
                     <p th:object="${terminosEnvio}"></p>
@@ -108,7 +120,7 @@
         </div>
         <p th:object="${terminosDevolucion}"></p>
         <p th:object="${tipoEnvioDevolucion}"></p>
-        <div th:if="${peticion.get().id_estado == 4 && peticion.get().id_biblioteca_prestadora == gestor.id_biblioteca && terminosDevolucion != null }" >
+        <div th:if="${peticion.get().id_estado == 5 && peticion.get().id_biblioteca_prestadora == gestor.id_biblioteca && terminosDevolucion != null }" >
             <div class="container-3" >
                 <form id="form4">
                     <p th:object="${terminosDevolucion}"></p>
@@ -128,7 +140,7 @@
     </div>
 </div>
 <p th:object="${gestor}"></p>
-<div id="terminosDivEnvio" th:object="${terminos_envio}" th:if="${peticion.get().id_estado == 9 && peticion.get().id_biblioteca_prestadora == gestor.id_biblioteca}">
+<div id="terminosDivEnvio" th:object="${terminos_envio}" th:if="${peticion.get().id_estado == 10 && peticion.get().id_biblioteca_prestadora == gestor.id_biblioteca}">
     <div class="col-sm-6 col-sm-offset-3">
         <div class="container-2" >
             <h1 style="text-align: center;">Terminos de envio</h1>
@@ -152,7 +164,7 @@
         </div>
     </div>
 </div>
-<div id="terminosDivDevolucion" th:object="${terminos_envio}" th:if="${(peticion.get().id_estado == 10 && peticion.get().id_biblioteca_prestataria == gestor.id_biblioteca) ||(peticion.get().id_estado == 8 && peticion.get().id_biblioteca_prestataria == gestor.id_biblioteca)}">
+<div id="terminosDivDevolucion" th:object="${terminos_envio}" th:if="${(peticion.get().id_estado == 11 && peticion.get().id_biblioteca_prestataria == gestor.id_biblioteca) ||(peticion.get().id_estado == 9 && peticion.get().id_biblioteca_prestataria == gestor.id_biblioteca)}">
     <div class="col-sm-6 col-sm-offset-3">
         <div class="container-2" >
             <h1 style="text-align: center;">Terminos de envio</h1>
@@ -247,7 +259,7 @@
             <p th:object="${gestor}"></p>
             <ul id="cuerpoMensajes" style="display: flex; flex-direction: column; overflow-y: scroll; height: 550px;">
                 <div th:each="mensajeGet : ${mensajes}" style=" padding-top: 10px; padding-bottom: 10px;">
-                    <div th:if="${mensajeGet.rut_gestor == '000000001'  }" class="container" style="background: #b9f8fa; width: 300px ;word-wrap: break-word; display: flex;flex-direction: column;float: left; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px">
+                    <div th:if="${mensajeGet.rut_gestor == '000000001'  }" class="container" style="background: #c7c2bd; width: 470px ;word-wrap: break-word; display: flex;flex-direction: column;float: left; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); border-radius: 13px;margin-right: 20px; align-items: center;">
                         <p th:id="'rutS-'+${mensajeGet.rut_gestor}+'-idMS-'+${mensajeGet.id_mensaje}"></p>
                         <p th:text="${mensajeGet.mensaje}"></p>
                         <p th:text="${#dates.format(mensajeGet.fecha_mensaje, 'dd-MM-yyyy HH:mm')}"></p>
@@ -396,9 +408,8 @@ document.addEventListener('readystatechange', function() {
         if(form == 1){
             const form = document.getElementById("form1");
             const ValUsuario = form.elements["usuario"].value;
-            //const ValStock = form.elements["stock"].value;
             if(ValUsuario == 0){
-                //ENVIAR ESTADO 2
+                //ENVIAR ESTADO 2 RECHAZADA VIGENCIA USUARIO
                 $.ajax({
                      url: '/peticion/'+id+'/'+2,
                      type: 'PUT',
@@ -410,26 +421,18 @@ document.addEventListener('readystatechange', function() {
                      }
                 });
             }else{
-                //ENVIAR ESTADO 3
-                $.ajax({
-                 url: '/peticion/'+id+'/'+3,
-                 type: 'PUT',
-                 success: function (data) {
-                    window.location.href = "/peticiones";
-                 },
-                 error: function () {
-                    alert('Ha ocurrido un error');
-                 }
-              });
+                  var div = document.getElementById("existeBib");
+                  div.style.display = "block";
+                  form.style.display ="none";
             }
         }
         if(form == 2){
             const form = document.getElementById("form2");
             const ValStock = form.elements["stock"].value;
             if(ValStock == 0){
-                //ENVIAR ESTADO 13 PENDIENTE
+                //ENVIAR ESTADO 14 PENDIENTE STOCK NO DISP...
                 $.ajax({
-                     url: '/peticion/'+id+'/'+13,
+                     url: '/peticion/'+id+'/'+14,
                      type: 'PUT',
                      success: function (data) {
                         window.location.href = "/peticiones";
@@ -439,9 +442,9 @@ document.addEventListener('readystatechange', function() {
                      }
                 });
             }else{
-                //ENVIAR ESTADO 9 PETICION VALIDADA
+                //ENVIAR ESTADO 10 PETICION VALIDADA
                 $.ajax({
-                 url: '/peticion/'+id+'/'+9,
+                 url: '/peticion/'+id+'/'+10,
                  type: 'PUT',
                  success: function (data) {
                     var url = window.location.href;
@@ -457,9 +460,9 @@ document.addEventListener('readystatechange', function() {
             const form = document.getElementById("form3");
             const acepta = form.elements["acepta"].value;
             if(acepta == 0){
-                //ENVIAR ESTADO 6 TERMINOS ENVIO RECHAZADOS
+                //ENVIAR ESTADO 7 TERMINOS ENVIO RECHAZADOS
                 $.ajax({
-                     url: '/peticion/'+id+'/'+6,
+                     url: '/peticion/'+id+'/'+7,
                      type: 'PUT',
                      success: function (data) {
                         window.location.href = "/peticiones";
@@ -469,9 +472,9 @@ document.addEventListener('readystatechange', function() {
                      }
                 });
             }else{
-                //ENVIAR ESTADO 5 TERMINOS ENVIO ACEPTADOS
+                //ENVIAR ESTADO 6 TERMINOS ENVIO ACEPTADOS
                 $.ajax({
-                 url: '/peticion/'+id+'/'+5,
+                 url: '/peticion/'+id+'/'+6,
                  type: 'PUT',
                  success: function (data) {
                     form.style.display="none";
@@ -486,9 +489,9 @@ document.addEventListener('readystatechange', function() {
             const form = document.getElementById("form4");
             const acepta = form.elements["acepta"].value;
             if(acepta == 0){
-                //ENVIAR ESTADO 8 TERMINOS DEVOLUCION RECHAZADOS
+                //ENVIAR ESTADO 9 TERMINOS DEVOLUCION RECHAZADOS
                 $.ajax({
-                     url: '/peticion/'+id+'/'+8,
+                     url: '/peticion/'+id+'/'+9,
                      type: 'PUT',
                      success: function (data) {
                         window.location.href = "/peticiones";
@@ -498,12 +501,41 @@ document.addEventListener('readystatechange', function() {
                      }
                 });
             }else{
-                //ENVIAR ESTADO 7 TERMINOS DEVOLUCION ACEPTADOS
+                //ENVIAR ESTADO 8 TERMINOS DEVOLUCION ACEPTADOS
                 $.ajax({
-                 url: '/peticion/'+id+'/'+7,
+                 url: '/peticion/'+id+'/'+8,
                  type: 'PUT',
                  success: function (data) {
                     form.style.display="none";
+                 },
+                 error: function () {
+                    alert('Ha ocurrido un error');
+                 }
+              });
+            }
+        }
+        if(form == 5){
+            const form = document.getElementById("form5");
+            const existe = form.elements["existe"].value;
+            if(existe == 0){
+                 //ENVIAR ESTADO 4 INICIADO PRESTADORA
+                $.ajax({
+                 url: '/peticion/'+id+'/'+4,
+                 type: 'PUT',
+                 success: function (data) {
+                    window.location.href = "/peticiones";
+                 },
+                 error: function () {
+                    alert('Ha ocurrido un error');
+                 }
+              });
+            }else{
+                 //ENVIAR ESTADO 3 RECHAZADA EXISTENCIA EN BIBLIOTECA
+                $.ajax({
+                 url: '/peticion/'+id+'/'+3,
+                 type: 'PUT',
+                 success: function (data) {
+                    window.location.href = "/peticiones";
                  },
                  error: function () {
                     alert('Ha ocurrido un error');
