@@ -21,4 +21,8 @@ public class Tipo_envioControlador {
     public ArrayList<Tipo_envioModelo> getTipos() {
             return tipoEnvioServicio.getTipos();
     }
+    @GetMapping(path = "/{id}")
+    public Tipo_envioModelo getById(@PathVariable("id")int id){
+        return tipoEnvioServicio.getByIdTerm(id);
+    }
 }

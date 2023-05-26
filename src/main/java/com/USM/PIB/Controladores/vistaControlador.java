@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -117,10 +118,17 @@ public class vistaControlador {
         }
     }
     @PostMapping(path = "peticion/{id}")
-    public ModelAndView updateEstadoPeticion(@PathVariable("id") int id,
-         Terminos_envioModelo terminos_envio){
+    public ModelAndView updateEstadoPeticion(@PathVariable("id") int id, Terminos_envioModelo terminos_envio){
         terminos_envio.setId_peticion(id);
         terminosEnvioServicio.saveTerminosEnvio(terminos_envio);
+        Tipo_envioModelo nombreEnvio = tipoEnvioControlador.getById(terminos_envio.getTipo_envio());
+        String TerminosMensaje = "Terminos: "+terminos_envio.getTerminos()+" Tipo envio: " + nombreEnvio.getTipo() + " Descripcion tipo de envio: " + terminos_envio.getDescripcion_envio() + " Fecha Vencimiento: " + terminos_envio.getFecha_vencimiento();
+        MensajesModelo terminosM = new MensajesModelo();
+        terminosM.setFecha_mensaje(new Date());
+        terminosM.setId_peticion(id);
+        terminosM.setMensaje(TerminosMensaje);
+        terminosM.setRut_gestor("000000001");
+        mensajesControlador.saveMensaje(terminosM);
         peticionServicio.updateTerminosPeticion(id);// NO OLVIDAR ACTUALIZAR EL ESTADOOO
         return new ModelAndView("redirect:/peticiones");
     }
