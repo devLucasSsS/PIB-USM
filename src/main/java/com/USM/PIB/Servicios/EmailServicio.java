@@ -14,35 +14,35 @@ import org.springframework.stereotype.Service;
 
 // Interface
 @Service
-public class EmailService {
+public class EmailServicio {
 
     @Autowired
     private JavaMailSender javaMailSender;
-    @Value("${spring.mail.username}") private String sender;
-    public String sendSimpleMail(DetalleEmailModelo details)
+    @Value("${spring.mail.username}") private String emailHost;
+    public String enviarEmail(DetalleEmailModelo email)
     {
 
         // Try block to check for exceptions
         try {
 
             // Creating a simple mail message
-            SimpleMailMessage mailMessage
+            SimpleMailMessage mensajeEmail
                     = new SimpleMailMessage();
 
             // Setting up necessary details
-            mailMessage.setFrom(sender);
-            mailMessage.setTo(details.getRecipient());
-            mailMessage.setText(details.getMsgBody());
-            mailMessage.setSubject(details.getSubject());
+            mensajeEmail.setFrom(emailHost);
+            mensajeEmail.setTo(email.getRecipient());
+            mensajeEmail.setText(email.getMsgBody());
+            mensajeEmail.setSubject(email.getSubject());
 
             // Sending the mail
-            javaMailSender.send(mailMessage);
-            return "Mail Sent Successfully...";
+            javaMailSender.send(mensajeEmail);
+            return "Email enviado correctamente...";
         }
 
         // Catch block to handle the exceptions
         catch (Exception e) {
-            return "Error while Sending Mail";
+            return "Error mientras se enviaba el email";
         }
     }
 }

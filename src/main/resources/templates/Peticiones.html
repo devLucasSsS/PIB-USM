@@ -344,9 +344,7 @@ document.addEventListener('readystatechange', function() {
     <table class="table table-bordered table-striped mb-0">
       <thead>
       <tr>
-        <th>Id</th><!--
-        <th>Autor</th>
-        <th>Edicion</th>-->
+        <th>Id</th>
         <th>Libro</th>
         <th>Rut</th>
         <th>Email</th>
@@ -359,9 +357,7 @@ document.addEventListener('readystatechange', function() {
       <tbody>
       <tr th:each="pet1 : ${peticionesSalientes}" th:object="${pet1}">
         <td th:text="*{id_peticion}"></td>
-        <!--<td th:text="*{autor}"></td>
-        <td th:text="*{edicion}"></td>-->
-        <td th:text="*{libro}"><!--<a th:href="*{link}" th:text="*{libro}" Target="_blank"></a>--></td>
+        <td th:text="*{libro}"></td>
         <td th:text="*{rut_prestatario}"></button></td>
         <td th:id="'correo-'+*{rut_prestatario}+'-idP-'+*{id_peticion}"></td>
         <td th:id="'institucion-'+*{id_institucion_prestadora}+'-idP-'+*{id_peticion}"></td>

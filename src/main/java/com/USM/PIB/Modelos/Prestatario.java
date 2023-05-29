@@ -48,4 +48,13 @@ public class Prestatario {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "Prestatario{" +
+                "rut_prestatario='" + rut_prestatario + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

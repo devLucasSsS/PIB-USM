@@ -203,6 +203,29 @@ public class Peticion {
         this.id_terminos_envio = id_terminos_envio;
         this.id_item = id_item;
     }
+
+    @Override
+    public String toString() {
+        return "Peticion{" +
+                "id_peticion=" + id_peticion +
+                ", libro='" + libro + '\'' +
+                ", edicion='" + edicion + '\'' +
+                ", autor='" + autor + '\'' +
+                ", link='" + link + '\'' +
+                ", ip='" + ip + '\'' +
+                ", fecha_peticion=" + fecha_peticion +
+                ", fecha_prestamo=" + fecha_prestamo +
+                ", fecha_devolucion=" + fecha_devolucion +
+                ", rut_prestatario='" + rut_prestatario + '\'' +
+                ", id_biblioteca_prestataria=" + id_biblioteca_prestataria +
+                ", id_institucion_prestataria=" + id_institucion_prestataria +
+                ", id_biblioteca_prestadora=" + id_biblioteca_prestadora +
+                ", id_institucion_prestadora=" + id_institucion_prestadora +
+                ", id_estado=" + id_estado +
+                ", id_terminos_envio=" + id_terminos_envio +
+                ", id_item=" + id_item +
+                '}';
+    }
 }
 
 

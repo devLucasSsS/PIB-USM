@@ -3,6 +3,7 @@ package com.USM.PIB.Servicios;
 import com.USM.PIB.Controladores.RespuestaPersonalizadaControlador;
 import com.USM.PIB.Modelos.GestorModelo;
 import com.USM.PIB.Modelos.InstitucionModelo;
+import com.USM.PIB.Modelos.Peticion;
 import com.USM.PIB.Repositorios.InstitucionRepositorio;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class InstitucionServicio {
     @Autowired
     InstitucionRepositorio institucionRepositorio;
+    private static final Logger log = (Logger) LoggerFactory.getLogger(InstitucionModelo.class);
     @Autowired
     RespuestaPersonalizadaControlador respuestaPersonalizadaControlador;
     public ArrayList<InstitucionModelo> getInstituciones(){
@@ -28,6 +30,8 @@ public class InstitucionServicio {
     }
 
     public InstitucionModelo addInstitucion(InstitucionModelo institucion) {
-        return institucionRepositorio.save(institucion);
+        InstitucionModelo inst = institucionRepositorio.save(institucion);
+        log.info("Se ha agredado una nueva institucion: {}",inst);
+        return inst;
     }
 }

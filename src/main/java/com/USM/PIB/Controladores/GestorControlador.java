@@ -30,6 +30,7 @@ public class GestorControlador {
             g.setId_nivel(dat.getId_nivel());
             g.setNombre(dat.getNombre());
             g.setId_institucion(dat.getId_institucion());
+            g.setEmail(dat.getEmail());
             return g;
         }else{
             return null;

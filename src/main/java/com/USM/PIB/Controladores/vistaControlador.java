@@ -4,8 +4,6 @@ import com.USM.PIB.Modelos.*;
 import com.USM.PIB.Repositorios.PeticionRepositorio;
 import com.USM.PIB.Servicios.*;
 import jakarta.servlet.http.HttpSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +52,8 @@ public class vistaControlador {
     private InstitucionControlador institucionControlador;
     @Autowired
     private EstadoControlador estadoControlador;
+    @Autowired
+    private EmailControlador emailControlador;
     @GetMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(){
         ArrayList<InstitucionModelo> institucion = institucionServicio.getInstituciones();
@@ -71,7 +71,8 @@ public class vistaControlador {
     }
     @PostMapping(path = "peticion/nueva")
     public ModelAndView nuevaPeticion(Peticion peticion, Prestatario prestatario){
-        peticionControlador.savePeticion(peticion);
+        Peticion pet = peticionControlador.savePeticion(peticion);
+
         Prestatario data = prestatarioServicio.getByRut(prestatario.getRut_prestatario());
         if(data != null){
             prestatarioServicio.updatePrestatario(prestatario.getRut_prestatario(),prestatario);
@@ -79,7 +80,14 @@ public class vistaControlador {
         }else{
             prestatarioServicio.savePrestatario(prestatario);
         }
-        return new ModelAndView("redirect:/peticiones");
+        DetalleEmailModelo email = new DetalleEmailModelo();
+        email.setRecipient(prestatario.getEmail());
+        email.setSubject("PETICIÓN CREADA");
+        email.setMsgBody("Estimado Usuario/a \n" +
+                "Su peticion ha sido correctamente creada \n" +
+                "su id de peticion es: "+pet.getId_peticion() +" titulo: "+pet.getLibro());
+        emailControlador.enviarEmail(email);
+        return new ModelAndView("redirect:/peticion/nueva");
     }
     @GetMapping(path = "peticion/{id}")
     public ModelAndView editarPeticion(@PathVariable("id") int id, HttpSession session){
