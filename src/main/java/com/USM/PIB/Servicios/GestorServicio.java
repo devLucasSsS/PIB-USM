@@ -21,11 +21,15 @@ public class GestorServicio {
     public GestorModelo login(String rut, String password){
         BCryptPasswordEncoder hash = new BCryptPasswordEncoder();
         GestorModelo user = getByRut(rut);
-        if(hash.matches(password,user.getPassword())){
-            log.info("Inicio de sesión correcto Rut:{}, Nombre:{}, IdBib:{}, IdInst:{}",user.getRut_gestor(),user.getNombre(),user.getId_biblioteca(),user.getId_institucion());
-            return user;
+        if(user != null){
+            if(hash.matches(password,user.getPassword())){
+                log.info("Inicio de sesión correcto Rut:{}, Nombre:{}, IdBib:{}, IdInst:{}",user.getRut_gestor(),user.getNombre(),user.getId_biblioteca(),user.getId_institucion());
+                return user;
+            }else {
+                log.info("Inicio de sesión fallido Rut:{}",rut);
+                return null;
+            }
         }else {
-            log.info("Inicio de sesión fallido Rut:{}",rut);
             return null;
         }
     }
@@ -62,7 +66,7 @@ public class GestorServicio {
             GestorModelo g = getByRut(rut);
             g.setHabilitado(0);
             gestorRepositorio.save(g);
-            log.info("Se ha deshabilitado el siguiente gestor: Rut={}, Nombre={}",g.getRut_gestor(),g.getNombre());
+            log.info("Se ha deshabilitado el siguiente gestor: Rut={}, Nombre={}, IdBib:{}",g.getRut_gestor(),g.getNombre(),g.getId_biblioteca());
     }
 
     public ArrayList<GestorModelo> getByInst(int id, String rut) {

@@ -38,7 +38,7 @@
                         </div>
                         <div class="form-group">
                             <label for="institucion">Institucion:  </label>
-                            <select id="institucion" name="institucion" onchange="ReloadBibliotecas(this.value,'biblioteca')">
+                            <select id="institucion" name="institucion" onchange="ReloadBibliotecas(this.value,'biblioteca')" th:field="*{id_institucion}">
                                 <option th:value="0">Seleccione una opción</option>
                                 <option th:each="inst : ${institucion}"  th:value="${inst.id_institucion}" th:text="${inst.nombre_institucion}"></option>
                             </select>

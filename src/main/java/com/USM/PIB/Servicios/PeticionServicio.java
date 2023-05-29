@@ -1,8 +1,11 @@
 package com.USM.PIB.Servicios;
 
 import com.USM.PIB.Controladores.PeticionControlador;
+import com.USM.PIB.Modelos.GestorModelo;
 import com.USM.PIB.Modelos.Peticion;
 import com.USM.PIB.Repositorios.PeticionRepositorio;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +16,14 @@ import java.util.Optional;
 public class PeticionServicio {
     @Autowired
     PeticionRepositorio peticionRepositorio;
+    private static final Logger log = (Logger) LoggerFactory.getLogger(Peticion.class);
 
     public Peticion savePeticion(Peticion peticion){
-        return peticionRepositorio.save(peticion);
+        Peticion pet= peticionRepositorio.save(peticion);
+        log.info("Nueva Peticion Creada Id:{} ,Libro:{}, Autor:{}, IdBibPrestataria: {}, IdInstPrestataria:{}, IdBibPrestadora:{}, IdInstPrestadora, Rut:{}",
+                pet.getId_peticion(),pet.getLibro(),pet.getAutor(),pet.getId_biblioteca_prestataria(),pet.getId_institucion_prestataria(),
+                pet.getId_biblioteca_prestadora(), pet.getId_institucion_prestadora(),pet.getRut_prestatario());
+        return pet;
     }
 
     public ArrayList<Peticion> getPeticion() {
