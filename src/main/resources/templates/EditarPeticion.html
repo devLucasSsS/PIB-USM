@@ -50,13 +50,47 @@
         line-height: 1.42857143;
         vertical-align: top;
     }
+      .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    visibility: hidden;
+  }
 
+  .loading-overlay.active {
+    visibility: visible;
+  }
+
+  .loading-spinner {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
     </style>
 </head>
 
 <body >
 <div th:insert="fragments/nav0 :: navUser0"></div>
 
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+</div>
 
 <p th:object="${peticion}"></p>
 <div th:if="${peticion.isPresent()}">
@@ -67,11 +101,11 @@
             <div class="container-3" style="ce" >
                 <form id="form1">
                     <label>El usuario solicitante existe?</label>
-                    <input type="radio" id="opcion1U" name="usuario" value="1">
+                    <input type="radio" id="opcion1U" name="usuario" value="1" >
                     <label for="opcion1U">Si</label>
                     <input type="radio" id="opcion2U" name="usuario" value="0">
                     <label for="opcion2U">No</label><br>
-                    <button type="button" onclick="Enviar(1)">Enviar</button>
+                    <button id="botonUser" type="button" onclick="Enviar(1,'botonUser')">Enviar</button>
                 </form>
             </div>
         </div>
@@ -83,7 +117,7 @@
                     <label for="opcion1U">Si</label>
                     <input type="radio" id="opcion2Eb" name="existe" value="0">
                     <label for="opcion2U">No</label><br>
-                    <button type="button" onclick="Enviar(5)">Enviar</button>
+                    <button id="botonStockProp" type="button" onclick="Enviar(5,'botonStockProp')">Enviar</button>
                 </form>
             </div>
         </div>
@@ -95,7 +129,7 @@
                     <label for="opcion1S">Si</label>
                     <input type="radio" id="opcion2S" name="stock" value="0">
                     <label for="opcion2S">No</label> <br>
-                    <button type="button" onclick="Enviar(2)">Enviar</button>
+                    <button id="botonStock" type="button" onclick="Enviar(2,'botonStock')">Enviar</button>
                 </form>
             </div>
         </div>
@@ -114,7 +148,7 @@
                     <label for="opcion1S">Si</label>
                     <input type="radio" id="opcion2T" name="acepta" value="0">
                     <label for="opcion2S">No</label><br>
-                    <button type="button" onclick="Enviar(3)">Enviar</button>
+                    <button id="botonTerm" type="button" onclick="Enviar(3,'botonTerm')">Enviar</button>
                 </form>
             </div>
         </div>
@@ -133,7 +167,7 @@
                     <label for="opcion1S">Si</label>
                     <input type="radio" id="opcion2D" name="acepta" value="0">
                     <label for="opcion2S">No</label><br>
-                    <button type="button" onclick="Enviar(4)">Enviar</button>
+                    <button id="botonDevo" type="button" onclick="Enviar(4,'botonDevo')">Enviar</button>
                 </form>
             </div>
         </div>
@@ -148,17 +182,17 @@
                 <p hidden="hidden" th:object="${peticion}"></p>
                 <h1>Terminos de envio</h1>
                 <label for="terminos">Ingrese los terminos y condiciones para el prestatario</label><br>
-                <textarea id="terminos" class="form-control" th:field="*{terminos}"></textarea><br>
+                <textarea id="terminos" class="form-control" th:field="*{terminos}" required="required"></textarea><br>
                 <label for="tipoEnvio">Ingresa el tipo de envio</label><br>
                 <select id="TipoEnvio" name="TipoEnvio" th:field="*{tipo_envio}">
                     <option th:value="0">Seleccione una opción</option>
-                    <option th:each="tipo : ${tipoEnvio}"  th:value="${tipo.tipo_envio}" th:text="${tipo.tipo}"></option>
+                    <option th:each="tipo : ${tipoEnvio}"  th:value="${tipo.tipo_envio}" th:text="${tipo.tipo} "  required="required"></option>
                 </select>
                 <label for="DescripcionEnvio">Ingrese una descripcion del tipo de envio</label><br>
-                <input id="DescripcionEnvio" class="form-control" type="text" th:field="*{descripcion_envio}"><br>
+                <input id="DescripcionEnvio" class="form-control" type="text" th:field="*{descripcion_envio}" required="required"><br>
                 <label for="FechaVencimiento">Ingrese una fecha de vencimiento</label>
-                <input type="datetime-local" class="form-control" id="FechaVencimiento" th:field="*{fecha_vencimiento}"><br>
-                <input hidden="hidden" th:field="*{envio}" th:value="0">
+                <input type="datetime-local" class="form-control" id="FechaVencimiento" th:field="*{fecha_vencimiento}" required="required" ><br>
+                <input hidden="hidden" th:field="*{envio}" th:value="0" required="required">
                 <button id="TerminosEnvioB" type="submit">Enviar Terminos</button>
             </form>
         </div>
@@ -180,8 +214,8 @@
                     <option th:each="tipo : ${tipoEnvio}"  th:value="${tipo.tipo_envio}" th:text="${tipo.tipo}"></option>
                 </select>
                 <label for="DescripcionEnvioDevolucion">Ingrese una descripcion del tipo de envio</label><br>
-                <input id="DescripcionEnvioDevolucion" class="form-control" type="text" th:field="*{descripcion_envio}"><br>
-                <input hidden="hidden" th:field="*{envio}" id="envioDevolucion">
+                <input id="DescripcionEnvioDevolucion" class="form-control" type="text" th:field="*{descripcion_envio}" required="required"><br>
+                <input hidden="hidden" th:field="*{envio}" id="envioDevolucion" >
                 <button type="submit">Enviar Terminos</button>
             </form>
         </div>
@@ -234,7 +268,7 @@
                 </tr>
                 <tr>
                     <th>Enlace</th>
-                    <td><a th:href="${peticion.get().link}" Target="_blank">Aqui Va el link</a></td>
+                    <td><a th:href="${peticion.get().link}" Target="_blank">Link</a></td>
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -280,7 +314,7 @@
         <form  th:object="${mensaje}"  id="formMensajes">
             <input hidden="hidden" id="rut_gestor" th:field="*{rut_gestor}">
             <input type="datetime-local" hidden="hidden" id="hora_local" th:field="*{fecha_mensaje}">
-            <input type="text" class="form-control"  th:field="*{mensaje}" th:minlength="1"> <!-- VALIDAR QUE NO SEA VACIO EL MENSAJE-->
+            <input type="text" class="form-control"  th:field="*{mensaje}" th:minlength="1" required = "required"> <!-- VALIDAR QUE NO SEA VACIO EL MENSAJE-->
             <input hidden="hidden" th:field="${peticion.id_peticion}">
             <button id="enviarMensaje" type="submit">Enviar</button>
         </form>
@@ -400,8 +434,19 @@ document.addEventListener('readystatechange', function() {
 
 
 </script>
+
 <script>
-      function Enviar(form) {
+    function loadingScreen() {
+        var loadingOverlay = document.getElementById("loadingOverlay");
+        loadingOverlay.classList.add("active");
+
+      setTimeout(function() {
+        // No se realiza ninguna acción aquí, ya que el tiempo de espera es infinito
+      }, 2000);
+
+
+    }
+      function Enviar(form,idBoton) {
         var url = window.location.href;
         var id = url.substring(url.lastIndexOf('/') + 1);
         id = parseInt(id);
@@ -410,6 +455,7 @@ document.addEventListener('readystatechange', function() {
             const ValUsuario = form.elements["usuario"].value;
             if(ValUsuario == 0){
                 //ENVIAR ESTADO 2 RECHAZADA VIGENCIA USUARIO
+                loadingScreen();
                 $.ajax({
                      url: '/peticion/'+id+'/'+2,
                      type: 'PUT',
@@ -431,6 +477,7 @@ document.addEventListener('readystatechange', function() {
             const ValStock = form.elements["stock"].value;
             if(ValStock == 0){
                 //ENVIAR ESTADO 14 PENDIENTE STOCK NO DISP...
+                loadingScreen();
                 $.ajax({
                      url: '/peticion/'+id+'/'+14,
                      type: 'PUT',
@@ -443,6 +490,7 @@ document.addEventListener('readystatechange', function() {
                 });
             }else{
                 //ENVIAR ESTADO 10 PETICION VALIDADA
+                 loadingScreen();
                 $.ajax({
                  url: '/peticion/'+id+'/'+10,
                  type: 'PUT',
@@ -461,6 +509,7 @@ document.addEventListener('readystatechange', function() {
             const acepta = form.elements["acepta"].value;
             if(acepta == 0){
                 //ENVIAR ESTADO 7 TERMINOS ENVIO RECHAZADOS
+                 loadingScreen();
                 $.ajax({
                      url: '/peticion/'+id+'/'+7,
                      type: 'PUT',
@@ -473,6 +522,7 @@ document.addEventListener('readystatechange', function() {
                 });
             }else{
                 //ENVIAR ESTADO 6 TERMINOS ENVIO ACEPTADOS
+                 loadingScreen();
                 $.ajax({
                  url: '/peticion/'+id+'/'+6,
                  type: 'PUT',
@@ -490,6 +540,7 @@ document.addEventListener('readystatechange', function() {
             const acepta = form.elements["acepta"].value;
             if(acepta == 0){
                 //ENVIAR ESTADO 9 TERMINOS DEVOLUCION RECHAZADOS
+                 loadingScreen();
                 $.ajax({
                      url: '/peticion/'+id+'/'+9,
                      type: 'PUT',
@@ -502,6 +553,7 @@ document.addEventListener('readystatechange', function() {
                 });
             }else{
                 //ENVIAR ESTADO 8 TERMINOS DEVOLUCION ACEPTADOS
+                 loadingScreen();
                 $.ajax({
                  url: '/peticion/'+id+'/'+8,
                  type: 'PUT',
@@ -519,6 +571,7 @@ document.addEventListener('readystatechange', function() {
             const existe = form.elements["existe"].value;
             if(existe == 0){
                  //ENVIAR ESTADO 4 INICIADO PRESTADORA
+                 loadingScreen();
                 $.ajax({
                  url: '/peticion/'+id+'/'+4,
                  type: 'PUT',
@@ -531,6 +584,7 @@ document.addEventListener('readystatechange', function() {
               });
             }else{
                  //ENVIAR ESTADO 3 RECHAZADA EXISTENCIA EN BIBLIOTECA
+                 loadingScreen();
                 $.ajax({
                  url: '/peticion/'+id+'/'+3,
                  type: 'PUT',
@@ -543,8 +597,12 @@ document.addEventListener('readystatechange', function() {
               });
             }
         }
+       var boton = document.getElementById(idBoton);
+       boton.disabled = true;
+
       }
-    </script>
+</script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
     var inst1 = "";

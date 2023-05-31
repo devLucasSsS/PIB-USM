@@ -21,20 +21,24 @@
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
             <div class="form-container">
-                <h2>Agregar usuario</h2>
-                <form action="" method="post" th:object="${nuevoGestor}">
+                <h2>Agregar Gestor</h2>
+                <form action="" method="post" th:object="${nuevoGestor}" onsubmit="return validatePassword()">
                     <div class="form-container2">
                         <div class="form-group">
                             <label for="rut">Rut (sin puntos ni guión):</label>
-                            <input type="text" class="form-control" id="rut" name="rut" placeholder="Introduce tu rut" pattern="[0-9kK]+.{8,9}" th:field="*{rut_gestor}" required>
+                            <input type="text" class="form-control" id="rut" name="rut" placeholder="Introduce tu rut" pattern="[0-9kK]+.{8,9}" th:field="*{rut_gestor}" required="required">
                         </div>
                         <div class="form-group">
                             <label for="nombre">Nombre y apellido:</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Introduce tu nombre" th:field="*{nombre}"required>
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Introduce tu nombre" th:field="*{nombre}"required="required">
                         </div>
                         <div class="form-group">
                             <label for="contraseña">Contraseña:</label>
-                            <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Introduce tu contraseña" th:field="*{password}" required>
+                            <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Introduce tu contraseña" th:field="*{password}" required="required">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmarContraseña">Confirmar contraseña:</label>
+                            <input type="password" class="form-control" id="confirmarContraseña" name="confirmarContraseña" placeholder="Confirma tu contraseña" required>
                         </div>
                         <div class="form-group">
                             <label for="institucion">Institucion:  </label>
@@ -58,12 +62,36 @@
                         </div>
                         <input hidden="hidden" id="habilitado" th:field="*{habilitado}">
                     </div>
-                    <button type="submit" id="enviar" class="btn btn-primary">Enviar</button>
+                    <button type="submit" id="enviar" class="btn btn-primary" onclick="ocultarBoton('enviar')" >Enviar</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<script>
+
+function ocultarBoton(idBoton) {
+  var boton = document.getElementById(idBoton);
+
+  // Realizar la llamada AJAX u otras operaciones necesarias antes de ocultar el botón
+
+  // Ocultar el botón
+  boton.style.display = "none";
+}
+
+</script>
+<script>
+    function validatePassword() {
+        var password = document.getElementById("contraseña").value;
+        var confirmPassword = document.getElementById("confirmarContraseña").value;
+        if (password !== confirmPassword) {
+            alert("La contraseña y la confirmación de contraseña no coinciden.");
+            return false;
+        }
+        return true;
+    }
+</script>
+
 <script>
   function ReloadBibliotecas(id,idSelect){
     $.ajax({
