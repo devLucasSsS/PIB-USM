@@ -32,9 +32,9 @@ public class InstitucionControlador {
         }
     }
     @PostMapping
-    public InstitucionModelo addInstitucion(InstitucionModelo institucion){
+    public InstitucionModelo addInstitucion(InstitucionModelo institucion,String rut){
         inst = institucionServicio.addInstitucion(institucion);
-        log.info("Se ha guardado una nueva institucion: ID:{}, Nombre:{}",inst.getId_institucion(),inst.getNombre_institucion());
+        log.info("Se ha guardado una nueva institucion: ID:{}, Nombre:{}. Agregado por rut:{}",inst.getId_institucion(),inst.getNombre_institucion(),rut);
         return inst;
     }
 }

@@ -105,7 +105,7 @@
   function ReloadBibliotecas(id,idSelect){
     $.ajax({
       type: "GET",
-      url: "/bibliotecas/"+id,
+      url: "/pib/bibliotecas/"+id,
       success: function (data) {
           $("#"+idSelect).empty();
           $("#"+idSelect).append('<option value="">Seleccione una opción</option>');
@@ -115,10 +115,6 @@
       }
     });
 }
-</script>
-<script>
-  estado = document.getElementById("estado");
-  estado.value = 1;
 </script>
 <script>
   hora_local = document.getElementById("hora_local");
@@ -135,18 +131,6 @@ var horaAjustada = new Date(fechaHoraActual.getTime() - offsetUTC4);
 // Formatear la fecha y hora ajustadas en el formato deseado
 var fechaHoraFormateada = horaAjustada.toISOString().slice(0, 16).replace(' ', 'T');
 hora_local.value = fechaHoraFormateada;
-console.log(fechaHoraFormateada);
-</script>
-<script>
-  const ip = document.getElementById("ip");
-  fetch('https://api.ipify.org?format=json')
-  .then(response => response.json())
-  .then(data => {
-    ip.value = data.ip;
-  })
-  .catch(error => {
-    console.error(error);
-  });
 </script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -156,33 +140,66 @@ console.log(fechaHoraFormateada);
     document.addEventListener("DOMContentLoaded", function() {
       var combo2 = document.getElementById("biblioteca");
       var newOption2 = document.createElement("option");
-      newOption2.value = "1";
+      newOption2.value = "0";
       newOption2.text = "Seleccione una opción";
       combo2.appendChild(newOption2);
       var combo3 = document.getElementById("biblioteca1");
       var newOption3 = document.createElement("option");
-      newOption3.value = "1";
+      newOption3.value = "0";
       newOption3.text = "Seleccione una opción";
       combo3.appendChild(newOption3);
+      if(sessionStorage.getItem('rut')){
+        var rut = document.getElementById("rut");
+        rut.value = sessionStorage.getItem('rut');
+        var nombre = document.getElementById("nombre");
+        nombre.value = sessionStorage.getItem('nombre');
+        var email = document.getElementById("email");
+        email.value = sessionStorage.getItem('email');
+        sessionStorage.removeItem('rut');
+        sessionStorage.removeItem('nombre');
+        sessionStorage.removeItem('email');
+      };
+      const ip = document.getElementById("ip");
+      fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        ip.value = data.ip;
+      })
+      .catch(error => {
+        console.error(error);
+      });
+      estado = document.getElementById("estado");
+      estado.value = 1;
     });
 </script>
     <script>
 		$('form').submit(function(event) {
 		document.getElementById("enviar").disabled = true;
 			event.preventDefault();
-			var formData = $(this).serialize();
+			var formData = $(this).serializeArray();
+			var rut = formData[3].value;
+			var nombre = formData[4].value;
+			var email = formData[5].value;
 			$.ajax({
 				url: $(this).attr('action'),
 				type: $(this).attr('method'),
 				data: formData,
 				success: function(response) {
-					Swal.fire({
-						title: 'Mensaje enviado',
-						text: 'Gracias por ponerte en contacto con nosotros. Nos pondremos en contacto contigo lo antes posible.',
+                    Swal.fire({
+						title: 'Petición Enviada',
+						text: '¿Desea enviar otra petición?',
 						icon: 'success',
-						confirmButtonText: 'OK'
+						confirmButtonText: 'OK',
+						showCancelButton: true,
+						cancelButtonText: 'NO'
 					}).then((result) => {
 						if (result.isConfirmed) {
+							sessionStorage.setItem('rut',rut);
+							sessionStorage.setItem('nombre',nombre);
+							sessionStorage.setItem('email',email);
+							location.reload();
+						}
+						else{
 							location.reload();
 						}
 					});

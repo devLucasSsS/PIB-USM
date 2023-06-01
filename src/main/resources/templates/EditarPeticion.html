@@ -357,11 +357,10 @@ hora_local.value = fechaHoraFormateada;
       // Realizar una solicitud AJAX al servidor
       $.ajax({
         type: 'POST',
-        url: '/mensajes',
+        url: '/pib/mensajes',
         data: formData,
         success: function(response) {
-            var url = window.location.href;
-            window.location.href = url;
+            window.location.reload();
         },
         error: function(xhr, status, error) {
           // Manejar errores, si es necesario
@@ -375,7 +374,7 @@ hora_local.value = fechaHoraFormateada;
 document.addEventListener('readystatechange', function() {
   if (document.readyState === 'interactive') {
   $.ajax({
-        url: "/gestor",
+        url: "/pib/gestor",
         type: "GET",
         dataType: "json",
         success: function(data) {
@@ -391,7 +390,7 @@ document.addEventListener('readystatechange', function() {
       var id = $(this).attr('id').split('-')[1];
       var id1 = $(this).attr('id').split('-')[3];
       $.ajax({
-         url: '/gestor/'+id,
+         url: '/pib/gestor/'+id,
          type: 'GET',
          success: function (data) {
            $('#rut1-' + id + '-idM1-' + id1).text(data.nombre);
@@ -405,7 +404,7 @@ document.addEventListener('readystatechange', function() {
       var id = $(this).attr('id').split('-')[1];
       var id1 = $(this).attr('id').split('-')[3];
       $.ajax({
-         url: 'http://localhost:8080/gestor/'+id,
+         url: '/pib/gestor/'+id,
          type: 'GET',
          success: function (data) {
            $('#rut2-' + id + '-idM2-' + id1).text(data.nombre);
@@ -419,7 +418,7 @@ document.addEventListener('readystatechange', function() {
       var id = $(this).attr('id').split('-')[1];
       var id1 = $(this).attr('id').split('-')[3];
       $.ajax({
-         url: 'http://localhost:8080/gestor/'+id,
+         url: '/pib/gestor/'+id,
          type: 'GET',
          success: function (data) {
            $('#rutS-' + id + '-idMS-' + id1).text(data.nombre);
@@ -447,7 +446,7 @@ document.addEventListener('readystatechange', function() {
 
     }
       function Enviar(form,idBoton) {
-        var url = window.location.href;
+        //var url = window.location.href;
         var id = url.substring(url.lastIndexOf('/') + 1);
         id = parseInt(id);
         if(form == 1){
@@ -457,10 +456,10 @@ document.addEventListener('readystatechange', function() {
                 //ENVIAR ESTADO 2 RECHAZADA VIGENCIA USUARIO
                 loadingScreen();
                 $.ajax({
-                     url: '/peticion/'+id+'/'+2,
+                     url: '/pib/peticion/'+id+'/'+2,
                      type: 'PUT',
                      success: function (data) {
-                        window.location.href = "/peticiones";
+                        window.location.href = "/pib/peticiones";
                      },
                      error: function () {
                         alert('Ha ocurrido un error');
@@ -479,10 +478,10 @@ document.addEventListener('readystatechange', function() {
                 //ENVIAR ESTADO 14 PENDIENTE STOCK NO DISP...
                 loadingScreen();
                 $.ajax({
-                     url: '/peticion/'+id+'/'+14,
+                     url: '/pib/peticion/'+id+'/'+14,
                      type: 'PUT',
                      success: function (data) {
-                        window.location.href = "/peticiones";
+                        window.location.href = "/pib/peticiones";
                      },
                      error: function () {
                         alert('Ha ocurrido un error');
@@ -492,11 +491,10 @@ document.addEventListener('readystatechange', function() {
                 //ENVIAR ESTADO 10 PETICION VALIDADA
                  loadingScreen();
                 $.ajax({
-                 url: '/peticion/'+id+'/'+10,
+                 url: '/pib/peticion/'+id+'/'+10,
                  type: 'PUT',
                  success: function (data) {
-                    var url = window.location.href;
-                    window.location.href = url;
+                    window.location.reload();
                  },
                  error: function () {
                     alert('Ha ocurrido un error');
@@ -511,10 +509,10 @@ document.addEventListener('readystatechange', function() {
                 //ENVIAR ESTADO 7 TERMINOS ENVIO RECHAZADOS
                  loadingScreen();
                 $.ajax({
-                     url: '/peticion/'+id+'/'+7,
+                     url: '/pib/peticion/'+id+'/'+7,
                      type: 'PUT',
                      success: function (data) {
-                        window.location.href = "/peticiones";
+                        window.location.href = "/pib/peticiones";
                      },
                      error: function () {
                         alert('Ha ocurrido un error');
@@ -524,7 +522,7 @@ document.addEventListener('readystatechange', function() {
                 //ENVIAR ESTADO 6 TERMINOS ENVIO ACEPTADOS
                  loadingScreen();
                 $.ajax({
-                 url: '/peticion/'+id+'/'+6,
+                 url: '/pib/peticion/'+id+'/'+6,
                  type: 'PUT',
                  success: function (data) {
                     form.style.display="none";
@@ -542,10 +540,10 @@ document.addEventListener('readystatechange', function() {
                 //ENVIAR ESTADO 9 TERMINOS DEVOLUCION RECHAZADOS
                  loadingScreen();
                 $.ajax({
-                     url: '/peticion/'+id+'/'+9,
+                     url: '/pib/peticion/'+id+'/'+9,
                      type: 'PUT',
                      success: function (data) {
-                        window.location.href = "/peticiones";
+                        window.location.href = "/pib/peticiones";
                      },
                      error: function () {
                         alert('Ha ocurrido un error');
@@ -555,7 +553,7 @@ document.addEventListener('readystatechange', function() {
                 //ENVIAR ESTADO 8 TERMINOS DEVOLUCION ACEPTADOS
                  loadingScreen();
                 $.ajax({
-                 url: '/peticion/'+id+'/'+8,
+                 url: '/pib/peticion/'+id+'/'+8,
                  type: 'PUT',
                  success: function (data) {
                     form.style.display="none";
@@ -573,10 +571,10 @@ document.addEventListener('readystatechange', function() {
                  //ENVIAR ESTADO 4 INICIADO PRESTADORA
                  loadingScreen();
                 $.ajax({
-                 url: '/peticion/'+id+'/'+4,
+                 url: '/pib/peticion/'+id+'/'+4,
                  type: 'PUT',
                  success: function (data) {
-                    window.location.href = "/peticiones";
+                    window.location.href = "/pib/peticiones";
                  },
                  error: function () {
                     alert('Ha ocurrido un error');
@@ -586,10 +584,10 @@ document.addEventListener('readystatechange', function() {
                  //ENVIAR ESTADO 3 RECHAZADA EXISTENCIA EN BIBLIOTECA
                  loadingScreen();
                 $.ajax({
-                 url: '/peticion/'+id+'/'+3,
+                 url: '/pib/peticion/'+id+'/'+3,
                  type: 'PUT',
                  success: function (data) {
-                    window.location.href = "/peticiones";
+                    window.location.href = "/pib/peticiones";
                  },
                  error: function () {
                     alert('Ha ocurrido un error');
@@ -615,14 +613,14 @@ document.addEventListener('readystatechange', function() {
       var id = $(this).attr('id').split('-')[1];
       var id1 = $(this).attr('id').split('-')[3];
       var ajax1 = $.ajax({
-           url: '/institucion/' + id,
+           url: '/pib/institucion/' + id,
            type: 'GET'
         }).done(function(data) {
            inst1 = data.siglas_institucion;
            titulo1 = data.nombre_institucion;
       });
       var ajax2 = $.ajax({
-           url: '/bibliotecas/' + id1 + '/bib',
+           url: '/pib/bibliotecas/' + id1 + '/bib',
            type: 'GET'
         }).done(function(data) {
            bib1 = data.nombre_biblioteca;
@@ -636,7 +634,7 @@ document.addEventListener('readystatechange', function() {
       var id = $(this).attr('id').split('-')[1];
       var id1 = $(this).attr('id').split('-')[3];
       var ajax3 = $.ajax({
-           url: '/institucion/' + id,
+           url: '/pib/institucion/' + id,
            type: 'GET'
         }).done(function(data) {
            inst2 = data.siglas_institucion;
@@ -644,7 +642,7 @@ document.addEventListener('readystatechange', function() {
 
       });
       var ajax4 = $.ajax({
-           url: '/bibliotecas/' + id1 + '/bib',
+           url: '/pib/bibliotecas/' + id1 + '/bib',
            type: 'GET'
         }).done(function(data) {
            bib2 = data.nombre_biblioteca;

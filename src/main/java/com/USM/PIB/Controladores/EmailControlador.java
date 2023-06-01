@@ -5,13 +5,15 @@ import com.USM.PIB.Servicios.EmailServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/enviarEmail")
 public class EmailControlador {
     @Autowired
     private EmailServicio emailServicio;
-    @PostMapping("/enviarEmail")
+    @PostMapping()
     public String
     enviarEmail(@RequestBody DetalleEmailModelo correo)
     {

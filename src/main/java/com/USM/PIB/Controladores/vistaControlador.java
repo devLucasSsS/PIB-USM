@@ -54,7 +54,7 @@ public class vistaControlador {
     private EstadoControlador estadoControlador;
     @Autowired
     private EmailControlador emailControlador;
-    @GetMapping(path = "peticion/nueva")
+    @GetMapping({"/","/peticion/nueva"})
     public ModelAndView nuevaPeticion(){
         ArrayList<InstitucionModelo> institucion = institucionServicio.getInstituciones();
         ArrayList<BibliotecaModelo> bibliotecas = bibliotecaServicio.getBibliotecas();
@@ -69,7 +69,7 @@ public class vistaControlador {
                 .addObject("nivel",nivel)
                 .addObject("miObjeto");
     }
-    @PostMapping(path = "peticion/nueva")
+    @PostMapping({"/","/peticion/nueva"})
     public ModelAndView nuevaPeticion(Peticion peticion, Prestatario prestatario){
         Peticion pet = peticionControlador.savePeticion(peticion);
 
@@ -95,32 +95,37 @@ public class vistaControlador {
         var vista = new ModelAndView("EditarPeticion");
         if(data!=null){
             Optional<Peticion> pet = peticionControlador.getPeticionById(id);
-            ArrayList<MensajesModelo> mensajes = mensajesControlador.getMensajesById(pet.get().getId_peticion());
-            Terminos_envioModelo terms0 = terminosEnvioServicio.getByIdPet0(pet.get().getId_peticion());
-            Terminos_envioModelo terms1 = terminosEnvioServicio.getByIdPet1(pet.get().getId_peticion());
-            ArrayList<Tipo_envioModelo> tipoEnvio = tipoEnvioControlador.getTipos();
-            Tipo_envioModelo TipoEnv0 = new Tipo_envioModelo();
-            Tipo_envioModelo TipoEnv1 = new Tipo_envioModelo();
-            Prestatario prestatario = prestatarioControlador.getPrestatarioByRut(pet.get().getRut_prestatario());
-            if(terms0 != null){
-                TipoEnv0 = tipoEnvioServicio.getByIdTerm(terms0.getTipo_envio());
-                    vista.addObject("terminosEnvio",terms0);
-                    vista.addObject("tipoEnvioP",TipoEnv0);
+            if(data.getId_institucion() == pet.get().getId_institucion_prestadora() || data.getId_institucion() == pet.get().getId_institucion_prestataria()){
+                ArrayList<MensajesModelo> mensajes = mensajesControlador.getMensajesById(pet.get().getId_peticion());
+                Terminos_envioModelo terms0 = terminosEnvioServicio.getByIdPet0(pet.get().getId_peticion());
+                Terminos_envioModelo terms1 = terminosEnvioServicio.getByIdPet1(pet.get().getId_peticion());
+                ArrayList<Tipo_envioModelo> tipoEnvio = tipoEnvioControlador.getTipos();
+                Tipo_envioModelo TipoEnv0 = new Tipo_envioModelo();
+                Tipo_envioModelo TipoEnv1 = new Tipo_envioModelo();
+                Prestatario prestatario = prestatarioControlador.getPrestatarioByRut(pet.get().getRut_prestatario());
+                if(terms0 != null){
+                    TipoEnv0 = tipoEnvioServicio.getByIdTerm(terms0.getTipo_envio());
+                        vista.addObject("terminosEnvio",terms0);
+                        vista.addObject("tipoEnvioP",TipoEnv0);
+                }
+                if(terms1 != null){
+                    TipoEnv1 = tipoEnvioServicio.getByIdTerm(terms1.getTipo_envio());
+                    vista.addObject("tipoEnvioDevolucion",TipoEnv1);
+                        vista.addObject("terminosDevolucion",terms1);
+                }
+                        vista.addObject("peticion",pet)
+                        .addObject("terminos_envio",new Terminos_envioModelo())
+                        .addObject("tipo_envio",new Tipo_envioModelo())
+                        .addObject("mensajes",mensajes)
+                        .addObject("mensaje", new MensajesModelo())
+                        .addObject("prestatario",prestatario)
+                        .addObject("gestor",data)
+                        .addObject("tipoEnvio", tipoEnvio);
+                return vista;
+
+            }else{
+                return new ModelAndView("redirect:/peticiones");
             }
-            if(terms1 != null){
-                TipoEnv1 = tipoEnvioServicio.getByIdTerm(terms1.getTipo_envio());
-                vista.addObject("tipoEnvioDevolucion",TipoEnv1);
-                    vista.addObject("terminosDevolucion",terms1);
-            }
-                    vista.addObject("peticion",pet)
-                    .addObject("terminos_envio",new Terminos_envioModelo())
-                    .addObject("tipo_envio",new Tipo_envioModelo())
-                    .addObject("mensajes",mensajes)
-                    .addObject("mensaje", new MensajesModelo())
-                    .addObject("prestatario",prestatario)
-                    .addObject("gestor",data)
-                    .addObject("tipoEnvio", tipoEnvio);
-            return vista;
         }else{
             return new ModelAndView("redirect:/login");
         }
@@ -187,7 +192,7 @@ public class vistaControlador {
         ArrayList<InstitucionModelo> institucion = institucionServicio.getInstituciones();
         ArrayList<Nivel_GestorModelo> niveles = nivelGestorControlador.getAll();
 
-        if(data!=null){
+        if(data!=null && data.getId_nivel() == 1){
             return new ModelAndView("GestionarGestores")
                     .addObject("nuevoGestor",new GestorModelo())
                     .addObject("institucion",institucion)
@@ -195,18 +200,18 @@ public class vistaControlador {
                     .addObject("niveles",niveles);
 
         }else{
-            return new ModelAndView("redirect:/login");
+            return new ModelAndView("redirect:/peticiones");
         }
     }
     @PostMapping(path = "/GestionarGestores")
-    public ModelAndView AgregarGestores(GestorModelo gestorModelo){
-        gestorControlador.addGestor(gestorModelo);
+    public ModelAndView AgregarGestores(GestorModelo gestorModelo, HttpSession session){
+        gestorControlador.addGestor(gestorModelo,session);
         return new ModelAndView("redirect:/peticiones");
     }
     @GetMapping(path = "/GestionarRevisores")
     public ModelAndView GestionarRevisores(HttpSession session){
         GestorModelo data = gestorControlador.getDataSession(session);
-        if(data!=null){
+        if(data!=null && data.getId_nivel() <= 2){
             ArrayList<GestorModelo> gestores = gestorControlador.getGestorByInst(data.getId_institucion(),data.getRut_gestor());
             ArrayList<BibliotecaModelo> bibliotecas = bibliotecaControlador.getBibliotecasByInstitucion(data.getId_institucion());
             return new ModelAndView("GestionarRevisores")
@@ -216,32 +221,38 @@ public class vistaControlador {
                     .addObject("bibliotecas",bibliotecas);
 
         }else{
-            return new ModelAndView("redirect:/login");
+            return new ModelAndView("redirect:/peticiones");
         }
     }
     @PostMapping(path = "/GestionarRevisores")
-    public ModelAndView AgregarRevisores(GestorModelo gestor){
+    public ModelAndView AgregarRevisores(GestorModelo gestor,HttpSession session){
         GestorModelo verificar = gestorControlador.getGestorByrut(gestor.getRut_gestor());
         if (verificar == null){
-            gestorControlador.addGestor(gestor);
+            gestorControlador.addGestor(gestor,session);
         }
         return new ModelAndView("redirect:/peticiones");
     }
     @GetMapping(path = "/GestionarInstituciones")
-    public ModelAndView GestionarInstituciones(){
-        ArrayList<InstitucionModelo> institucion = institucionServicio.getInstituciones();
-        return new ModelAndView("GestionarInstituciones")
-                .addObject("institucion",institucion)
-                .addObject("biblioteca",new BibliotecaModelo())
-                .addObject("institucionNueva",new InstitucionModelo());
+    public ModelAndView GestionarInstituciones(HttpSession session){
+        GestorModelo data = gestorControlador.getDataSession(session);
+        if(data !=null && data.getId_nivel() == 1){
+            ArrayList<InstitucionModelo> institucion = institucionServicio.getInstituciones();
+            return new ModelAndView("GestionarInstituciones")
+                    .addObject("institucion",institucion)
+                    .addObject("biblioteca",new BibliotecaModelo())
+                    .addObject("institucionNueva",new InstitucionModelo());
+        }else{
+            return new ModelAndView("redirect:/peticiones");
+        }
     }
     @PostMapping(path = "/GestionarInstituciones")
-    public ModelAndView AgregarInstituciones(InstitucionModelo institucion, BibliotecaModelo biblioteca){
-        if(biblioteca != null){
-            bibliotecaControlador.addBiblioteca(biblioteca);
+    public ModelAndView AgregarInstituciones(InstitucionModelo institucion, BibliotecaModelo biblioteca, HttpSession session){
+        GestorModelo g = gestorControlador.getDataSession(session);
+        if(biblioteca != null){ //TRAER DATOS SSION,
+            bibliotecaControlador.addBiblioteca(biblioteca,g.getRut_gestor());
         }
         if(institucion != null){
-            institucionControlador.addInstitucion(institucion);
+            institucionControlador.addInstitucion(institucion,g.getRut_gestor());
         }
         return new ModelAndView("redirect:/peticiones");
     }

@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 @Controller
 @RestController
-@RequestMapping("estado")
+@RequestMapping("/estado")
 public class EstadoControlador {
 
     @Autowired

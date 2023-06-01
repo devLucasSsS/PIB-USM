@@ -33,6 +33,10 @@
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Introduce tu nombre" th:field="*{nombre}"required="required">
                         </div>
                         <div class="form-group">
+                            <label for="email">Correo Electronico:</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Introduce el correo electronico" th:field="*{email}"required="required">
+                        </div>
+                        <div class="form-group">
                             <label for="contraseña">Contraseña:</label>
                             <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Introduce tu contraseña" th:field="*{password}" required="required">
                         </div>
@@ -96,7 +100,7 @@ function ocultarBoton(idBoton) {
   function ReloadBibliotecas(id,idSelect){
     $.ajax({
       type: "GET",
-      url: "http://localhost:8080/bibliotecas/"+id,
+      url: "/pib/bibliotecas/"+id,
       success: function (data) {
           $("#"+idSelect).empty();
           $("#"+idSelect).append('<option value="">Seleccione una opción</option>');
@@ -112,6 +116,15 @@ function ocultarBoton(idBoton) {
   if(habilitado){
     habilitado.value = 1;
   }
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var combo2 = document.getElementById("biblioteca");
+    var newOption2 = document.createElement("option");
+    newOption2.value = "0";
+    newOption2.text = "Seleccione una opción";
+    combo2.appendChild(newOption2);
+});
 </script>
 </body>
 </html>

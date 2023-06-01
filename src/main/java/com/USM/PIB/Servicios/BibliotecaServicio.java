@@ -1,8 +1,10 @@
 package com.USM.PIB.Servicios;
 
 import com.USM.PIB.Modelos.BibliotecaModelo;
+import com.USM.PIB.Modelos.GestorModelo;
 import com.USM.PIB.Modelos.Peticion;
 import com.USM.PIB.Repositorios.BibliotecaRepositorio;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,16 +31,17 @@ public class BibliotecaServicio {
             return bib;
     }
 
-    public BibliotecaModelo addBibliotecas(BibliotecaModelo bibliotecaModelo) {
+    public BibliotecaModelo addBibliotecas(BibliotecaModelo bibliotecaModelo, String rut) {
+
         BibliotecaModelo bib= bibliotecaRepositorio.save(bibliotecaModelo);
-        log.info("Nueva Biblioteca Agregada al sistema: {}",bib);
+        log.info("Nueva Biblioteca Agregada al sistema: {} por Rut:{}",bib,rut);
         return bib;
     }
 
-    public void deshabilitarBiblioteca(int id) {
+    public void deshabilitarBiblioteca(int id,String rut) {
         BibliotecaModelo bib = getBibliotecaById(id);
         bib.setHabilitado(0);
-        log.info("Biblioteca Id:{} se ha deshabilitado",bib.getId_biblioteca());
+        log.info("Biblioteca Id:{} se ha deshabilitado por el rut:{}",bib.getId_biblioteca(),rut);
         bibliotecaRepositorio.save(bib);
     }
 }

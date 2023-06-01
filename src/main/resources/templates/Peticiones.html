@@ -24,7 +24,7 @@
     return new Promise(function(resolve, reject) {
       var nivel = { id_nivel: null };
       $.ajax({
-        url: "http://localhost:8080/gestor",
+        url: "/pib/gestor",
         type: "GET",
         dataType: "json",
         success: function(data) {
@@ -132,9 +132,9 @@
     function Alerta(idP,pet) {
     var url = '';
     if(pet==1){
-      url = '/estado/prestador';
+      url = '/pib/estado/prestador';
     }else{
-      url = '/estado/prestatario';
+      url = '/pib/estado/prestatario';
     }
     Swal.fire({
   title: 'Selecciona un estado para cambiar',
@@ -206,10 +206,10 @@
 <script>
   function actualizarEstado(id,estado){
     $.ajax({
-         url: 'http://localhost:8080/peticion/'+id+'/'+estado,
+         url: '/pib/peticion/'+id+'/'+estado,
          type: 'PUT',
          success: function (data) {
-            window.location.href = "http://localhost:8080/peticiones";
+            location.reload();
          },
          error: function () {
             alert('Ha ocurrido un error');
@@ -226,7 +226,7 @@ document.addEventListener('readystatechange', function() {
       var id = $(this).attr('id').split('-')[1];
       var id1 = $(this).attr('id').split('-')[3];
       $.ajax({
-         url: 'http://localhost:8080/estado/'+id,
+         url: '/pib/estado/'+id,
          type: 'GET',
          success: function (data) {
             $('#estado-'+id+'-idP-'+id1).text(data.estado);
@@ -240,7 +240,7 @@ document.addEventListener('readystatechange', function() {
       var id = $(this).attr('id').split('-')[1];
       var id1 = $(this).attr('id').split('-')[3];
       $.ajax({
-         url: 'http://localhost:8080/prestatario/'+id,
+         url: '/pib/prestatario/'+id,
          type: 'GET',
          success: function (data) {
             $('#correo-'+id+'-idP-'+id1).text(data);
@@ -254,7 +254,7 @@ document.addEventListener('readystatechange', function() {
       var id = $(this).attr('id').split('-')[1];
       var id1 = $(this).attr('id').split('-')[3];
       $.ajax({
-         url: 'http://localhost:8080/institucion/'+id,
+         url: '/pib/institucion/'+id,
          type: 'GET',
          success: function (data) {
             $('#institucion-'+id+'-idP-'+id1).text(data.nombre_institucion);
@@ -268,7 +268,7 @@ document.addEventListener('readystatechange', function() {
       var id = $(this).attr('id').split('-')[1];
       var id1 = $(this).attr('id').split('-')[3];
       $.ajax({
-         url: 'http://localhost:8080/bibliotecas/'+id+'/bib',
+         url: '/pib/bibliotecas/'+id+'/bib',
          type: 'GET',
          success: function (data) {
             $('#biblioteca-'+id+'-idP-'+id1).text(data.nombre_biblioteca);
@@ -389,9 +389,9 @@ document.addEventListener('readystatechange', function() {
   function RecargarEstados(tipo,id){
   var url = "";
   if(tipo == 1){
-      url = '/estado/prestador';
+      url = '/pib/estado/prestador';
   }else{
-      url = '/estado/prestatario'
+      url = '/pib/estado/prestatario'
   }
     var xhr = new XMLHttpRequest();
 xhr.open('GET',url, true);

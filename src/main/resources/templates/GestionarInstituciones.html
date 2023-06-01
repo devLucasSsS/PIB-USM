@@ -127,7 +127,7 @@
     // Puedes utilizar fetch o jQuery.ajax para enviar una solicitud AJAX al servidor
 
     // Ejemplo utilizando fetch:
-    fetch("/bibliotecas/" + idInstitucion)
+    fetch("/pib/bibliotecas/" + idInstitucion)
       .then(function(response) {
         return response.json();
       })
@@ -167,10 +167,9 @@
     function deshabilitarBiblioteca(id){
         $.ajax({
             type: 'POST',
-            url: '/bibliotecas/'+id,
+            url: '/pib/bibliotecas/'+id,
             success: function(response) {
-                var url = window.location.href;
-                window.location.href = url;
+                window.location.reload();
             },
             error: function(xhr, status, error) {
               // Manejar errores, si es necesario

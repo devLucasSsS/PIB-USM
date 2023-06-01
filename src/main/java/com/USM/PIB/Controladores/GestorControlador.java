@@ -42,8 +42,9 @@ public class GestorControlador {
     }
 
     @PostMapping
-    public GestorModelo addGestor(GestorModelo gestor){
-        return gestorServicio.addGestor(gestor);
+    public GestorModelo addGestor(GestorModelo gestor, HttpSession session){
+        GestorModelo data = getDataSession(session);
+        return gestorServicio.addGestor(gestor,data.getRut_gestor());
     }
 
     @GetMapping(path = "/bib/{id}")
@@ -55,7 +56,8 @@ public class GestorControlador {
         return gestorServicio.getByInst(id,rut);
     }
     @PostMapping(path = "/d/{rut}")
-    public void deshabilitarRevisor(@PathVariable("rut") String rut){
-        gestorServicio.deshabilitarRevisor(rut);
+    public void deshabilitarRevisor(@PathVariable("rut") String rut,HttpSession session){
+        GestorModelo data = getDataSession(session);
+        gestorServicio.deshabilitarRevisor(rut,data.getRut_gestor());
     }
 }

@@ -42,19 +42,21 @@ public class GestorServicio {
         return gestorRepositorio.findByRut(rut);
     }
 
-    public GestorModelo addGestor(GestorModelo gestor) {
+    public GestorModelo addGestor(GestorModelo gestor,String rut_Gestor) {
         BCryptPasswordEncoder hash = new BCryptPasswordEncoder();
         String pwhash = hash.encode(gestor.getPassword());
         gestor.setPassword(pwhash);
         GestorModelo g= gestorRepositorio.save(gestor);
-        log.info("Se ha guardado un nuevo gestor: Rut={}, Nombre={}, Contrasenia={}, Id_Bib={}, Id_Inst={}, Id_Nivel={}, Habilitado={}",
+        log.info("Se ha guardado un nuevo gestor/revisor: Rut:{}, Nombre:{}, Contrasenia:{}, Correo:{}, Id_Bib:{}, Id_Inst:{}, Id_Nivel:{}, Habilitado:{}. Agregado por Rut:{}",
                 g.getRut_gestor(),
                 g.getNombre(),
                 g.getPassword(),
+                g.getEmail(),
                 g.getId_biblioteca(),
                 g.getId_institucion(),
                 g.getId_nivel(),
-                g.getHabilitado());
+                g.getHabilitado(),
+                rut_Gestor);
         return g;
     }
 
@@ -62,11 +64,11 @@ public class GestorServicio {
         return gestorRepositorio.getByBib(id);
     }
 
-    public void deshabilitarRevisor(String rut) {
+    public void deshabilitarRevisor(String rut,String rutGestor) {
             GestorModelo g = getByRut(rut);
             g.setHabilitado(0);
             gestorRepositorio.save(g);
-            log.info("Se ha deshabilitado el siguiente gestor: Rut={}, Nombre={}, IdBib:{}",g.getRut_gestor(),g.getNombre(),g.getId_biblioteca());
+            log.info("Se ha deshabilitado el siguiente gestor: Rut={}, Nombre={}, IdBib:{}. Deshabilitado por rut:{}",g.getRut_gestor(),g.getNombre(),g.getId_biblioteca(),rutGestor);
     }
 
     public ArrayList<GestorModelo> getByInst(int id, String rut) {

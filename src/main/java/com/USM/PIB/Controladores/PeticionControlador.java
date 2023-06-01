@@ -2,6 +2,7 @@ package com.USM.PIB.Controladores;
 
 import com.USM.PIB.Modelos.Peticion;
 import com.USM.PIB.Servicios.PeticionServicio;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,8 +42,8 @@ public class PeticionControlador {
         return peticionServicio.getPeticionByBibliotecaPrestadora(id);
     }
     @PutMapping(path = "/{id}/{e}")
-    public Peticion updateEstadoPeticion(@PathVariable("id")int id, @PathVariable("e")int e){
-        return peticionServicio.updateEstadoPeticion(id,e);
+    public Peticion updateEstadoPeticion(@PathVariable("id")int id, @PathVariable("e")int e, HttpSession session){
+        return peticionServicio.updateEstadoPeticion(id,e,session);
     }
 
 

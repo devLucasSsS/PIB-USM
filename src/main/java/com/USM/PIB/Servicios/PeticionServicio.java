@@ -6,12 +6,16 @@ import com.USM.PIB.Controladores.GestorControlador;
 import com.USM.PIB.Controladores.PrestatarioControlador;
 import com.USM.PIB.Modelos.*;
 import com.USM.PIB.Repositorios.PeticionRepositorio;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -47,11 +51,21 @@ public class PeticionServicio {
     public ArrayList<Peticion> getPeticionByBibliotecaPrestadora(int id) {
     return (ArrayList<Peticion>) peticionRepositorio.findByBibliotecaPrestadora(id);
     }
-    public Peticion updateEstadoPeticion(int id, int e) {
+    public Peticion updateEstadoPeticion(int id, int e, HttpSession session) {
+        GestorModelo data = gestorControlador.getDataSession(session);
         Peticion pet = peticionRepositorio.getById(id);
         int estadoA = pet.getId_estado();
+        if(e == 12){
+            Date fechaHoraActual = new Date();
+            pet.setFecha_devolucion(fechaHoraActual);
+        }
+        if(e == 15){
+            Date fechaHoraActual = new Date();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            pet.setFecha_prestamo(fechaHoraActual);
+        }
         pet.setId_estado(e);
-        log.info("Peticion Id:{}, Actualizada | Estado Antiguo:{}, Estado Nuevo:{}",pet.getId_peticion(),estadoA,pet.getId_estado());
+        log.info("Peticion Id:{}, Actualizada | Estado Antiguo:{}, Estado Nuevo:{}. Actualizada por Rut:{}",pet.getId_peticion(),estadoA,pet.getId_estado(),data.getRut_gestor());
         Peticion p = peticionRepositorio.save(pet);
         Prestatario prestatario = prestatarioControlador.getPrestatarioByRut(pet.getRut_prestatario());
         String actualizacionPeticion = "ACTUALIZACIÓN DE PETICIÓN "+pet.getId_peticion();

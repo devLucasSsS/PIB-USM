@@ -25,8 +25,11 @@ public class Peticion {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date fecha_peticion;
     @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+
     private Date fecha_prestamo;
     @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date fecha_devolucion;
     @Column
     private String rut_prestatario;
@@ -40,8 +43,6 @@ public class Peticion {
     private int id_institucion_prestadora;
     @Column
     private int id_estado;
-    @Column
-    private int id_terminos_envio;
     @Column
     private int id_item;
 
@@ -168,14 +169,6 @@ public class Peticion {
         this.id_estado = id_estado;
     }
 
-    public int getId_terminos_envio() {
-        return id_terminos_envio;
-    }
-
-    public void setId_terminos_envio(int id_terminos_envio) {
-        this.id_terminos_envio = id_terminos_envio;
-    }
-
     public int getId_item() {
         return id_item;
     }
@@ -184,7 +177,7 @@ public class Peticion {
         this.id_item = id_item;
     }
 
-    public Peticion(int id_peticion, String libro, String edicion, String autor, String link, String ip, Date fecha_peticion, Date fecha_prestamo, Date fecha_devolucion, String rut_prestatario, int id_biblioteca_prestataria, int id_institucion_prestataria, int id_biblioteca_prestadora, int id_institucion_prestadora, int id_estado, int id_terminos_envio, int id_item) {
+    public Peticion(int id_peticion, String libro, String edicion, String autor, String link, String ip, Date fecha_peticion, Date fecha_prestamo, Date fecha_devolucion, String rut_prestatario, int id_biblioteca_prestataria, int id_institucion_prestataria, int id_biblioteca_prestadora, int id_institucion_prestadora, int id_estado, int id_item) {
         this.id_peticion = id_peticion;
         this.libro = libro;
         this.edicion = edicion;
@@ -200,7 +193,6 @@ public class Peticion {
         this.id_biblioteca_prestadora = id_biblioteca_prestadora;
         this.id_institucion_prestadora = id_institucion_prestadora;
         this.id_estado = id_estado;
-        this.id_terminos_envio = id_terminos_envio;
         this.id_item = id_item;
     }
 
@@ -222,7 +214,6 @@ public class Peticion {
                 ", id_biblioteca_prestadora=" + id_biblioteca_prestadora +
                 ", id_institucion_prestadora=" + id_institucion_prestadora +
                 ", id_estado=" + id_estado +
-                ", id_terminos_envio=" + id_terminos_envio +
                 ", id_item=" + id_item +
                 '}';
     }
