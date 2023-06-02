@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title> Editar Petición </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -446,7 +447,7 @@ document.addEventListener('readystatechange', function() {
 
     }
       function Enviar(form,idBoton) {
-        //var url = window.location.href;
+        var url = window.location.href;
         var id = url.substring(url.lastIndexOf('/') + 1);
         id = parseInt(id);
         if(form == 1){
@@ -526,6 +527,7 @@ document.addEventListener('readystatechange', function() {
                  type: 'PUT',
                  success: function (data) {
                     form.style.display="none";
+                    window.location.href = "/pib/peticiones";
                  },
                  error: function () {
                     alert('Ha ocurrido un error');
