@@ -14,7 +14,7 @@
     }
 
 	.navbar {
-		background-color: #004b85;
+		background-color: #3763EB;
 		border: blue;
 	}
 
@@ -74,7 +74,7 @@
         height: fit-content;
     }
     .cristal {
-      position: revert;
+      position: relative;
       width: 100%;
       height: auto;
       overflow: hidden;
@@ -120,6 +120,9 @@
     .table>tbody>tr>th{
       padding: 1px;
 
+    }
+
+     .logo-image{
     }
 
 </style>
