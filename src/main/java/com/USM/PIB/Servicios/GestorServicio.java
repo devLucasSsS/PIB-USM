@@ -74,4 +74,8 @@ public class GestorServicio {
     public ArrayList<GestorModelo> getByInst(int id, String rut) {
         return gestorRepositorio.getByInst(id,rut);
     }
+
+    public ArrayList<GestorModelo> getRevisorByBib(int id) {
+        return gestorRepositorio.getRevisorById(id);
+    }
 }

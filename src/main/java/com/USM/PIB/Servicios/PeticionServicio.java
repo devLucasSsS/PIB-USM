@@ -55,42 +55,51 @@ public class PeticionServicio {
         GestorModelo data = gestorControlador.getDataSession(session);
         Peticion pet = peticionRepositorio.getById(id);
         int estadoA = pet.getId_estado();
+        if(e == 4){
+            ArrayList<GestorModelo> revisorbibPrestadora = gestorControlador.getRevisorByBib(pet.getId_biblioteca_prestadora());
+            for (GestorModelo revisor : revisorbibPrestadora){
+                DetalleEmailModelo emailPrestador = new DetalleEmailModelo();
+                emailPrestador.setRecipient(revisor.getEmail());
+                emailPrestador.setSubject("NUEVA PETICIÓN "+pet.getId_peticion());
+                emailPrestador.setMsgBody("Se ha iniciado una nueva petición ID: "+pet.getId_peticion());
+                emailControlador.enviarEmail(emailPrestador);
+            }
+        }
         if(e == 12){
             Date fechaHoraActual = new Date();
             pet.setFecha_devolucion(fechaHoraActual);
         }
         if(e == 15){
             Date fechaHoraActual = new Date();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             pet.setFecha_prestamo(fechaHoraActual);
         }
         pet.setId_estado(e);
         log.info("Peticion Id:{}, Actualizada | Estado Antiguo:{}, Estado Nuevo:{}. Actualizada por Rut:{}",pet.getId_peticion(),estadoA,pet.getId_estado(),data.getRut_gestor());
         Peticion p = peticionRepositorio.save(pet);
         Prestatario prestatario = prestatarioControlador.getPrestatarioByRut(pet.getRut_prestatario());
-        String actualizacionPeticion = "ACTUALIZACIÓN DE PETICIÓN "+pet.getId_peticion();
+        String asunto = "ACTUALIZACIÓN DE PETICIÓN "+pet.getId_peticion();
         EstadoModelo estado = estadoControlador.getEstadoById(pet.getId_estado());
         String cuerpoEmail = "La petición "+pet.getId_peticion()+" ha cambiado el estado a "+estado.getEstado();
-        ArrayList<GestorModelo> revisorbibPrestataria = gestorControlador.getGestorByBib(p.getId_biblioteca_prestataria());
+        ArrayList<GestorModelo> revisorbibPrestataria = gestorControlador.getRevisorByBib(p.getId_biblioteca_prestataria());
         for (GestorModelo revisor : revisorbibPrestataria){
             DetalleEmailModelo emailPrestataria = new DetalleEmailModelo();
             emailPrestataria.setRecipient(revisor.getEmail());
-            emailPrestataria.setSubject(actualizacionPeticion);
+            emailPrestataria.setSubject(asunto);
             emailPrestataria.setMsgBody(cuerpoEmail);
             emailControlador.enviarEmail(emailPrestataria);
 
         }
-        ArrayList<GestorModelo> revisorbibPrestadora = gestorControlador.getGestorByBib(p.getId_biblioteca_prestadora());
+        ArrayList<GestorModelo> revisorbibPrestadora = gestorControlador.getRevisorByBib(p.getId_biblioteca_prestadora());
         for (GestorModelo revisor : revisorbibPrestadora){
             DetalleEmailModelo emailPrestador = new DetalleEmailModelo();
             emailPrestador.setRecipient(revisor.getEmail());
-            emailPrestador.setSubject(actualizacionPeticion);
+            emailPrestador.setSubject(asunto);
             emailPrestador.setMsgBody(cuerpoEmail);
             emailControlador.enviarEmail(emailPrestador);
         }
         DetalleEmailModelo email = new DetalleEmailModelo();
         email.setRecipient(prestatario.getEmail());
-        email.setSubject(actualizacionPeticion);
+        email.setSubject(asunto);
         int estadoN = p.getId_estado();
         switch (estadoN){
 

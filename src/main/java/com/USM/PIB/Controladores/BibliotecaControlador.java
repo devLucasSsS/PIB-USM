@@ -22,15 +22,15 @@ public class BibliotecaControlador {
     public ArrayList<BibliotecaModelo> getBibliotecasByInstitucion(@PathVariable("id") int id){
         return bibliotecaServicio.getBibliotecasByInstitucion(id);
     }
+    @PostMapping
+    public BibliotecaModelo addBiblioteca(BibliotecaModelo bibliotecaModelo, String rut){
+        return bibliotecaServicio.addBibliotecas(bibliotecaModelo,rut);
+    }
     @GetMapping(path = "/{id}/bib")
     public BibliotecaModelo getBibliotecaById(@PathVariable("id") int id){
         return bibliotecaServicio.getBibliotecaById(id);
     }
 
-    @PostMapping
-    public BibliotecaModelo addBiblioteca(BibliotecaModelo bibliotecaModelo, String rut){
-        return bibliotecaServicio.addBibliotecas(bibliotecaModelo,rut);
-    }
     @PostMapping(path = "/{id}")
     public void deshabilitarBiblioteca(@PathVariable("id") int id,HttpSession session){
         GestorModelo g = gestorControlador.getDataSession(session);

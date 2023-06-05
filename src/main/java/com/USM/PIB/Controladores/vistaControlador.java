@@ -87,6 +87,15 @@ public class vistaControlador {
                 "Su peticion ha sido correctamente creada \n" +
                 "su id de peticion es: "+pet.getId_peticion() +" titulo: "+pet.getLibro());
         emailControlador.enviarEmail(email);
+        ArrayList<GestorModelo> revisorbibPrestataria = gestorControlador.getRevisorByBib(pet.getId_biblioteca_prestataria());
+        for (GestorModelo revisor : revisorbibPrestataria){
+            DetalleEmailModelo emailPrestataria = new DetalleEmailModelo();
+            emailPrestataria.setRecipient(revisor.getEmail());
+            emailPrestataria.setSubject("NUEVA PETICIÓN "+pet.getId_peticion());
+            emailPrestataria.setMsgBody("Se ha iniciado una nueva petición ID: "+pet.getId_peticion());
+            emailControlador.enviarEmail(emailPrestataria);
+
+        }
         return new ModelAndView("redirect:/peticion/nueva");
     }
     @GetMapping(path = "peticion/{id}")

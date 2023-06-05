@@ -21,15 +21,13 @@ public class PeticionControlador {
     Tipo_envioControlador tipoEnvioControlador;
     @Autowired
     Terminos_EnvioControlador terminosEnvioControlador;
+    public ArrayList<Peticion> getPeticiones() {
+        return this.peticionServicio.getPeticion();
+    }
     @PostMapping
     public Peticion savePeticion(@RequestBody Peticion peticion){
         return new ResponseEntity<>(this.peticionServicio.savePeticion(peticion), HttpStatus.CREATED).getBody();
     }
-
-    public ArrayList<Peticion> getPeticiones() {
-        return this.peticionServicio.getPeticion();
-    }
-
     public Optional<Peticion> getPeticionById(@PathVariable("id") int id){
         return peticionServicio.getPeticionById(id);
     }

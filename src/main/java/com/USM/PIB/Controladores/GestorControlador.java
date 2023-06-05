@@ -51,6 +51,10 @@ public class GestorControlador {
     public ArrayList<GestorModelo> getGestorByBib(@PathVariable("id")int id){
         return gestorServicio.getByBib(id);
     }
+    @GetMapping(path = "/bib/revisor/{id}")
+    public ArrayList<GestorModelo> getRevisorByBib(@PathVariable("id")int id){
+        return gestorServicio.getRevisorByBib(id);
+    }
     @GetMapping(path = "/inst/{id}")
     public ArrayList<GestorModelo> getGestorByInst(@PathVariable("id")int id,String rut){
         return gestorServicio.getByInst(id,rut);
