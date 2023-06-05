@@ -118,7 +118,7 @@ public class PeticionServicio {
             case 14: // PENDIENTE STOCK NO DISPONIBLE
                 email.setMsgBody("Le informamos por este medio que su Petición con id: "+pet.getId_peticion()+" titulo: "+pet.getLibro()+" esta en estado pendiente debido a que no hay existencias disponibles.");
                 break;
-            case 15: // CANCELADA
+            case 17: // CANCELADA
                 email.setMsgBody("Le informamos por este medio que su Petición con id: "+pet.getId_peticion()+" titulo: "+pet.getLibro()+" ha sido cancelada.");
                 break;
         }
