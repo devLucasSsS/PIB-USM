@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
   <title>Peticiones</title>
   <meta charset="UTF-8">
@@ -37,7 +37,74 @@
     });
   };
 </script>
+<script>
 
+  function funBotonEsta() {
+  Swal.fire({
+    title: 'Revisar Peticiones',
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: 'Peticiones Finalizadas',
+    denyButtonText: 'Peticiones Totales',
+    denyButtonColor: 'green',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      var cantidadPeticionesFinalizadas = contarPeticionesFinalizadas();
+      Swal.fire('Cantidad total de peticiones Finalizadas: ' + cantidadPeticionesFinalizadas);
+    } else if (result.isDenied) {
+     var cantidadPeticionesFinalizadas = contarTodasLasPeticiones();
+       Swal.fire( 'Cantidad de peticiones totales: ' + cantidadPeticionesFinalizadas.toString()');
+    }
+  });
+}
+
+</script>
+
+<script>
+
+  function contarTodasLasPeticiones() {
+  var peticionesCount = 0;
+  var filas = document.getElementsByTagName("tr");
+
+  for (var i = 0; i < filas.length; i++) {
+    if (filas[i].parentNode.nodeName !== "THEAD") {
+      peticionesCount++;
+    }
+  }
+
+  return peticionesCount;
+}
+
+var cantidadTotalPeticiones = contarTodasLasPeticiones();
+console.log("Cantidad total de peticiones: " + cantidadTotalPeticiones);
+
+</script>
+
+<script>
+
+function contarPeticionesFinalizadas() {
+  var finalizadoCount = 0;
+  var filas = document.getElementsByTagName("tr");
+
+  for (var i = 0; i < filas.length; i++) {
+    var celdaEstado = filas[i].querySelector("td[id^='estado-']");
+
+    if (celdaEstado && filas[i].parentNode.nodeName !== "THEAD") {
+      var estadoFila = celdaEstado.textContent.trim();
+
+      if (estadoFila === "Finalizado") {
+        finalizadoCount++;
+      }
+    }
+  }
+
+  return finalizadoCount;
+}
+
+var cantidadPeticionesFinalizadas = contarPeticionesFinalizadas();
+console.log("Cantidad de peticiones finalizadas: " + cantidadPeticionesFinalizadas);
+
+</script>
 <script>
   obtenerNivel()
     .then(function(nivel) {
@@ -54,6 +121,7 @@
       switch (opcion) {
         case 1:
           document.getElementById("opcion1").style.display = "block";
+          document.getElementById("botonEsta").style.display = "block";
           break;
         case 2:
           document.getElementById("opcion2").style.display = "block";
@@ -93,6 +161,7 @@
     <option value="">Todos los estados</option>
     <option th:each="estado : ${estados}" th:object="${estado}" th:value="*{estado}" th:text="*{estado}"></option>
   </select>
+  <button id="botonEsta" onclick="funBotonEsta()" style="margin-left: 980px;color: white;background: #337ab7;border-radius: 10px;height: 30px;border-width: 1px;display: none;" >Estadisticas Generales</button>
   <div class="table-wrapper-scroll-y my-custom-scrollbar">
     <table class="table table-bordered table-striped mb-0">
       <thead>
@@ -116,7 +185,7 @@
         <td th:id="'correo-'+*{rut_prestatario}+'-idP-'+*{id_peticion}"></td>
         <td th:id="'institucion-'+*{id_institucion_prestataria}+'-idP-'+*{id_peticion}"></td>
         <td th:id="'biblioteca-'+*{id_biblioteca_prestataria}+'-idP-'+*{id_peticion}"></td>
-        <td  th:id="'estado-'+*{id_estado}+'-idP-'+*{id_peticion}"></button> </td>
+        <td  th:id="'estado-'+*{id_estado}+'-idP-'+*{id_peticion}"></td>
         <td style="display: flex;">
           <a  class="navbar-brand" th:href="@{peticion/{id}(id=*{id_peticion})}" style="padding-bottom: 0px;padding-left: 0px;border-top-width: 0px;padding-top: 0px;padding-right: 0px;height: 0px;"><button  href="/peticiones" type="button" class="btn btn-primary"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
             <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
@@ -184,7 +253,7 @@
           <script>
             function AlertaEliminar(id){
               Swal.fire({
-                title: '¿Desea cancelar la petición??',
+                title: '¿Desea cancelar la petición?',
                 showCancelButton: true,
                 confirmButtonText: 'Aceptar',
                 cancelButtonText: `Cancelar`,

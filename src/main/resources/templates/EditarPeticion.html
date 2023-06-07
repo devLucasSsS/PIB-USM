@@ -182,7 +182,6 @@
             <h1 style="text-align: center;">Terminos de envio</h1>
             <form method="post" th:object="${terminos_envio}" id="formTerminosE">
                 <p hidden="hidden" th:object="${peticion}"></p>
-                <h1>Terminos de envio</h1>
                 <label for="terminos">Ingrese los terminos y condiciones para el prestatario</label><br>
                 <textarea id="terminos" class="form-control" th:field="*{terminos}" required="required"></textarea><br>
                 <label for="tipoEnvio">Ingresa el tipo de envio</label><br>
@@ -203,13 +202,11 @@
 <div id="terminosDivDevolucion" th:object="${terminos_envio}" th:if="${(peticion.get().id_estado == 11 && peticion.get().id_biblioteca_prestataria == gestor.id_biblioteca) ||(peticion.get().id_estado == 9 && peticion.get().id_biblioteca_prestataria == gestor.id_biblioteca)}">
     <div class="col-sm-6 col-sm-offset-3">
         <div class="container-2" >
-            <h1 style="text-align: center;">Terminos de envio</h1>
+            <h1 style="text-align: center;">Terminos de devolucion</h1>
             <form method="post" th:object="${terminos_envio}">
                 <p hidden="hidden" th:object="${peticion}"></p>
-                <h1>Terminos de envio</h1>
                 <label for="terminosDevolucion">Ingrese los terminos y condiciones para el Prestador</label><br>
                 <textarea id="terminosDevolucion" class="form-control" th:field="*{terminos}"></textarea><br>
-
                 <label for="tipoEnvioDevolucion">Tipo de envio:  </label><br>
                 <select id="TipoEnvioDevolucion" name="TipoEnvioDevolucion" th:field="*{tipo_envio}">
                     <option th:value="0">Seleccione una opción</option>
