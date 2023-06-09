@@ -44,6 +44,13 @@ public class PeticionControlador {
         return peticionServicio.updateEstadoPeticion(id,e,session);
     }
 
+    @GetMapping("/cantidad-total")
+    public int getCantidadTotalPeticiones() {
+        return peticionServicio.obtenerCantidadTotalPeticiones();
+    }
 
-
+    @GetMapping("/cantidad-estado16")
+    public int getCantidadPeticionesEstado16() {
+        return peticionServicio.obtenerCantidadPeticionesEstado16();
+    }
 }

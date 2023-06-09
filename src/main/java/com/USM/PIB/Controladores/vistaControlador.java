@@ -166,10 +166,16 @@ public class vistaControlador {
             ArrayList<Peticion> PetPrestatarias = peticionControlador.getPeticionByBibliotecasPrestataria(data.getId_biblioteca());
             ArrayList<Peticion> PetPrestadoras = peticionControlador.getPeticionByBibliotecasPrestadora(data.getId_biblioteca());
             ArrayList<EstadoModelo> Estados = estadoControlador.getEstados();
+            int cantidadTotalPeticiones = peticionControlador.getCantidadTotalPeticiones();
+            int cantidadPeticionesEstado16 = peticionControlador.getCantidadPeticionesEstado16();
+
             return new ModelAndView("Peticiones")
                     .addObject("peticionesEntrantes",PetPrestadoras)
                     .addObject("peticionesSalientes",PetPrestatarias)
-                    .addObject("estados",Estados);
+                    .addObject("estados",Estados)
+                    .addObject("cantidadTotalPeticiones", cantidadTotalPeticiones)
+                    .addObject("cantidadPeticionesEstado16", cantidadPeticionesEstado16);
+
         }else{
             return new ModelAndView("redirect:/login");
         }

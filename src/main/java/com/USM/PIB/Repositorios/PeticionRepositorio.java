@@ -16,4 +16,11 @@ public interface PeticionRepositorio extends JpaRepository<Peticion,Integer> {
     @Query("SELECT p FROM Peticion p WHERE p.id_biblioteca_prestadora=?1 AND p.id_estado >= 4")
     ArrayList<Peticion> findByBibliotecaPrestadora(int id);
 
+    // Obtener la cantidad total de peticiones
+    long count();
+
+    // Obtener la cantidad de peticiones con estado 16
+    @Query("SELECT COUNT(p) FROM Peticion p WHERE p.id_estado = 16")
+    int countPeticionesEstado16();
+
 }

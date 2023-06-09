@@ -45,6 +45,14 @@ public class PeticionServicio {
     public Optional<Peticion> getPeticionById(int id){
         return peticionRepositorio.findById(id);
     }
+
+    public int obtenerCantidadTotalPeticiones() {
+        return peticionRepositorio.findAll().size();
+    }
+
+    public int obtenerCantidadPeticionesEstado16() {
+        return peticionRepositorio.countPeticionesEstado16();
+    }
     public ArrayList<Peticion> getPeticionByBibliotecaPrestataria(int id) {
     return (ArrayList<Peticion>) peticionRepositorio.findByBibliotecaPrestataria(id);
     }
@@ -130,4 +138,6 @@ public class PeticionServicio {
         pet.setId_estado(5);
         return peticionRepositorio.save(pet);
     }
+
+
 }

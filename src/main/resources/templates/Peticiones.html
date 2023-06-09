@@ -36,28 +36,25 @@
       });
     });
   };
-</script>
-<script>
-
+</script><script>
   function funBotonEsta() {
-  Swal.fire({
-    title: 'Revisar Peticiones',
-    showDenyButton: true,
-    showCancelButton: true,
-    confirmButtonText: 'Peticiones Finalizadas',
-    denyButtonText: 'Peticiones Totales',
-    denyButtonColor: 'green',
-  }).then((result) => {
-    if (result.isConfirmed) {
-      var cantidadPeticionesFinalizadas = contarPeticionesFinalizadas();
-      Swal.fire('Cantidad total de peticiones Finalizadas: ' + cantidadPeticionesFinalizadas);
-    } else if (result.isDenied) {
-     var cantidadPeticionesFinalizadas = contarTodasLasPeticiones();
-       Swal.fire( 'Cantidad de peticiones totales: ' + cantidadPeticionesFinalizadas.toString()');
-    }
-  });
-}
-
+    Swal.fire({
+      title: 'Revisar Peticiones',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Peticiones Finalizadas',
+      denyButtonText: 'Peticiones Totales',
+      denyButtonColor: 'green',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        var cantidadPeticionesFinalizadas = contarPeticionesFinalizadas();
+        Swal.fire('Cantidad total de peticiones Finalizadas: ' + cantidadPeticionesFinalizadas);
+      } else if (result.isDenied) {
+        var cantidadPeticionesFinalizadas = contarTodasLasPeticiones();
+        Swal.fire('Cantidad de peticiones totales: ' + cantidadPeticionesFinalizadas.toString());
+      }
+    });
+  }
 </script>
 
 <script>
@@ -153,6 +150,8 @@ console.log("Cantidad de peticiones finalizadas: " + cantidadPeticionesFinalizad
     <div th:insert="fragments/nav3 :: navUser3" ></div>
   </div>
 </div>
+<div id="cantidadTotalPeticiones"></div>
+<div id="cantidadPeticionesEstado16"></div>
 <div class="container">
   <h1>Peticiones Entrantes</h1>
   <input type="text" id="rut-buscador" placeholder="Buscar por RUT" />
@@ -161,7 +160,7 @@ console.log("Cantidad de peticiones finalizadas: " + cantidadPeticionesFinalizad
     <option value="">Todos los estados</option>
     <option th:each="estado : ${estados}" th:object="${estado}" th:value="*{estado}" th:text="*{estado}"></option>
   </select>
-  <button id="botonEsta" onclick="funBotonEsta()" style="margin-left: 980px;color: white;background: #337ab7;border-radius: 10px;height: 30px;border-width: 1px;display: none;" >Estadisticas Generales</button>
+  <button id="botonEsta" onclick="funBotonEsta()" style="margin-left: 980px;color: white;background: #337ab7;border-radius: 10px;height: 30px;border-width: 1px;" >Estadisticas Generales</button>
   <div class="table-wrapper-scroll-y my-custom-scrollbar">
     <table class="table table-bordered table-striped mb-0">
       <thead>
@@ -491,6 +490,29 @@ function fillSelect(data,idSel) {
 }
   };
 </script>
+
+<script>
+    $(document).ready(function() {
+        // Obtener la cantidad total de peticiones
+        $.ajax({
+            type: 'GET',
+            url: '/pib/peticion/cantidad-total',
+            success: function(data) {
+                $("#cantidadTotalPeticiones").text("Cantidad total de peticiones: " + data);
+            }
+        });
+
+        // Obtener la cantidad de peticiones con estado 16
+        $.ajax({
+            type: 'GET',
+            url: '/pib/peticion/cantidad-estado16',
+            success: function(data) {
+                $("#cantidadPeticionesEstado16").text("Cantidad de peticiones con estado 16: " + data);
+            }
+        });
+    });
+</script>
+
 <!-- Scripts de Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
         crossorigin="anonymous"></script>
