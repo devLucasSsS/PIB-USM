@@ -118,13 +118,15 @@ console.log("Cantidad de peticiones finalizadas: " + cantidadPeticionesFinalizad
       switch (opcion) {
         case 1:
           document.getElementById("opcion1").style.display = "block";
-          document.getElementById("botonEsta").style.display = "block";
+          document.getElementById("ConDatos").style.display = "block";
           break;
         case 2:
           document.getElementById("opcion2").style.display = "block";
+          document.getElementById("botonEsta").style.display = "block";
           break;
         case 3:
           document.getElementById("opcion3").style.display = "block";
+          document.getElementById("botonEsta").style.display = "block";
           break;
         default:
           break;
@@ -150,8 +152,18 @@ console.log("Cantidad de peticiones finalizadas: " + cantidadPeticionesFinalizad
     <div th:insert="fragments/nav3 :: navUser3" ></div>
   </div>
 </div>
-<div id="cantidadTotalPeticiones"></div>
-<div id="cantidadPeticionesEstado16"></div>
+
+<div class="container" id="ConDatos" style="display:none; background-color: #fff;padding: 20px;box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);width: 350px;margin-right: 1005px;">
+  <form id="fechaForm">
+    <label for="fechaDesde">Fecha Desde:</label>
+    <input type="date" id="fechaDesde" name="fechaDesde">
+    <button type="submit">Obtener</button>
+  </form>
+  <div id="resultado"></div>
+  <div id="cantidadTotalPeticiones"></div>
+  <div id="cantidadPeticionesEstado16"></div>
+</div>
+
 <div class="container">
   <h1>Peticiones Entrantes</h1>
   <input type="text" id="rut-buscador" placeholder="Buscar por RUT" />
@@ -160,7 +172,7 @@ console.log("Cantidad de peticiones finalizadas: " + cantidadPeticionesFinalizad
     <option value="">Todos los estados</option>
     <option th:each="estado : ${estados}" th:object="${estado}" th:value="*{estado}" th:text="*{estado}"></option>
   </select>
-  <button id="botonEsta" onclick="funBotonEsta()" style="margin-left: 980px;color: white;background: #337ab7;border-radius: 10px;height: 30px;border-width: 1px;" >Estadisticas Generales</button>
+  <button id="botonEsta" onclick="funBotonEsta()" style="margin-left: 980px;color: white;background: #337ab7;border-radius: 10px;height: 30px;border-width: 1px;display:none;" >Estadisticas Generales</button>
   <div class="table-wrapper-scroll-y my-custom-scrollbar">
     <table class="table table-bordered table-striped mb-0">
       <thead>
@@ -507,10 +519,35 @@ function fillSelect(data,idSel) {
             type: 'GET',
             url: '/pib/peticion/cantidad-estado16',
             success: function(data) {
-                $("#cantidadPeticionesEstado16").text("Cantidad de peticiones con estado 16: " + data);
+                $("#cantidadPeticionesEstado16").text("Peticiones finalizadas: " + data);
             }
         });
     });
+</script>
+<script>
+ $(document).ready(function() {
+    // Obtener la cantidad total de peticiones desde la fecha
+    $('#fechaForm').submit(function(event) {
+        event.preventDefault();
+        var fechaDesde = $('#fechaDesde').val();
+
+        obtenerCantidadTotalPeticionesDesdeFecha(fechaDesde);
+    });
+
+    function obtenerCantidadTotalPeticionesDesdeFecha(fechaDesde) {
+        $.ajax({
+            type: 'GET',
+            url: '/pib/peticion/cantidad-total-desde-fecha',
+            data: { fechaDesde: fechaDesde },
+            success: function(data) {
+                $('#resultado').text('Cantidad Total de Peticiones desde la Fecha: ' + data);
+            },
+            error: function(error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+});
 </script>
 
 <!-- Scripts de Bootstrap -->

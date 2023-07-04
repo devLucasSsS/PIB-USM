@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 @Repository
 public interface PeticionRepositorio extends JpaRepository<Peticion,Integer> {
@@ -23,4 +24,11 @@ public interface PeticionRepositorio extends JpaRepository<Peticion,Integer> {
     @Query("SELECT COUNT(p) FROM Peticion p WHERE p.id_estado = 16")
     int countPeticionesEstado16();
 
+
+    default int obtenerCantidadTotalPeticionesDesdeFecha(Date fechaDesde) {
+        return countByFechaPeticionGreaterThanEqual(fechaDesde);
+    }
+
+    @Query("SELECT COUNT(p) FROM Peticion p WHERE p.fecha_peticion >= :fecha_peticion")
+    int countByFechaPeticionGreaterThanEqual(Date fecha_peticion);
 }

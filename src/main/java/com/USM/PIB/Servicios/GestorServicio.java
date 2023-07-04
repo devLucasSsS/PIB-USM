@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
-@Slf4j
+
 public class GestorServicio {
     @Autowired
     GestorRepositorio gestorRepositorio;

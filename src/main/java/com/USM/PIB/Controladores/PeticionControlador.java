@@ -4,12 +4,14 @@ import com.USM.PIB.Modelos.Peticion;
 import com.USM.PIB.Servicios.PeticionServicio;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/peticion")
@@ -52,5 +54,10 @@ public class PeticionControlador {
     @GetMapping("/cantidad-estado16")
     public int getCantidadPeticionesEstado16() {
         return peticionServicio.obtenerCantidadPeticionesEstado16();
+    }
+    @GetMapping("/cantidad-total-desde-fecha")
+    public int getCantidadTotalPeticionesDesdeFecha(@RequestParam("fechaDesde") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaDesde) {
+        int cantidadTotal = peticionServicio.obtenerCantidadTotalPeticionesDesdeFecha(fechaDesde);
+        return cantidadTotal;
     }
 }

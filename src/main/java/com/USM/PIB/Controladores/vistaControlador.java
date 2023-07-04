@@ -5,6 +5,7 @@ import com.USM.PIB.Repositorios.PeticionRepositorio;
 import com.USM.PIB.Servicios.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -160,7 +161,7 @@ public class vistaControlador {
         return new ModelAndView("redirect:/peticiones");
     }
     @GetMapping(path = "peticiones")
-    public ModelAndView peticiones(HttpSession session){
+    public ModelAndView peticiones(HttpSession session,@ModelAttribute("fechaDesde") @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaDesde){
         GestorModelo data = gestorControlador.getDataSession(session);
         if(data!=null){
             ArrayList<Peticion> PetPrestatarias = peticionControlador.getPeticionByBibliotecasPrestataria(data.getId_biblioteca());
@@ -168,13 +169,14 @@ public class vistaControlador {
             ArrayList<EstadoModelo> Estados = estadoControlador.getEstados();
             int cantidadTotalPeticiones = peticionControlador.getCantidadTotalPeticiones();
             int cantidadPeticionesEstado16 = peticionControlador.getCantidadPeticionesEstado16();
-
+            int cantidadPeticionesDesdeFecha = peticionControlador.getCantidadTotalPeticionesDesdeFecha(fechaDesde);
             return new ModelAndView("Peticiones")
                     .addObject("peticionesEntrantes",PetPrestadoras)
                     .addObject("peticionesSalientes",PetPrestatarias)
                     .addObject("estados",Estados)
                     .addObject("cantidadTotalPeticiones", cantidadTotalPeticiones)
-                    .addObject("cantidadPeticionesEstado16", cantidadPeticionesEstado16);
+                    .addObject("cantidadPeticionesEstado16", cantidadPeticionesEstado16)
+                    .addObject("cantidadPeticionesDesdeFecha", cantidadPeticionesDesdeFecha);
 
         }else{
             return new ModelAndView("redirect:/login");

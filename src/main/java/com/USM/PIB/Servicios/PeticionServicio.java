@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
@@ -52,6 +50,11 @@ public class PeticionServicio {
 
     public int obtenerCantidadPeticionesEstado16() {
         return peticionRepositorio.countPeticionesEstado16();
+    }
+
+    public int obtenerCantidadTotalPeticionesDesdeFecha(Date fechaDesde) {
+        int cantidadTotal = peticionRepositorio.obtenerCantidadTotalPeticionesDesdeFecha(fechaDesde);
+        return cantidadTotal;
     }
     public ArrayList<Peticion> getPeticionByBibliotecaPrestataria(int id) {
     return (ArrayList<Peticion>) peticionRepositorio.findByBibliotecaPrestataria(id);
